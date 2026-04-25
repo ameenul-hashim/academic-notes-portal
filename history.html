@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History Chapters - Academic Notes</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Glassmorphism utility classes */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-fuchsia-900 min-h-screen text-white font-sans antialiased flex flex-col">
+
+    <!-- Navigation Bar -->
+    <nav class="glass-card sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center h-16">
+                <a href="index.html" class="p-2 mr-4 rounded-full hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50" aria-label="Back to home">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                </a>
+                <div class="flex flex-1 items-center justify-between">
+                    <span class="font-bold text-2xl tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-blue-400">NotesPortal</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <!-- Header Section -->
+        <div class="mb-12 flex flex-col md:flex-row md:items-center justify-between">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-3 drop-shadow-lg flex items-center">
+                    <span class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center mr-4 shadow-lg text-2xl">🏛️</span>
+                    History
+                </h1>
+                <p class="text-lg text-gray-300 max-w-2xl">Explore past events, ancient civilizations, and modern history chapters below.</p>
+            </div>
+        </div>
+
+        <!-- Chapters Grid -->
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+            
+            <!-- Chapter 1 Card -->
+            <div class="glass-card rounded-2xl p-6 lg:p-8 flex flex-col transition-all duration-300 hover:shadow-[0_0_25px_rgba(236,72,153,0.3)] hover:border-pink-500/30">
+                <div class="flex justify-between items-start mb-4">
+                    <h2 class="text-2xl font-bold text-white">Chapter 1: Introduction to History</h2>
+                    <span class="px-3 py-1 text-xs font-semibold bg-white/10 rounded-full border border-white/20 text-pink-200">Basics</span>
+                </div>
+                <p class="text-gray-300 mb-8 flex-grow">An introductory overview of historical timelines, primary sources, and the study of human history.</p>
+                
+                <!-- Action Buttons Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- English Section -->
+                    <div class="space-y-3">
+                        <p class="text-sm font-semibold text-blue-300 uppercase tracking-wider mb-2 border-b border-white/10 pb-1">English</p>
+                        <a href="pdfs/history/chapter1-en.pdf" target="_blank" class="btn-glass flex items-center justify-center w-full py-2.5 px-4 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            View English
+                        </a>
+                        <a href="pdfs/history/chapter1-en.pdf" download class="btn-glass flex items-center justify-center w-full py-2.5 px-4 rounded-lg text-sm font-medium bg-blue-600/20 hover:bg-blue-600/40 text-blue-100 border-blue-500/30 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            Download English
+                        </a>
+                    </div>
+                    
+                    <!-- Malayalam Section -->
+                    <div class="space-y-3">
+                        <p class="text-sm font-semibold text-green-300 uppercase tracking-wider mb-2 border-b border-white/10 pb-1">Malayalam</p>
+                        <a href="pdfs/history/chapter1-ml.pdf" target="_blank" class="btn-glass flex items-center justify-center w-full py-2.5 px-4 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            View Malayalam
+                        </a>
+                        <a href="pdfs/history/chapter1-ml.pdf" download class="btn-glass flex items-center justify-center w-full py-2.5 px-4 rounded-lg text-sm font-medium bg-green-600/20 hover:bg-green-600/40 text-green-100 border-green-500/30 focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            Download Malayalam
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapter 2 Card -->
+            <div class="glass-card rounded-2xl p-6 lg:p-8 flex flex-col transition-all duration-300 hover:shadow-[0_0_25px_rgba(236,72,153,0.3)] hover:border-pink-500/30">
+                <div class="flex justify-between items-start mb-4">
+                    <h2 class="text-2xl font-bold text-white">Chapter 2: Ancient Civilizations</h2>
+                    <span class="px-3 py-1 text-xs font-semibold bg-white/10 rounded-full border border-white/20 text-pink-200">Ancient</span>
+                </div>
+                <p class="text-gray-300 mb-8 flex-grow">A deep dive into the Indus Valley Civilization, Mesopotamia, and ancient Egypt.</p>
+                
+                <!-- Action Buttons Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- English Section -->
+                    <div class="space-y-3">
+                        <p class="text-sm font-semibold text-blue-300 uppercase tracking-wider mb-2 border-b border-white/10 pb-1">English</p>
+                        <a href="pdfs/history/chapter2-en.pdf" target="_blank" class="btn-glass flex items-center justify-center w-full py-2.5 px-4 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            View English
+                        </a>
+                        <a href="pdfs/history/chapter2-en.pdf" download class="btn-glass flex items-center justify-center w-full py-2.5 px-4 rounded-lg text-sm font-medium bg-blue-600/20 hover:bg-blue-600/40 text-blue-100 border-blue-500/30 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            Download English
+                        </a>
+                    </div>
+                    
+                    <!-- Malayalam Section -->
+                    <div class="space-y-3">
+                        <p class="text-sm font-semibold text-green-300 uppercase tracking-wider mb-2 border-b border-white/10 pb-1">Malayalam</p>
+                        <a href="pdfs/history/chapter2-ml.pdf" target="_blank" class="btn-glass flex items-center justify-center w-full py-2.5 px-4 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            View Malayalam
+                        </a>
+                        <a href="pdfs/history/chapter2-ml.pdf" download class="btn-glass flex items-center justify-center w-full py-2.5 px-4 rounded-lg text-sm font-medium bg-green-600/20 hover:bg-green-600/40 text-green-100 border-green-500/30 focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            Download Malayalam
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer Area -->
+    <footer class="glass-card mt-auto py-6 text-center text-gray-400 border-t-0 border-r-0 border-l-0">
+        <p>&copy; 2026 Academic Notes Portal. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

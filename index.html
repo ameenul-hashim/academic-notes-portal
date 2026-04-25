@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Notes Portal</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for glassmorphism effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-fuchsia-900 min-h-screen text-white font-sans antialiased flex flex-col">
+
+    <!-- Navigation Bar -->
+    <nav class="glass-card sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="font-bold text-2xl tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-blue-400">NotesPortal</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <!-- Header Section -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-lg">Select Your Subject</h1>
+            <p class="text-lg text-gray-300 max-w-2xl mx-auto">Access comprehensive study materials, chapter-wise notes, and downloadable PDFs in both English and Malayalam.</p>
+        </div>
+
+        <!-- Subjects Grid Layout -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Subject Card: History -->
+            <a href="history.html" class="group block h-full outline-none focus:ring-4 focus:ring-pink-500/50 rounded-2xl transition-all duration-300">
+                <div class="glass-card rounded-2xl p-6 h-full flex flex-col transition-all duration-300 ease-in-out transform group-hover:-translate-y-2 group-hover:scale-[1.02] group-hover:shadow-[0_0_30px_rgba(236,72,153,0.5)]">
+                    <!-- Icon Container -->
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center mb-6 shadow-lg group-hover:animate-pulse">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    </div>
+                    <!-- Content -->
+                    <h2 class="text-2xl font-bold mb-3">History</h2>
+                    <p class="text-gray-300 flex-grow">Explore past events, ancient civilizations, and modern history chapters.</p>
+                    <!-- Action Link -->
+                    <div class="mt-6 flex items-center text-pink-300 font-semibold group-hover:text-pink-100 transition-colors">
+                        View Chapters 
+                        <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Subject Card: English -->
+            <a href="#" class="group block h-full outline-none focus:ring-4 focus:ring-blue-500/50 rounded-2xl transition-all duration-300">
+                <div class="glass-card rounded-2xl p-6 h-full flex flex-col transition-all duration-300 ease-in-out transform group-hover:-translate-y-2 group-hover:scale-[1.02] group-hover:shadow-[0_0_30px_rgba(59,130,246,0.5)]">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center mb-6 shadow-lg group-hover:animate-pulse">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
+                    </div>
+                    <h2 class="text-2xl font-bold mb-3">English</h2>
+                    <p class="text-gray-300 flex-grow">Enhance your vocabulary, literature, and grammar skills.</p>
+                    <div class="mt-6 flex items-center text-blue-300 font-semibold group-hover:text-blue-100 transition-colors">
+                        View Chapters 
+                        <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </div>
+                </div>
+            </a>
+            
+            <!-- Subject Card: Science -->
+            <a href="#" class="group block h-full outline-none focus:ring-4 focus:ring-teal-500/50 rounded-2xl transition-all duration-300">
+                <div class="glass-card rounded-2xl p-6 h-full flex flex-col transition-all duration-300 ease-in-out transform group-hover:-translate-y-2 group-hover:scale-[1.02] group-hover:shadow-[0_0_30px_rgba(20,184,166,0.5)]">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-teal-400 to-emerald-600 flex items-center justify-center mb-6 shadow-lg group-hover:animate-pulse">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    </div>
+                    <h2 class="text-2xl font-bold mb-3">Science</h2>
+                    <p class="text-gray-300 flex-grow">Dive into physics, chemistry, biology, and the natural world.</p>
+                    <div class="mt-6 flex items-center text-teal-300 font-semibold group-hover:text-teal-100 transition-colors">
+                        View Chapters 
+                        <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </main>
+
+    <!-- Footer Area -->
+    <footer class="glass-card mt-auto py-6 text-center text-gray-400 border-t-0 border-r-0 border-l-0">
+        <p>&copy; 2026 Academic Notes Portal. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
