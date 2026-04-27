@@ -1,21 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Philosophy of Education - Languages</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    
-    <script>
-        // Apply theme early to avoid flash
-        (function() {
-            const savedTheme = localStorage.getItem('preferred-theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-        })();
-    </script>
-        <style>
+import os
+import re
+
+REFINED_STYLE = """    <style>
         /* Glassmorphism utility classes */
         .glass-card {
             background: rgba(255, 255, 255, 0.1);
@@ -107,96 +93,19 @@
             background-color: white !important;
             color: #0f172a !important;
         }
-    </style>
-    <script>
-        (function() {
-            const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-        })();
-    </script></head>
-<body class="bg-gradient-to-br from-red-950 via-rose-900 to-red-900 min-h-screen text-white font-sans antialiased flex flex-col">
+    </style>"""
 
-    <!-- Header Section -->
-    <header class="glass-card sticky top-0 z-50 shadow-lg py-4 relative">
-        <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
-            <!-- Back Button Navigation -->
-            <a href="index.html" class="flex items-center text-orange-200 hover:text-white transition-colors">
-                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                Back
-            </a>
-            <div class="absolute left-1/2 transform -translate-x-1/2 text-center hidden md:block">
-                <p class="text-sm text-orange-200 tracking-widest uppercase mb-1">Subject</p>
-                <h1 class="font-bold text-2xl tracking-wider text-white">Philosophy of Education</h1>
-            </div>
-            <!-- Empty div to balance flexbox space -->
-            <div>
-                <select id="theme-selector" class="bg-black/20 text-white backdrop-blur-md border border-white/10 rounded-lg px-2 py-1 text-xs outline-none cursor-pointer hover:bg-white/20 transition-all">
-                    <option value="rose">Rose</option>
-                    <option value="dark">Navy</option>
-                    <option value="light">Light</option>
-                    <option value="emerald">Emerald</option>
-                </select>
-            </div>
-        </div>
-    </header>
+html_files = [f for f in os.listdir('c:/Users/lenov/OneDrive/Desktop/pdf app') if f.endswith('.html')]
 
-    <!-- Mobile Subject Title -->
-    <div class="md:hidden text-center mt-6 px-4">
-        <h1 class="font-bold text-3xl tracking-wider text-white">Philosophy of Education</h1>
-    </div>
-
-    <!-- Main Content Area: Level 2 - Languages -->
-    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full flex flex-col items-center justify-center">
-        
-        <h2 class="text-2xl text-gray-200 mb-8 font-light">Select Language:</h2>
-
-        <!-- Grid System: 1 col on mobile, 2 on tablet+ -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full max-w-3xl">
-            
-            <!-- Language Card: Malayalam -->
-            <a href="history-ml.html" class="block outline-none">
-                <div class="glass-card rounded-2xl p-10 flex flex-col items-center justify-center text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)]">
-                    <span class="text-5xl mb-4">അ</span>
-                    <h2 class="text-3xl font-bold text-white">Malayalam</h2>
-                </div>
-            </a>
-
-            <!-- Language Card: English -->
-            <a href="history-en.html" class="block outline-none">
-                <div class="glass-card rounded-2xl p-10 flex flex-col items-center justify-center text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)]">
-                    <span class="text-5xl mb-4">A</span>
-                    <h2 class="text-3xl font-bold text-white">English</h2>
-                </div>
-            </a>
-
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="glass-card py-6 text-center text-gray-300 border-t-0 border-r-0 border-l-0 mt-auto">
-        <p>&copy; 2026 Unofficial Notes Portal. Created by Hashim</p>
-    </footer>
-
+for f in html_files:
+    path = os.path.join('c:/Users/lenov/OneDrive/Desktop/pdf app', f)
+    with open(path, 'r', encoding='utf-8') as file:
+        content = file.read()
     
-    <script>
-        (function() {
-            const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-        })();
-    </script>    <script>
-        (function() {
-            const selector = document.getElementById('theme-selector');
-            const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
-            if (selector) {
-                selector.value = savedTheme;
-                selector.addEventListener('change', (e) => {
-                    const theme = e.target.value;
-                    document.documentElement.setAttribute('data-theme', theme);
-                    localStorage.setItem('preferred-theme', theme);
-                });
-            }
-        })();
-    </script>
-</body>
-</html>
+    # Replace existing <style> block
+    content = re.sub(r'<style>.*?</style>', REFINED_STYLE, content, flags=re.DOTALL)
 
+    with open(path, 'w', encoding='utf-8') as file:
+        file.write(content)
+
+print("Refined theme colors for better readability and style.")

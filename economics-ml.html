@@ -15,7 +15,7 @@
             document.documentElement.setAttribute('data-theme', savedTheme);
         })();
     </script>
-    <style>
+        <style>
         /* Glassmorphism utility classes */
         .glass-card {
             background: rgba(255, 255, 255, 0.1);
@@ -38,78 +38,76 @@
 
         /* Theme variables */
         :root {
-            --bg-light: linear-gradient(to bottom right, #f0f5ff, #e0eaff);
-            --bg-dark: linear-gradient(to bottom right, #1a1a2e, #16213e);
             --bg-rose: linear-gradient(to bottom right, #450a0a, #881337, #7f1d1d);
-            --bg-emerald: linear-gradient(to bottom right, #e0f7e9, #c2efd9);
-            --text-light: #212529;
-            --text-dark: #f8f9fa;
-            --text-rose: #f8f9fa;
-            --text-emerald: #0a3b1c;
-            --card-bg-light: rgba(255,255,255,0.6);
-            --card-bg-dark: rgba(0,0,0,0.3);
-            --card-bg-rose: rgba(255,255,255,0.1);
-            --card-bg-emerald: rgba(255,255,255,0.5);
-            --card-border-light: rgba(0,0,0,0.1);
-            --card-border-dark: rgba(255,255,255,0.1);
-            --card-border-rose: rgba(255,255,255,0.2);
-            --card-border-emerald: rgba(6,78,59,0.2);
+            --bg-dark: linear-gradient(to bottom right, #0f172a, #1e293b);
+            --bg-light: linear-gradient(to bottom right, #f8fafc, #e2e8f0);
+            --bg-emerald: linear-gradient(to bottom right, #064e3b, #065f46);
+            
+            --text-rose: #fff1f2;
+            --text-dark: #f8fafc;
+            --text-light: #0f172a;
+            --text-emerald: #ecfdf5;
+
+            --accent-rose: #fecdd3;
+            --accent-dark: #fde68a;
+            --accent-light: #2563eb;
+            --accent-emerald: #6ee7b7;
+
+            --card-rose: rgba(255, 255, 255, 0.08);
+            --card-dark: rgba(255, 255, 255, 0.05);
+            --card-light: rgba(255, 255, 255, 0.7);
+            --card-emerald: rgba(255, 255, 255, 0.05);
         }
 
-        /* Theme rules applying to html and body */
-        html[data-theme="light"], body[data-theme="light"] { background: var(--bg-light) !important; color: var(--text-light) !important; }
-        html[data-theme="dark"], body[data-theme="dark"] { background: var(--bg-dark) !important; color: var(--text-dark) !important; }
+        /* Base Theme Application */
         html[data-theme="rose"], body[data-theme="rose"] { background: var(--bg-rose) !important; color: var(--text-rose) !important; }
+        html[data-theme="dark"], body[data-theme="dark"] { background: var(--bg-dark) !important; color: var(--text-dark) !important; }
+        html[data-theme="light"], body[data-theme="light"] { background: var(--bg-light) !important; color: var(--text-light) !important; }
         html[data-theme="emerald"], body[data-theme="emerald"] { background: var(--bg-emerald) !important; color: var(--text-emerald) !important; }
-        
-        [data-theme="light"] .glass-card { background: var(--card-bg-light) !important; border-color: var(--card-border-light) !important; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important; }
-        [data-theme="dark"] .glass-card { background: var(--card-bg-dark) !important; border-color: var(--card-border-dark) !important; }
-        [data-theme="rose"] .glass-card { background: var(--card-bg-rose) !important; border-color: var(--card-border-rose) !important; }
-        [data-theme="emerald"] .glass-card { background: var(--card-bg-emerald) !important; border-color: var(--card-border-emerald) !important; box-shadow: 0 4px 6px -1px rgba(6, 78, 59, 0.05) !important; }
 
-        /* Text Color Overrides for Tailwind classes */
+        /* Card Styles */
+        [data-theme="rose"] .glass-card { background: var(--card-rose) !important; border-color: rgba(255,255,255,0.2) !important; }
+        [data-theme="dark"] .glass-card { background: var(--card-dark) !important; border-color: rgba(255,255,255,0.1) !important; }
+        [data-theme="light"] .glass-card { background: var(--card-light) !important; border-color: rgba(0,0,0,0.1) !important; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important; }
+        [data-theme="emerald"] .glass-card { background: var(--card-emerald) !important; border-color: rgba(255,255,255,0.1) !important; }
+
+        /* Text Overrides for all themes */
+        [data-theme="rose"] .text-white, [data-theme="rose"] .text-gray-100 { color: var(--text-rose) !important; }
+        [data-theme="dark"] .text-white, [data-theme="dark"] .text-gray-100 { color: var(--text-dark) !important; }
         [data-theme="light"] .text-white, [data-theme="light"] .text-gray-100, [data-theme="light"] .text-gray-200, [data-theme="light"] .text-gray-300 { color: var(--text-light) !important; }
-        [data-theme="emerald"] .text-white, [data-theme="emerald"] .text-gray-100, [data-theme="emerald"] .text-gray-200, [data-theme="emerald"] .text-gray-300 { color: var(--text-emerald) !important; }
-        
-        /* Accent colors to adapt to themes */
-        [data-theme="light"] .text-orange-200, [data-theme="light"] .text-pink-200, [data-theme="light"] .text-orange-300, [data-theme="light"] .text-pink-300 { color: #b45309 !important; }
-        [data-theme="emerald"] .text-orange-200, [data-theme="emerald"] .text-pink-200, [data-theme="emerald"] .text-orange-300, [data-theme="emerald"] .text-pink-300 { color: #047857 !important; }
+        [data-theme="emerald"] .text-white, [data-theme="emerald"] .text-gray-100 { color: var(--text-emerald) !important; }
 
-        /* Specific background overrides like bg-white/5 */
-        [data-theme="light"] .bg-white\/5, [data-theme="light"] .bg-white\/10 { background-color: rgba(0,0,0,0.05) !important; }
-        [data-theme="emerald"] .bg-white\/5, [data-theme="emerald"] .bg-white\/10 { background-color: rgba(6,78,59,0.05) !important; }
+        /* Accent Text (Welcome, Subject, etc.) */
+        [data-theme="rose"] .text-orange-200, [data-theme="rose"] .text-pink-200 { color: var(--accent-rose) !important; }
+        [data-theme="dark"] .text-orange-200, [data-theme="dark"] .text-pink-200 { color: var(--accent-dark) !important; }
+        [data-theme="light"] .text-orange-200, [data-theme="light"] .text-pink-200 { color: var(--accent-light) !important; }
+        [data-theme="emerald"] .text-orange-200, [data-theme="emerald"] .text-pink-200 { color: var(--accent-emerald) !important; }
 
-        /* Border overrides */
-        [data-theme="light"] .border-white\/20, [data-theme="light"] .border-white\/10 { border-color: rgba(0,0,0,0.1) !important; }
-        [data-theme="emerald"] .border-white\/20, [data-theme="emerald"] .border-white\/10 { border-color: rgba(6,78,59,0.1) !important; }
+        /* Subtitles and Gray Text */
+        [data-theme="rose"] .text-gray-300, [data-theme="rose"] .text-gray-400 { color: #fda4af !important; }
+        [data-theme="dark"] .text-gray-300, [data-theme="dark"] .text-gray-400 { color: #94a3b8 !important; }
+        [data-theme="light"] .text-gray-300, [data-theme="light"] .text-gray-400, [data-theme="light"] .text-gray-500 { color: #475569 !important; }
+        [data-theme="emerald"] .text-gray-300, [data-theme="emerald"] .text-gray-400 { color: #6ee7b7 !important; }
 
-        /* Hover effects */
-        [data-theme="light"] .hover\:text-white:hover { color: #000 !important; }
-        [data-theme="emerald"] .hover\:text-white:hover { color: #022c22 !important; }
-
-        /* Link colors */
-        [data-theme="light"] a.text-orange-300 { color: #2563eb !important; }
-        [data-theme="emerald"] a.text-orange-300 { color: #047857 !important; }
-    
         /* Dropdown visibility fix */
         #theme-selector {
             color: white !important;
-            background-color: rgba(0,0,0,0.5) !important;
+            background-color: rgba(0,0,0,0.3) !important;
         }
         #theme-selector option {
             background-color: #1a1a2e !important;
             color: white !important;
         }
         [data-theme="light"] #theme-selector {
-            color: #212529 !important;
+            color: #0f172a !important;
             background-color: rgba(255,255,255,0.8) !important;
             border-color: rgba(0,0,0,0.2) !important;
         }
         [data-theme="light"] #theme-selector option {
             background-color: white !important;
-            color: #212529 !important;
+            color: #0f172a !important;
         }
-</style>
+    </style>
     <script>
         (function() {
             const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
