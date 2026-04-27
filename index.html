@@ -90,7 +90,26 @@
         /* Link colors */
         [data-theme="light"] a.text-orange-300 { color: #2563eb !important; }
         [data-theme="emerald"] a.text-orange-300 { color: #047857 !important; }
-    </style>
+    
+        /* Dropdown visibility fix */
+        #theme-selector {
+            color: white !important;
+            background-color: rgba(0,0,0,0.5) !important;
+        }
+        #theme-selector option {
+            background-color: #1a1a2e !important;
+            color: white !important;
+        }
+        [data-theme="light"] #theme-selector {
+            color: #212529 !important;
+            background-color: rgba(255,255,255,0.8) !important;
+            border-color: rgba(0,0,0,0.2) !important;
+        }
+        [data-theme="light"] #theme-selector option {
+            background-color: white !important;
+            color: #212529 !important;
+        }
+</style>
     <script>
         (function() {
             const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
