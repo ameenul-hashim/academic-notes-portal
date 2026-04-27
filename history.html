@@ -15,195 +15,90 @@
             document.documentElement.setAttribute('data-theme', savedTheme);
         })();
     </script>
-        <style>
-        /* Glassmorphism utility classes */
+            <style>
+        /* Modern Glassmorphism System */
         .glass-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        /* Glass button styling */
-        .btn-glass {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-        .btn-glass:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.4);
-            transform: translateY(-2px);
-        }
-
-        /* Theme variables */
-        :root {
-            --bg-rose: linear-gradient(to bottom right, #450a0a, #881337, #7f1d1d);
-            --bg-dark: linear-gradient(to bottom right, #0f172a, #1e293b);
-            --bg-light: linear-gradient(to bottom right, #f8fafc, #e2e8f0);
-            --bg-emerald: linear-gradient(to bottom right, #064e3b, #065f46);
-            --bg-midnight: linear-gradient(to bottom right, #2e1065, #4c1d95);
-            --bg-ocean: linear-gradient(to bottom right, #083344, #155e75);
-            --bg-golden: linear-gradient(to bottom right, #451a03, #78350f);
-            --bg-coffee: linear-gradient(to bottom right, #1c1917, #44403c);
-            --bg-sky: linear-gradient(to bottom right, #f0fdf4, #dcfce7);
-            
-            --text-midnight: #f5f3ff;
-            --text-ocean: #ecfeff;
-            --text-golden: #fffbeb;
-            --text-coffee: #fafaf9;
-            --text-sky: #064e3b;
-
-            --accent-midnight: #ddd6fe;
-            --accent-ocean: #a5f3fc;
-            --accent-golden: #fde68a;
-            --accent-coffee: #e7e5e4;
-            --accent-sky: #10b981;
-            --bg-sunset: linear-gradient(to bottom right, #7c2d12, #9d174d);
-            --bg-indigo: linear-gradient(to bottom right, #312e81, #1e1b4b);
-            --bg-forest: linear-gradient(to bottom right, #064e3b, #14532d);
-            --bg-chocolate: linear-gradient(to bottom right, #3b2b07, #1c1917);
-            --bg-slate: linear-gradient(to bottom right, #334155, #0f172a);
-            
-            --text-sunset: #fff7ed;
-            --text-indigo: #e0e7ff;
-            --text-forest: #f0fdf4;
-            --text-chocolate: #fffbeb;
-            --text-slate: #f1f5f9;
-
-            --accent-sunset: #fdba74;
-            --accent-indigo: #818cf8;
-            --accent-forest: #4ade80;
-            --accent-chocolate: #d97706;
-            --accent-slate: #94a3b8;
-            
-            --text-rose: #fff1f2;
-            --text-dark: #f8fafc;
-            --text-light: #0f172a;
-            --text-emerald: #ecfdf5;
-
-            --accent-rose: #fecdd3;
-            --accent-dark: #fde68a;
-            --accent-light: #2563eb;
-            --accent-emerald: #6ee7b7;
-
-            --card-rose: rgba(255, 255, 255, 0.08);
-            --card-dark: rgba(255, 255, 255, 0.05);
-            --card-light: rgba(255, 255, 255, 0.7);
-            --card-emerald: rgba(255, 255, 255, 0.05);
-        }
-
-        /* Base Theme Application */
         
-        /* Base Theme Application */
-        html[data-theme="rose"], body[data-theme="rose"] { background: var(--bg-rose) !important; color: var(--text-rose) !important; }
-        html[data-theme="dark"], body[data-theme="dark"] { background: var(--bg-dark) !important; color: var(--text-dark) !important; }
-        html[data-theme="light"], body[data-theme="light"] { background: var(--bg-light) !important; color: var(--text-light) !important; }
-        html[data-theme="emerald"], body[data-theme="emerald"] { background: var(--bg-emerald) !important; color: var(--text-emerald) !important; }
-        html[data-theme="midnight"], body[data-theme="midnight"] { background: var(--bg-midnight) !important; color: var(--text-midnight) !important; }
-        html[data-theme="ocean"], body[data-theme="ocean"] { background: var(--bg-ocean) !important; color: var(--text-ocean) !important; }
-        html[data-theme="golden"], body[data-theme="golden"] { background: var(--bg-golden) !important; color: var(--text-golden) !important; }
-        html[data-theme="coffee"], body[data-theme="coffee"] { background: var(--bg-coffee) !important; color: var(--text-coffee) !important; }
-        html[data-theme="sky"], body[data-theme="sky"] { background: var(--bg-sky) !important; color: var(--text-sky) !important; }
-        html[data-theme="sunset"], body[data-theme="sunset"] { background: var(--bg-sunset) !important; color: var(--text-sunset) !important; }
-        html[data-theme="indigo"], body[data-theme="indigo"] { background: var(--bg-indigo) !important; color: var(--text-indigo) !important; }
-        html[data-theme="forest"], body[data-theme="forest"] { background: var(--bg-forest) !important; color: var(--text-forest) !important; }
-        html[data-theme="chocolate"], body[data-theme="chocolate"] { background: var(--bg-chocolate) !important; color: var(--text-chocolate) !important; }
-        html[data-theme="slate"], body[data-theme="slate"] { background: var(--bg-slate) !important; color: var(--text-slate) !important; }
+        /* Theme Definitions */
+        :root {
+            --bg-rose: linear-gradient(135deg, #450a0a 0%, #881337 50%, #7f1d1d 100%);
+            --bg-midnight: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #2e1065 100%);
+            --bg-ocean: linear-gradient(135deg, #083344 0%, #155e75 50%, #164e63 100%);
+            --bg-golden: linear-gradient(135deg, #451a03 0%, #78350f 50%, #92400e 100%);
+            --bg-coffee: linear-gradient(135deg, #1c1917 0%, #44403c 50%, #292524 100%);
+            --bg-sunset: linear-gradient(135deg, #7c2d12 0%, #9d174d 50%, #be123c 100%);
+            --bg-indigo: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #3730a3 100%);
+            --bg-forest: linear-gradient(135deg, #064e3b 0%, #14532d 50%, #065f46 100%);
+            --bg-chocolate: linear-gradient(135deg, #1c1917 0%, #3b2b07 50%, #451a03 100%);
+            --bg-slate: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            --bg-emerald: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%);
+            --bg-dark: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e293b 100%);
+            --bg-light: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+            --bg-desert: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #fde68a 100%);
+        }
 
-        /* Text Overrides for all themes */
-        [data-theme="rose"] .text-white, [data-theme="rose"] .text-gray-100 { color: var(--text-rose) !important; }
-        [data-theme="dark"] .text-white, [data-theme="dark"] .text-gray-100 { color: var(--text-dark) !important; }
-        [data-theme="light"] .text-white, [data-theme="light"] .text-gray-100, [data-theme="light"] .text-gray-200, [data-theme="light"] .text-gray-300 { color: var(--text-light) !important; }
-        [data-theme="emerald"] .text-white, [data-theme="emerald"] .text-gray-100 { color: var(--text-emerald) !important; }
+        /* Global Theme Application */
+        html, body {
+            min-height: 100vh !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background-attachment: fixed !important;
+        }
 
-        /* Accent Text (Welcome, Subject, etc.) */
-        [data-theme="rose"] .text-orange-200, [data-theme="rose"] .text-pink-200 { color: var(--accent-rose) !important; }
-        [data-theme="dark"] .text-orange-200, [data-theme="dark"] .text-pink-200 { color: var(--accent-dark) !important; }
-        [data-theme="light"] .text-orange-200, [data-theme="light"] .text-pink-200 { color: var(--accent-light) !important; }
-        [data-theme="emerald"] .text-orange-200, [data-theme="emerald"] .text-pink-200 { color: var(--accent-emerald) !important; }
+        [data-theme="rose"] { background: var(--bg-rose) !important; color: #fff1f2 !important; }
+        [data-theme="midnight"] { background: var(--bg-midnight) !important; color: #f5f3ff !important; }
+        [data-theme="ocean"] { background: var(--bg-ocean) !important; color: #ecfeff !important; }
+        [data-theme="golden"] { background: var(--bg-golden) !important; color: #fffbeb !important; }
+        [data-theme="coffee"] { background: var(--bg-coffee) !important; color: #fafaf9 !important; }
+        [data-theme="sunset"] { background: var(--bg-sunset) !important; color: #fff7ed !important; }
+        [data-theme="indigo"] { background: var(--bg-indigo) !important; color: #e0e7ff !important; }
+        [data-theme="forest"] { background: var(--bg-forest) !important; color: #f0fdf4 !important; }
+        [data-theme="chocolate"] { background: var(--bg-chocolate) !important; color: #fffbeb !important; }
+        [data-theme="slate"] { background: var(--bg-slate) !important; color: #f1f5f9 !important; }
+        [data-theme="emerald"] { background: var(--bg-emerald) !important; color: #ecfdf5 !important; }
+        [data-theme="dark"] { background: var(--bg-dark) !important; color: #f8fafc !important; }
+        [data-theme="light"] { background: var(--bg-light) !important; color: #0f172a !important; }
+        [data-theme="sky"] { background: var(--bg-desert) !important; color: #451a03 !important; }
 
-        /* Subtitles and Gray Text */
-        [data-theme="rose"] .text-gray-300, [data-theme="rose"] .text-gray-400 { color: #fda4af !important; }
-        [data-theme="dark"] .text-gray-300, [data-theme="dark"] .text-gray-400 { color: #94a3b8 !important; }
-        [data-theme="light"] .text-gray-300, [data-theme="light"] .text-gray-400, [data-theme="light"] .text-gray-500 { color: #475569 !important; }
-        [data-theme="emerald"] .text-gray-300, [data-theme="emerald"] .text-gray-400 { color: #6ee7b7 !important; }
+        /* Card Visibility Fix */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+        [data-theme="light"] .glass-card, [data-theme="sky"] .glass-card {
+            background: rgba(255, 255, 255, 0.7) !important;
+            border: 1px solid rgba(0, 0, 0, 0.1) !important;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1) !important;
+        }
 
-        /* Dropdown visibility fix */
+        /* Text Overrides */
+        [data-theme="light"] .text-white, [data-theme="light"] .text-gray-100, [data-theme="light"] .text-orange-200 { color: #0f172a !important; }
+        [data-theme="sky"] .text-white, [data-theme="sky"] .text-gray-100, [data-theme="sky"] .text-orange-200 { color: #451a03 !important; }
+
+        /* Header Dropdown Fix */
         #theme-selector {
+            background: rgba(0,0,0,0.5) !important;
             color: white !important;
-            background-color: rgba(0,0,0,0.3) !important;
+            border: 1px solid rgba(255,255,255,0.2) !important;
         }
         #theme-selector option {
-            background-color: #1a1a2e !important;
+            background: #1e293b !important;
             color: white !important;
         }
-        [data-theme="light"] #theme-selector {
+        [data-theme="light"] #theme-selector, [data-theme="sky"] #theme-selector {
+            background: rgba(255,255,255,0.8) !important;
             color: #0f172a !important;
-            background-color: rgba(255,255,255,0.8) !important;
-            border-color: rgba(0,0,0,0.2) !important;
+            border: 1px solid rgba(0,0,0,0.1) !important;
         }
-        [data-theme="light"] #theme-selector option {
-            background-color: white !important;
-            color: #0f172a !important;
-        }
-    
-        /* Upload Status Badge Overrides */
-        /* Red Badges (0 Uploaded) */
-        [data-theme="light"] .bg-red-500\/20 { background-color: rgba(239, 68, 68, 0.15) !important; }
-        [data-theme="light"] .text-red-300 { color: #b91c1c !important; border-color: rgba(185, 28, 28, 0.2) !important; }
-        [data-theme="emerald"] .text-red-300 { color: #fca5a5 !important; }
-
-        /* Yellow Badges (Partial) */
-        [data-theme="light"] .bg-yellow-500\/20 { background-color: rgba(245, 158, 11, 0.15) !important; }
-        [data-theme="light"] .text-yellow-300 { color: #b45309 !important; border-color: rgba(180, 83, 9, 0.2) !important; }
-        [data-theme="rose"] .text-yellow-300 { color: #fde68a !important; }
-
-        /* Green Badges (Complete) */
-        [data-theme="light"] .bg-green-500\/20 { background-color: rgba(34, 197, 94, 0.15) !important; }
-        [data-theme="light"] .text-green-300 { color: #15803d !important; border-color: rgba(21, 128, 61, 0.2) !important; }
-
-        /* All 14 Theme Card Overrides */
-        [data-theme="rose"] .glass-card { background: rgba(255, 255, 255, 0.08) !important; border-color: rgba(255,255,255,0.2) !important; }
-        [data-theme="midnight"] .glass-card { background: rgba(255, 255, 255, 0.05) !important; border-color: rgba(139, 92, 246, 0.3) !important; }
-        [data-theme="ocean"] .glass-card { background: rgba(255, 255, 255, 0.05) !important; border-color: rgba(6, 182, 212, 0.3) !important; }
-        [data-theme="golden"] .glass-card { background: rgba(255, 255, 255, 0.05) !important; border-color: rgba(245, 158, 11, 0.3) !important; }
-        [data-theme="coffee"] .glass-card { background: rgba(255, 255, 255, 0.05) !important; border-color: rgba(120, 113, 108, 0.3) !important; }
-        [data-theme="sunset"] .glass-card { background: rgba(255, 255, 255, 0.08) !important; border-color: rgba(251, 113, 133, 0.3) !important; }
-        [data-theme="indigo"] .glass-card { background: rgba(255, 255, 255, 0.05) !important; border-color: rgba(99, 102, 241, 0.3) !important; }
-        [data-theme="forest"] .glass-card { background: rgba(255, 255, 255, 0.05) !important; border-color: rgba(34, 197, 94, 0.3) !important; }
-        [data-theme="chocolate"] .glass-card { background: rgba(255, 255, 255, 0.05) !important; border-color: rgba(120, 53, 15, 0.3) !important; }
-        [data-theme="slate"] .glass-card { background: rgba(255, 255, 255, 0.05) !important; border-color: rgba(148, 163, 184, 0.3) !important; }
-        [data-theme="emerald"] .glass-card { background: rgba(255, 255, 255, 0.05) !important; border-color: rgba(16, 185, 129, 0.3) !important; }
-        [data-theme="dark"] .glass-card { background: rgba(255, 255, 255, 0.05) !important; border-color: rgba(255, 255, 255, 0.1) !important; }
-        [data-theme="light"] .glass-card { background: rgba(255, 255, 255, 0.7) !important; border-color: rgba(0, 0, 0, 0.1) !important; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important; }
-        [data-theme="sky"] .glass-card { background: rgba(255, 255, 255, 0.7) !important; border-color: rgba(16, 185, 129, 0.2) !important; box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.05) !important; }
-
-        /* Light Theme Visibility Fixes */
-        [data-theme="light"] {
-            --text-light: #0f172a !important;
-            --accent-light: #1d4ed8 !important;
-        }
-        [data-theme="sky"] {
-            --bg-sky: linear-gradient(to bottom right, #fffbeb, #fef3c7) !important;
-            --text-sky: #451a03 !important;
-            --accent-sky: #92400e !important;
-        }
-
-        /* Force dark text for all light-mode classes */
-        [data-theme="light"] .text-white, [data-theme="light"] .text-gray-100, [data-theme="light"] .text-gray-200, [data-theme="light"] .text-orange-200, [data-theme="light"] .text-pink-200 { 
-            color: #0f172a !important; 
-        }
-        [data-theme="sky"] .text-white, [data-theme="sky"] .text-gray-100, [data-theme="sky"] .text-gray-200, [data-theme="sky"] .text-orange-200, [data-theme="sky"] .text-pink-200 { 
-            color: #451a03 !important; 
-        }
-        
-        /* Dropdown options for light themes */
         [data-theme="light"] #theme-selector option, [data-theme="sky"] #theme-selector option {
-            background-color: white !important;
-            color: black !important;
+            background: white !important;
+            color: #0f172a !important;
         }
-</style>
+    </style>
     <script>
         (function() {
             const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
