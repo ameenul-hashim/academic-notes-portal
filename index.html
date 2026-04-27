@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Notes Portal</title>
+    <title>BA History Calicut Unofficial Notes</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom styles for glassmorphism effect */
+        /* Glassmorphism utility classes */
         .glass-card {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
@@ -16,85 +16,249 @@
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-fuchsia-900 min-h-screen text-white font-sans antialiased flex flex-col">
+<body class="bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950 min-h-screen text-white font-sans antialiased flex flex-col">
 
-    <!-- Navigation Bar -->
-    <nav class="glass-card sticky top-0 z-50 shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <span class="font-bold text-2xl tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-blue-400">NotesPortal</span>
-                </div>
-            </div>
+    <!-- Header Section -->
+    <header class="glass-card sticky top-0 z-50 shadow-lg py-4">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-sm text-cyan-200 tracking-widest uppercase mb-1">Welcome</p>
+            <h1 class="font-bold text-2xl md:text-3xl tracking-wider text-white">BA History Calicut Unofficial Notes</h1>
         </div>
-    </nav>
+    </header>
 
-    <!-- Main Content Area -->
+    <!-- Main Content Area: Level 1 - Subjects -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
-        <!-- Header Section -->
-        <div class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-lg">Select Your Subject</h1>
-            <p class="text-lg text-gray-300 max-w-2xl mx-auto">Access comprehensive study materials, chapter-wise notes, and downloadable PDFs in both English and Malayalam.</p>
-        </div>
-
-        <!-- Subjects Grid Layout -->
+        
+        <!-- Grid System: 1 col on mobile, 2 on tablet (sm), 3 on desktop (lg) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             
-            <!-- Subject Card: History -->
-            <a href="history.html" class="group block h-full outline-none focus:ring-4 focus:ring-cyan-500/50 rounded-2xl transition-all duration-300">
-                <div class="glass-card rounded-2xl p-6 h-full flex flex-col transition-all duration-300 ease-in-out transform group-hover:-translate-y-2 group-hover:scale-[1.02] group-hover:shadow-[0_0_30px_rgba(236,72,153,0.5)]">
-                    <!-- Icon Container -->
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center mb-6 shadow-lg group-hover:animate-pulse">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                    </div>
-                    <!-- Content -->
-                    <h2 class="text-2xl font-bold mb-3">History</h2>
-                    <p class="text-gray-300 flex-grow">Explore past events, ancient civilizations, and modern history chapters.</p>
-                    <!-- Action Link -->
-                    <div class="mt-6 flex items-center text-cyan-300 font-semibold group-hover:text-cyan-100 transition-colors">
-                        View Chapters 
-                        <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                    </div>
+            <!-- Subject Card 1 -->
+            <a href="history.html" class="block outline-none">
+                <div class="glass-card rounded-2xl p-8 h-full flex items-center justify-center text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(6,182,212,0.5)]">
+                    <h2 class="text-2xl font-bold text-white">Philosophy of Education</h2>
                 </div>
             </a>
 
-            <!-- Subject Card: English -->
-            <a href="#" class="group block h-full outline-none focus:ring-4 focus:ring-blue-500/50 rounded-2xl transition-all duration-300">
-                <div class="glass-card rounded-2xl p-6 h-full flex flex-col transition-all duration-300 ease-in-out transform group-hover:-translate-y-2 group-hover:scale-[1.02] group-hover:shadow-[0_0_30px_rgba(59,130,246,0.5)]">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center mb-6 shadow-lg group-hover:animate-pulse">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
-                    </div>
-                    <h2 class="text-2xl font-bold mb-3">English</h2>
-                    <p class="text-gray-300 flex-grow">Enhance your vocabulary, literature, and grammar skills.</p>
-                    <div class="mt-6 flex items-center text-blue-300 font-semibold group-hover:text-blue-100 transition-colors">
-                        View Chapters 
-                        <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                    </div>
-                </div>
-            </a>
-            
-            <!-- Subject Card: Science -->
-            <a href="#" class="group block h-full outline-none focus:ring-4 focus:ring-teal-500/50 rounded-2xl transition-all duration-300">
-                <div class="glass-card rounded-2xl p-6 h-full flex flex-col transition-all duration-300 ease-in-out transform group-hover:-translate-y-2 group-hover:scale-[1.02] group-hover:shadow-[0_0_30px_rgba(20,184,166,0.5)]">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-teal-400 to-emerald-600 flex items-center justify-center mb-6 shadow-lg group-hover:animate-pulse">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                    </div>
-                    <h2 class="text-2xl font-bold mb-3">Science</h2>
-                    <p class="text-gray-300 flex-grow">Dive into physics, chemistry, biology, and the natural world.</p>
-                    <div class="mt-6 flex items-center text-teal-300 font-semibold group-hover:text-teal-100 transition-colors">
-                        View Chapters 
-                        <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                    </div>
+            <!-- Subject Card 2 -->
+            <a href="world.html" class="block outline-none">
+                <div class="glass-card rounded-2xl p-8 h-full flex items-center justify-center text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(6,182,212,0.5)]">
+                    <h2 class="text-2xl font-bold text-white">Philosophy of Artificial Intelligence</h2>
                 </div>
             </a>
 
+            <!-- Subject Card 3 -->
+            <a href="kerala.html" class="block outline-none">
+                <div class="glass-card rounded-2xl p-8 h-full flex items-center justify-center text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(6,182,212,0.5)]">
+                    <h2 class="text-2xl font-bold text-white">English for BA Programs</h2>
+                </div>
+            </a>
+
+            <!-- Subject Card 4 -->
+            <a href="politics.html" class="block outline-none">
+                <div class="glass-card rounded-2xl p-8 h-full flex items-center justify-center text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(6,182,212,0.5)]">
+                    <h2 class="text-2xl font-bold text-white">Literature in Malayalam</h2>
+                </div>
+            </a>
+
+            <!-- Subject Card 5 -->
+            <a href="economics.html" class="block outline-none">
+                <div class="glass-card rounded-2xl p-8 h-full flex items-center justify-center text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(6,182,212,0.5)]">
+                    <h2 class="text-2xl font-bold text-white">History of Keralam upto 12th Century</h2>
+                </div>
+            </a>
+
+            <!-- Subject Card 6 -->
+            <a href="philosophy.html" class="block outline-none">
+                <div class="glass-card rounded-2xl p-8 h-full flex items-center justify-center text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(6,182,212,0.5)]">
+                    <h2 class="text-2xl font-bold text-white">Development Issues in Indian Economy</h2>
+                </div>
+            </a>
+
+        </div>
+
+        <!-- Reference Table Section -->
+        <div class="mt-20">
+            <div class="glass-card rounded-3xl p-8 md:p-12 overflow-hidden relative">
+                <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-cyan-500/20 blur-3xl rounded-full"></div>
+                <div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-purple-500/20 blur-3xl rounded-full"></div>
+                
+                <h2 class="text-3xl font-bold text-white mb-8 text-center flex items-center justify-center gap-3">
+                    <svg class="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                    Notes Upload Status
+                </h2>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse min-w-[600px]">
+                        <thead>
+                            <tr class="border-b border-white/20 text-cyan-200 uppercase text-sm tracking-widest">
+                                <th class="py-5 px-6">Subject</th>
+                                <th class="py-5 px-6 text-center">English Medium</th>
+                                <th class="py-5 px-6 text-center">Malayalam Medium</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-100 divide-y divide-white/5">
+                            <tr class="hover:bg-white/5 transition-colors group">
+                                <td class="py-6 px-6 font-medium group-hover:text-cyan-300 transition-colors">Philosophy of Education</td>
+                                <td class="py-6 px-6 text-center">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">2 / 5 Uploaded</span>
+                                </td>
+                                <td class="py-6 px-6 text-center">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">2 / 5 Uploaded</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-white/5 transition-colors group">
+                                <td class="py-6 px-6 font-medium group-hover:text-cyan-300 transition-colors">Philosophy of Artificial Intelligence</td>
+                                <td class="py-6 px-6 text-center">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-green-500/20 text-green-300 border border-green-500/30">4 / 21 Uploaded</span>
+                                </td>
+                                <td class="py-6 px-6 text-center">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-green-500/20 text-green-300 border border-green-500/30">4 / 21 Uploaded</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-white/5 transition-colors group">
+                                <td class="py-6 px-6 font-medium group-hover:text-cyan-300 transition-colors">English for BA Programs</td>
+                                <td class="py-6 px-6 text-center">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-red-500/20 text-red-300 border border-red-500/30">0 / 5 Uploaded</span>
+                                </td>
+                                <td class="py-6 px-6 text-center">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-red-500/20 text-red-300 border border-red-500/30">0 / 5 Uploaded</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-white/5 transition-colors group">
+                                <td class="py-6 px-6 font-medium group-hover:text-cyan-300 transition-colors">Literature in Malayalam</td>
+                                <td class="py-6 px-6 text-center">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-red-500/20 text-red-300 border border-red-500/30">0 / 5 Uploaded</span>
+                                </td>
+                                <td class="py-6 px-6 text-center">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-red-500/20 text-red-300 border border-red-500/30">0 / 5 Uploaded</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-white/5 transition-colors group">
+                                <td class="py-6 px-6 font-medium group-hover:text-cyan-300 transition-colors">History of Keralam upto 12th Century</td>
+                                <td class="py-6 px-6 text-center">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">1 / 5 Uploaded</span>
+                                </td>
+                                <td class="py-6 px-6 text-center">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">1 / 5 Uploaded</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-white/5 transition-colors group">
+                                <td class="py-6 px-6 font-medium group-hover:text-cyan-300 transition-colors">Development Issues in Indian Economy</td>
+                                <td class="py-6 px-6 text-center">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">1 / 5 Uploaded</span>
+                                </td>
+                                <td class="py-6 px-6 text-center">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">1 / 5 Uploaded</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="mt-8 text-center text-gray-400 text-sm italic">
+                    * Status is updated based on recent content uploads.
+                </p>
+            </div>
+        </div>
+
+        <!-- Issue Report Form -->
+        <div class="mt-20 max-w-2xl mx-auto px-4 pb-20">
+            <div class="glass-card rounded-3xl p-8 md:p-12 border border-white/10 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 -mt-10 -mr-10 w-32 h-32 bg-cyan-500/10 blur-3xl rounded-full"></div>
+                
+                <h2 class="text-3xl font-bold text-white mb-8 flex items-center justify-center gap-3">
+                    <svg class="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    Report an Issue
+                </h2>
+                
+                <form id="issue-form" action="https://formsubmit.co/57b3baf5b0a7caab5c4ea779fbf63caf" method="POST" class="space-y-6 relative z-10">
+                    <input type="hidden" name="_subject" value="New Issue Report - Academic Notes Portal">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    <div>
+                        <label class="block text-sm font-medium text-cyan-200 mb-2 uppercase tracking-widest">Sender Name</label>
+                        <input type="text" name="name" required class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all text-lg" placeholder="Your Name">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-cyan-200 mb-2 uppercase tracking-widest">Describe the Issue</label>
+                        <textarea name="message" required rows="4" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all text-lg resize-none" placeholder="Explain the problem here..."></textarea>
+                    </div>
+                    <!-- Hidden field to specify your email if needed, but Formspree uses the ID in the URL -->
+                    <button type="submit" class="w-full py-5 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-500 hover:to-indigo-600 text-white font-bold rounded-2xl shadow-xl transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3 text-xl">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        Submit Issue
+                    </button>
+                </form>
+                <div id="form-status" class="hidden mt-6 p-4 rounded-xl text-center font-bold"></div>
+            </div>
         </div>
     </main>
 
-    <!-- Footer Area -->
-    <footer class="glass-card mt-auto py-6 text-center text-gray-400 border-t-0 border-r-0 border-l-0">
-        <p>&copy; 2026 Academic Notes Portal. All rights reserved.</p>
+    <!-- Footer -->
+    <footer class="glass-card py-6 text-center text-gray-300 border-t-0 border-r-0 border-l-0 mt-auto">
+        <p>&copy; 2026 Unofficial Notes Portal. Created by Hashim</p>
     </footer>
 
+    <script>
+        const form = document.getElementById("issue-form");
+        const status = document.getElementById("form-status");
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+            const data = new FormData(event.target);
+            
+            // Show loading state
+            const btn = event.target.querySelector('button');
+            const originalBtnText = btn.innerHTML;
+            btn.innerHTML = '<svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Sending...';
+            btn.disabled = true;
+
+            fetch(event.target.action, {
+                method: form.method,
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                btn.disabled = false;
+                btn.innerHTML = originalBtnText;
+                
+                if (response.ok) {
+                    status.innerHTML = "✅ Success! Your report has been sent.";
+                    status.classList.remove("hidden", "bg-red-500/20", "text-red-300");
+                    status.classList.add("bg-green-500/20", "text-green-300");
+                    form.reset();
+                } else {
+                    response.json().then(data => {
+                        if (Object.hasOwn(data, 'errors')) {
+                            status.innerHTML = "❌ " + data["errors"].map(error => error["message"]).join(", ");
+                        } else {
+                            status.innerHTML = "❌ Oops! There was a problem submitting your form";
+                        }
+                        status.classList.remove("hidden", "bg-green-500/20", "text-green-300");
+                        status.classList.add("bg-red-500/20", "text-red-300");
+                    })
+                }
+
+                // Hide message after 5 seconds
+                setTimeout(() => {
+                    status.classList.add("hidden");
+                }, 5000);
+
+            }).catch(error => {
+                btn.disabled = false;
+                btn.innerHTML = originalBtnText;
+                status.innerHTML = "❌ Oops! There was a problem connecting to the server";
+                status.classList.remove("hidden", "bg-green-500/20", "text-green-300");
+                status.classList.add("bg-red-500/20", "text-red-300");
+
+                // Hide message after 5 seconds
+                setTimeout(() => {
+                    status.classList.add("hidden");
+                }, 5000);
+            });
+        }
+        form.addEventListener("submit", handleSubmit);
+    </script>
 </body>
 </html>
+
