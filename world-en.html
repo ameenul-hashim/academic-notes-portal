@@ -7,6 +7,14 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    
+    <script>
+        // Apply theme early to avoid flash
+        (function() {
+            const savedTheme = localStorage.getItem('preferred-theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
     <style>
         /* Glassmorphism utility classes */
         .glass-card {
@@ -32,51 +40,40 @@
         :root {
             --bg-light: linear-gradient(to bottom right, #f0f5ff, #e0eaff);
             --bg-dark: linear-gradient(to bottom right, #1a1a2e, #16213e);
+            --bg-rose: linear-gradient(to bottom right, #450a0a, #881337, #7f1d1d);
             --bg-emerald: linear-gradient(to bottom right, #e0f7e9, #c2efd9);
             --text-light: #212529;
             --text-dark: #f8f9fa;
+            --text-rose: #f8f9fa;
             --text-emerald: #0a3b1c;
             --card-bg-light: rgba(255,255,255,0.6);
             --card-bg-dark: rgba(0,0,0,0.3);
+            --card-bg-rose: rgba(255,255,255,0.1);
             --card-bg-emerald: rgba(255,255,255,0.5);
             --card-border-light: rgba(0,0,0,0.1);
             --card-border-dark: rgba(255,255,255,0.1);
+            --card-border-rose: rgba(255,255,255,0.2);
             --card-border-emerald: rgba(6,78,59,0.2);
         }
 
         /* Theme rules applying to html and body */
-        html[data-theme="light"], body[data-theme="light"] {
-            background: var(--bg-light) !important;
-            color: var(--text-light) !important;
-        }
-        html[data-theme="dark"], body[data-theme="dark"] {
-            background: var(--bg-dark) !important;
-            color: var(--text-dark) !important;
-        }
-        html[data-theme="emerald"], body[data-theme="emerald"] {
-            background: var(--bg-emerald) !important;
-            color: var(--text-emerald) !important;
-        }
+        html[data-theme="light"], body[data-theme="light"] { background: var(--bg-light) !important; color: var(--text-light) !important; }
+        html[data-theme="dark"], body[data-theme="dark"] { background: var(--bg-dark) !important; color: var(--text-dark) !important; }
+        html[data-theme="rose"], body[data-theme="rose"] { background: var(--bg-rose) !important; color: var(--text-rose) !important; }
+        html[data-theme="emerald"], body[data-theme="emerald"] { background: var(--bg-emerald) !important; color: var(--text-emerald) !important; }
         
         [data-theme="light"] .glass-card { background: var(--card-bg-light) !important; border-color: var(--card-border-light) !important; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important; }
         [data-theme="dark"] .glass-card { background: var(--card-bg-dark) !important; border-color: var(--card-border-dark) !important; }
+        [data-theme="rose"] .glass-card { background: var(--card-bg-rose) !important; border-color: var(--card-border-rose) !important; }
         [data-theme="emerald"] .glass-card { background: var(--card-bg-emerald) !important; border-color: var(--card-border-emerald) !important; box-shadow: 0 4px 6px -1px rgba(6, 78, 59, 0.05) !important; }
 
         /* Text Color Overrides for Tailwind classes */
-        [data-theme="light"] .text-white, [data-theme="light"] .text-gray-100, [data-theme="light"] .text-gray-200, [data-theme="light"] .text-gray-300 {
-            color: var(--text-light) !important;
-        }
-        [data-theme="emerald"] .text-white, [data-theme="emerald"] .text-gray-100, [data-theme="emerald"] .text-gray-200, [data-theme="emerald"] .text-gray-300 {
-            color: var(--text-emerald) !important;
-        }
+        [data-theme="light"] .text-white, [data-theme="light"] .text-gray-100, [data-theme="light"] .text-gray-200, [data-theme="light"] .text-gray-300 { color: var(--text-light) !important; }
+        [data-theme="emerald"] .text-white, [data-theme="emerald"] .text-gray-100, [data-theme="emerald"] .text-gray-200, [data-theme="emerald"] .text-gray-300 { color: var(--text-emerald) !important; }
         
         /* Accent colors to adapt to themes */
-        [data-theme="light"] .text-orange-200, [data-theme="light"] .text-pink-200, [data-theme="light"] .text-orange-300, [data-theme="light"] .text-pink-300 {
-            color: #b45309 !important; /* amber-700 */
-        }
-        [data-theme="emerald"] .text-orange-200, [data-theme="emerald"] .text-pink-200, [data-theme="emerald"] .text-orange-300, [data-theme="emerald"] .text-pink-300 {
-            color: #047857 !important; /* emerald-700 */
-        }
+        [data-theme="light"] .text-orange-200, [data-theme="light"] .text-pink-200, [data-theme="light"] .text-orange-300, [data-theme="light"] .text-pink-300 { color: #b45309 !important; }
+        [data-theme="emerald"] .text-orange-200, [data-theme="emerald"] .text-pink-200, [data-theme="emerald"] .text-orange-300, [data-theme="emerald"] .text-pink-300 { color: #047857 !important; }
 
         /* Specific background overrides like bg-white/5 */
         [data-theme="light"] .bg-white\/5, [data-theme="light"] .bg-white\/10 { background-color: rgba(0,0,0,0.05) !important; }
@@ -95,13 +92,11 @@
         [data-theme="emerald"] a.text-orange-300 { color: #047857 !important; }
     </style>
     <script>
-        // Apply theme early to avoid flash
         (function() {
-            const savedTheme = localStorage.getItem('preferred-theme') || 'dark';
+            const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
             document.documentElement.setAttribute('data-theme', savedTheme);
         })();
-    </script>
-</head>
+    </script></head>
 <body class="bg-gradient-to-br from-red-950 via-rose-900 to-red-900 min-h-screen text-white font-sans antialiased flex flex-col">
 
     <!-- Header Section -->
@@ -585,25 +580,13 @@
         <p>&copy; 2026 Unofficial Notes Portal. Created by Hashim</p>
     </footer>
 
-    <!-- Theme selector -->
     
-
     <script>
         (function() {
-            const selector = document.getElementById('theme-selector');
-            const savedTheme = localStorage.getItem('preferred-theme') || 'dark';
+            const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
             document.documentElement.setAttribute('data-theme', savedTheme);
-            if (selector) {
-                selector.value = savedTheme;
-                selector.addEventListener('change', (e) => {
-                    const theme = e.target.value;
-                    document.documentElement.setAttribute('data-theme', theme);
-                    localStorage.setItem('preferred-theme', theme);
-                });
-            }
         })();
-    </script>
-</body>
+    </script></body>
 </html>
 
 

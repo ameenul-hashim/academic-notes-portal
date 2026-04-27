@@ -1,21 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Philosophy of Education - Languages</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    
-    <script>
-        // Apply theme early to avoid flash
-        (function() {
-            const savedTheme = localStorage.getItem('preferred-theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-        })();
-    </script>
-    <style>
+import os
+import re
+
+# Reddish Brown Theme (Rose)
+ROSE_CSS_VARS = """            --bg-rose: linear-gradient(to bottom right, #450a0a, #881337, #7f1d1d);
+            --text-rose: #f8f9fa;
+            --card-bg-rose: rgba(255,255,255,0.1);
+            --card-border-rose: rgba(255,255,255,0.2);"""
+
+ROSE_CSS_RULES = """        html[data-theme="rose"], body[data-theme="rose"] {
+            background: var(--bg-rose) !important;
+            color: var(--text-rose) !important;
+        }
+        [data-theme="rose"] .glass-card { background: var(--card-bg-rose) !important; border-color: var(--card-border-rose) !important; }"""
+
+CSS_CONTENT = """    <style>
         /* Glassmorphism utility classes */
         .glass-card {
             background: rgba(255, 255, 255, 0.1);
@@ -90,75 +88,70 @@
         /* Link colors */
         [data-theme="light"] a.text-orange-300 { color: #2563eb !important; }
         [data-theme="emerald"] a.text-orange-300 { color: #047857 !important; }
-    </style>
-    <script>
+    </style>"""
+
+HEAD_SCRIPT = """    <script>
         (function() {
             const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
             document.documentElement.setAttribute('data-theme', savedTheme);
         })();
-    </script></head>
-<body class="bg-gradient-to-br from-red-950 via-rose-900 to-red-900 min-h-screen text-white font-sans antialiased flex flex-col">
+    </script>"""
 
-    <!-- Header Section -->
-    <header class="glass-card sticky top-0 z-50 shadow-lg py-4 relative">
-        <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
-            <!-- Back Button Navigation -->
-            <a href="index.html" class="flex items-center text-orange-200 hover:text-white transition-colors">
-                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                Back
-            </a>
-            <div class="absolute left-1/2 transform -translate-x-1/2 text-center hidden md:block">
-                <p class="text-sm text-orange-200 tracking-widest uppercase mb-1">Subject</p>
-                <h1 class="font-bold text-2xl tracking-wider text-white">Philosophy of Education</h1>
-            </div>
-            <!-- Empty div to balance flexbox space -->
-            <div class="w-20"></div>
-        </div>
-    </header>
-
-    <!-- Mobile Subject Title -->
-    <div class="md:hidden text-center mt-6 px-4">
-        <h1 class="font-bold text-3xl tracking-wider text-white">Philosophy of Education</h1>
+THEME_JS_WITH_DROPDOWN = """    <!-- Theme selector -->
+    <div class="fixed bottom-4 right-4 z-50">
+        <select id="theme-selector" class="bg-black/60 text-white backdrop-blur-md border border-white/20 rounded-lg px-3 py-2 outline-none cursor-pointer hover:bg-black/80 transition-colors shadow-lg">
+            <option value="rose">Reddish Brown (Default)</option>
+            <option value="dark">Dark Navy</option>
+            <option value="light">Light Theme</option>
+            <option value="emerald">Emerald Theme</option>
+        </select>
     </div>
 
-    <!-- Main Content Area: Level 2 - Languages -->
-    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full flex flex-col items-center justify-center">
-        
-        <h2 class="text-2xl text-gray-200 mb-8 font-light">Select Language:</h2>
-
-        <!-- Grid System: 1 col on mobile, 2 on tablet+ -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full max-w-3xl">
-            
-            <!-- Language Card: Malayalam -->
-            <a href="history-ml.html" class="block outline-none">
-                <div class="glass-card rounded-2xl p-10 flex flex-col items-center justify-center text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)]">
-                    <span class="text-5xl mb-4">അ</span>
-                    <h2 class="text-3xl font-bold text-white">Malayalam</h2>
-                </div>
-            </a>
-
-            <!-- Language Card: English -->
-            <a href="history-en.html" class="block outline-none">
-                <div class="glass-card rounded-2xl p-10 flex flex-col items-center justify-center text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)]">
-                    <span class="text-5xl mb-4">A</span>
-                    <h2 class="text-3xl font-bold text-white">English</h2>
-                </div>
-            </a>
-
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="glass-card py-6 text-center text-gray-300 border-t-0 border-r-0 border-l-0 mt-auto">
-        <p>&copy; 2026 Unofficial Notes Portal. Created by Hashim</p>
-    </footer>
-
-    
     <script>
+        (function() {
+            const selector = document.getElementById('theme-selector');
+            const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            if (selector) {
+                selector.value = savedTheme;
+                selector.addEventListener('change', (e) => {
+                    const theme = e.target.value;
+                    document.documentElement.setAttribute('data-theme', theme);
+                    localStorage.setItem('preferred-theme', theme);
+                });
+            }
+        })();
+    </script>"""
+
+THEME_JS_NO_DROPDOWN = """    <script>
         (function() {
             const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
             document.documentElement.setAttribute('data-theme', savedTheme);
         })();
-    </script></body>
-</html>
+    </script>"""
 
+html_files = [f for f in os.listdir('c:/Users/lenov/OneDrive/Desktop/pdf app') if f.endswith('.html')]
+
+for f in html_files:
+    path = os.path.join('c:/Users/lenov/OneDrive/Desktop/pdf app', f)
+    with open(path, 'r', encoding='utf-8') as file:
+        content = file.read()
+    
+    # Remove any existing style/script/dropdown blocks from my previous actions
+    content = re.sub(r'<style>.*?</style>', '', content, flags=re.DOTALL)
+    content = re.sub(r'<script>\s*\(function\(\)\s*{\s*const savedTheme = localStorage\.getItem\(\'preferred-theme\'\).*?}\)\(\);\s*</script>', '', content, flags=re.DOTALL)
+    content = re.sub(r'<!-- Theme selector -->.*?localStorage\.setItem\(\'preferred-theme\', theme\);.*?}\)\(\);\s*</script>', '', content, flags=re.DOTALL)
+    
+    # Add new CSS and Head Script
+    content = content.replace('</head>', CSS_CONTENT + '\n' + HEAD_SCRIPT + '</head>')
+    
+    # Add Bottom JS
+    if f == 'index.html':
+        content = content.replace('</body>', THEME_JS_WITH_DROPDOWN + '</body>')
+    else:
+        content = content.replace('</body>', THEME_JS_NO_DROPDOWN + '</body>')
+
+    with open(path, 'w', encoding='utf-8') as file:
+        file.write(content)
+
+print("Updated themes to include Reddish Brown (Rose) as default.")
