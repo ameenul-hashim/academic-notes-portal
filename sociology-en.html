@@ -154,7 +154,7 @@
             
             <!-- Chapter Card 1 -->
             <div>
-                <div onclick="document.getElementById('modal-ch1').classList.remove('hidden')" class="glass-card h-48 flex items-center justify-center p-6 cursor-pointer rounded-xl text-center transition-all hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(251,113,133,0.3)]">
+                <div onclick="document.getElementById('modal-ch1').classList.remove('hidden')" class="glass-card h-40 flex items-center justify-center p-6 cursor-pointer rounded-xl text-center transition-all hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(251,113,133,0.3)]">
                     <h2 class="text-2xl font-bold text-white">Chapter 1</h2>
                 </div>
 
@@ -164,12 +164,15 @@
                         <button onclick="document.getElementById('modal-ch1').classList.add('hidden')" class="absolute top-4 right-4 text-gray-300 hover:text-white text-2xl">&times;</button>
                         <h3 class="text-2xl font-bold text-white mb-6 text-center">Chapter 1</h3>
                         <div class="flex flex-col gap-4">
-                            <!-- You can put your custom link here -->
-                            <a href="https://drive.google.com/file/d/1-Ph1qVmGDjpM864IZ_UPhOZ6JuCcqzA0/view?usp=sharing" target="_blank" class="text-orange-300 hover:text-orange-100 underline text-center font-medium">Google Drive Link</a>
-                            <!-- Download PDF Option -->
-                            <a href="https://drive.google.com/uc?export=download&id=1-Ph1qVmGDjpM864IZ_UPhOZ6JuCcqzA0" download class="btn-glass text-center py-3 px-4 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white/10 text-white mt-2">
+                            <a href="https://drive.google.com/file/d/1-Ph1qVmGDjpM864IZ_UPhOZ6JuCcqzA0/view?usp=sharing" target="_blank" class="w-full py-4 bg-gradient-to-r from-rose-600 to-red-700 hover:from-rose-500 hover:to-red-600 text-white font-bold rounded-xl shadow-xl transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                View Notes
+                            </a>
+                            <a href="https://drive.google.com/uc?export=download&id=1-Ph1qVmGDjpM864IZ_UPhOZ6JuCcqzA0" download target="_blank" class="w-full py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/20 transition-all flex items-center justify-center gap-3">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                                 Download PDF
                             </a>
+                        </div>
                         </div>
                     </div>
                 </div>
