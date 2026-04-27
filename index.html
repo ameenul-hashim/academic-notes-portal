@@ -159,6 +159,33 @@
                 </p>
             </div>
         </div>
+
+        <!-- Issue Report Form -->
+        <div class="mt-20 max-w-2xl mx-auto px-4 pb-20">
+            <div class="glass-card rounded-3xl p-8 md:p-12 border border-white/10 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 -mt-10 -mr-10 w-32 h-32 bg-pink-500/10 blur-3xl rounded-full"></div>
+                
+                <h2 class="text-3xl font-bold text-white mb-8 flex items-center justify-center gap-3">
+                    <svg class="w-8 h-8 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    Report an Issue
+                </h2>
+                
+                <form onsubmit="sendEmail(event)" class="space-y-6 relative z-10">
+                    <div>
+                        <label for="sender-name" class="block text-sm font-medium text-pink-200 mb-2 uppercase tracking-widest">Sender Name</label>
+                        <input type="text" id="sender-name" required class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500/50 transition-all text-lg" placeholder="Your Name">
+                    </div>
+                    <div>
+                        <label for="issue-description" class="block text-sm font-medium text-pink-200 mb-2 uppercase tracking-widest">Describe the Issue</label>
+                        <textarea id="issue-description" required rows="4" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500/50 transition-all text-lg resize-none" placeholder="Explain the problem here..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-5 bg-gradient-to-r from-pink-600 to-purple-700 hover:from-pink-500 hover:to-purple-600 text-white font-bold rounded-2xl shadow-xl transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3 text-xl">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        Submit Issue
+                    </button>
+                </form>
+            </div>
+        </div>
     </main>
 
     <!-- Footer -->
@@ -166,6 +193,17 @@
         <p>&copy; 2026 Unofficial Notes Portal. Created by Hashim</p>
     </footer>
 
+    <script>
+        function sendEmail(e) {
+            e.preventDefault();
+            const name = document.getElementById('sender-name').value;
+            const issue = document.getElementById('issue-description').value;
+            const email = 'hashimhakkim67@gmail.com';
+            const subject = encodeURIComponent('Issue Report - Academic Notes Portal');
+            const body = encodeURIComponent(`Sender Name: ${name}\n\nDescription of Issue:\n${issue}`);
+            window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+        }
+    </script>
 </body>
 </html>
 
