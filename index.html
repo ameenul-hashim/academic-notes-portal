@@ -42,6 +42,23 @@
             --bg-dark: linear-gradient(to bottom right, #0f172a, #1e293b);
             --bg-light: linear-gradient(to bottom right, #f8fafc, #e2e8f0);
             --bg-emerald: linear-gradient(to bottom right, #064e3b, #065f46);
+            --bg-midnight: linear-gradient(to bottom right, #2e1065, #4c1d95);
+            --bg-ocean: linear-gradient(to bottom right, #083344, #155e75);
+            --bg-golden: linear-gradient(to bottom right, #451a03, #78350f);
+            --bg-coffee: linear-gradient(to bottom right, #1c1917, #44403c);
+            --bg-sky: linear-gradient(to bottom right, #f0f9ff, #e0f2fe);
+            
+            --text-midnight: #f5f3ff;
+            --text-ocean: #ecfeff;
+            --text-golden: #fffbeb;
+            --text-coffee: #fafaf9;
+            --text-sky: #0c4a6e;
+
+            --accent-midnight: #ddd6fe;
+            --accent-ocean: #a5f3fc;
+            --accent-golden: #fde68a;
+            --accent-coffee: #e7e5e4;
+            --accent-sky: #0369a1;
             
             --text-rose: #fff1f2;
             --text-dark: #f8fafc;
@@ -64,6 +81,24 @@
         html[data-theme="dark"], body[data-theme="dark"] { background: var(--bg-dark) !important; color: var(--text-dark) !important; }
         html[data-theme="light"], body[data-theme="light"] { background: var(--bg-light) !important; color: var(--text-light) !important; }
         html[data-theme="emerald"], body[data-theme="emerald"] { background: var(--bg-emerald) !important; color: var(--text-emerald) !important; }
+        html[data-theme="midnight"], body[data-theme="midnight"] { background: var(--bg-midnight) !important; color: var(--text-midnight) !important; }
+        html[data-theme="ocean"], body[data-theme="ocean"] { background: var(--bg-ocean) !important; color: var(--text-ocean) !important; }
+        html[data-theme="golden"], body[data-theme="golden"] { background: var(--bg-golden) !important; color: var(--text-golden) !important; }
+        html[data-theme="coffee"], body[data-theme="coffee"] { background: var(--bg-coffee) !important; color: var(--text-coffee) !important; }
+        html[data-theme="sky"], body[data-theme="sky"] { background: var(--bg-sky) !important; color: var(--text-sky) !important; }
+
+        [data-theme="midnight"] .glass-card { background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.1) !important; }
+        [data-theme="ocean"] .glass-card { background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.1) !important; }
+        [data-theme="golden"] .glass-card { background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.1) !important; }
+        [data-theme="coffee"] .glass-card { background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.1) !important; }
+        [data-theme="sky"] .glass-card { background: rgba(255,255,255,0.7) !important; border-color: rgba(0,0,0,0.1) !important; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important; }
+
+        [data-theme="midnight"] .text-orange-200 { color: var(--accent-midnight) !important; }
+        [data-theme="ocean"] .text-orange-200 { color: var(--accent-ocean) !important; }
+        [data-theme="golden"] .text-orange-200 { color: var(--accent-golden) !important; }
+        [data-theme="coffee"] .text-orange-200 { color: var(--accent-coffee) !important; }
+        [data-theme="sky"] .text-orange-200 { color: var(--accent-sky) !important; }
+
 
         /* Card Styles */
         [data-theme="rose"] .glass-card { background: var(--card-rose) !important; border-color: rgba(255,255,255,0.2) !important; }
@@ -141,10 +176,15 @@
             </div>
             <div>
                 <select id="theme-selector" class="bg-black/20 text-white backdrop-blur-md border border-white/10 rounded-lg px-2 py-1 text-xs outline-none cursor-pointer hover:bg-white/20 transition-all">
-                    <option value="rose">Rose</option>
-                    <option value="dark">Navy</option>
-                    <option value="light">Light</option>
-                    <option value="emerald">Emerald</option>
+                    <option value="rose">Reddish Brown</option>
+                    <option value="midnight">Midnight Purple</option>
+                    <option value="ocean">Ocean Blue</option>
+                    <option value="golden">Golden Amber</option>
+                    <option value="coffee">Warm Coffee</option>
+                    <option value="emerald">Emerald Green</option>
+                    <option value="dark">Navy Blue</option>
+                    <option value="light">Classic Light</option>
+                    <option value="sky">Sky Blue (Light)</option>
                 </select>
             </div>
         </div>
