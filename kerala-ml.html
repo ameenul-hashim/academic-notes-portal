@@ -111,7 +111,14 @@
                 <p class="text-sm text-orange-200 tracking-widest uppercase mb-1">Malayalam Medium</p>
                 <h1 class="font-bold text-2xl tracking-wider text-white">English for BA Programs</h1>
             </div>
-            <div class="w-20"></div>
+            <div>
+                <select id="theme-selector" class="bg-black/20 text-white backdrop-blur-md border border-white/10 rounded-lg px-2 py-1 text-xs outline-none cursor-pointer hover:bg-white/20 transition-all">
+                    <option value="rose">Rose</option>
+                    <option value="dark">Navy</option>
+                    <option value="light">Light</option>
+                    <option value="emerald">Emerald</option>
+                </select>
+            </div>
         </div>
     </header>
 
@@ -246,7 +253,21 @@
             const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
             document.documentElement.setAttribute('data-theme', savedTheme);
         })();
-    </script></body>
+    </script>    <script>
+        (function() {
+            const selector = document.getElementById('theme-selector');
+            const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
+            if (selector) {
+                selector.value = savedTheme;
+                selector.addEventListener('change', (e) => {
+                    const theme = e.target.value;
+                    document.documentElement.setAttribute('data-theme', theme);
+                    localStorage.setItem('preferred-theme', theme);
+                });
+            }
+        })();
+    </script>
+</body>
 </html>
 
 
