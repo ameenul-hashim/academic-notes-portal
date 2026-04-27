@@ -178,6 +178,31 @@
         [data-theme="dark"] .glass-card { background: rgba(255, 255, 255, 0.05) !important; border-color: rgba(255, 255, 255, 0.1) !important; }
         [data-theme="light"] .glass-card { background: rgba(255, 255, 255, 0.7) !important; border-color: rgba(0, 0, 0, 0.1) !important; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important; }
         [data-theme="sky"] .glass-card { background: rgba(255, 255, 255, 0.7) !important; border-color: rgba(16, 185, 129, 0.2) !important; box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.05) !important; }
+
+        /* Light Theme Visibility Fixes */
+        [data-theme="light"] {
+            --text-light: #0f172a !important;
+            --accent-light: #1d4ed8 !important;
+        }
+        [data-theme="sky"] {
+            --bg-sky: linear-gradient(to bottom right, #fffbeb, #fef3c7) !important;
+            --text-sky: #451a03 !important;
+            --accent-sky: #92400e !important;
+        }
+
+        /* Force dark text for all light-mode classes */
+        [data-theme="light"] .text-white, [data-theme="light"] .text-gray-100, [data-theme="light"] .text-gray-200, [data-theme="light"] .text-orange-200, [data-theme="light"] .text-pink-200 { 
+            color: #0f172a !important; 
+        }
+        [data-theme="sky"] .text-white, [data-theme="sky"] .text-gray-100, [data-theme="sky"] .text-gray-200, [data-theme="sky"] .text-orange-200, [data-theme="sky"] .text-pink-200 { 
+            color: #451a03 !important; 
+        }
+        
+        /* Dropdown options for light themes */
+        [data-theme="light"] #theme-selector option, [data-theme="sky"] #theme-selector option {
+            background-color: white !important;
+            color: black !important;
+        }
 </style>
     <script>
         (function() {
@@ -215,7 +240,7 @@
                     <option value="emerald">Emerald Green</option>
                     <option value="dark">Navy Blue</option>
                     <option value="light">Classic Light</option>
-                    <option value="sky">Emerald Light</option>
+                    <option value="sky">Desert Gold (Light)</option>
                 </select>
             </div>
         </div>
