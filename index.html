@@ -135,20 +135,42 @@
             </div>
         </div>
     </header>
-    
-    <!-- Full Width Marquee -->
-    <div class="overflow-hidden bg-amber-200 border-b border-amber-300/50 shadow-sm">
-        <marquee direction="left" scrollamount="6" class="py-2 text-black font-bold text-sm block">
-            welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;&nbsp;
-            welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;&nbsp;
-            welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;&nbsp;
-            welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;&nbsp;
-            welcome user, uploaded and managed by hashim further informations send an email 
-        </marquee>
-    </div>
 
-    <!-- Main Content Area: Level 1 - Subjects -->
     <main class="flex-grow max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <!-- Scrolling Ticker (CSS Animation) -->
+        <style>
+            @keyframes ticker {
+                0% { transform: translateX(100%); }
+                100% { transform: translateX(-100%); }
+            }
+            .ticker-container {
+                width: 100%;
+                overflow: hidden;
+                background-color: #fef3c7 !important; /* amber-100 */
+                border: 1px solid #fde68a !important;
+                border-radius: 9999px;
+                margin-bottom: 2rem;
+                position: relative;
+                z-index: 40;
+            }
+            .ticker-text {
+                display: inline-block;
+                white-space: nowrap;
+                padding: 0.75rem 0;
+                font-weight: 700;
+                color: #000000 !important;
+                animation: ticker 25s linear infinite;
+            }
+        </style>
+        <div class="ticker-container shadow-lg">
+            <div class="ticker-text">
+                welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;&nbsp;
+                welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;&nbsp;
+                welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;&nbsp;
+                welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;&nbsp;
+                welcome user, uploaded and managed by hashim further informations send an email
+            </div>
+        </div>
         
         <!-- Grid System: 1 col on mobile, 2 on tablet (sm), 4 on desktop (lg) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
