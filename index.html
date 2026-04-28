@@ -450,13 +450,10 @@
                     displayArea.classList.remove('hidden');
                     nameSpan.textContent = name;
                     
-                    
                     // Pre-fill Issue Form
                     const formNameInput = document.querySelector('input[name="name"]');
                     if (formNameInput) {
                         formNameInput.value = name;
-                        formNameInput.readOnly = false;
-                        formNameInput.classList.remove('opacity-50', 'cursor-not-allowed');
                     }
                 } else {
                     inputArea.classList.remove('hidden');
@@ -525,6 +522,7 @@
                 
                 console.log("User added successfully:", name);
                 nameInput.value = "";
+                updateUI(null); // Immediately update UI to hide input area
             }
 
             document.getElementById('join-btn').addEventListener('click', join);
