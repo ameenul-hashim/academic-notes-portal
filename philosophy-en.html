@@ -326,6 +326,34 @@
             }
         })();
     </script>
+
+    
+
+    
+
+    
+
+    <script>
+        (function() {
+            const name = localStorage.getItem('portal-username');
+            if (name) {
+                const headerDiv = document.querySelector('header div.flex');
+                if (headerDiv) {
+                    const nameContainer = document.createElement('div');
+                    nameContainer.className = "flex items-center gap-2 px-3 py-1 bg-white/5 rounded-lg border border-white/10 text-[10px] md:text-xs font-bold text-orange-400";
+                    nameContainer.innerHTML = `
+                        <div class="flex items-center gap-1">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"></path></svg> 
+                            <span>${name}</span>
+                        </div>
+                        <button onclick="localStorage.removeItem('portal-username'); localStorage.removeItem('portal-userkey'); location.reload();" class="ml-1 text-[8px] text-gray-400 hover:text-white underline uppercase tracking-tighter">Change</button>
+                    `;
+                    // Insert before the theme selector
+                    headerDiv.insertBefore(nameContainer, headerDiv.lastElementChild);
+                }
+            }
+        })();
+    </script>
 </body>
 </html>
 

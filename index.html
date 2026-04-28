@@ -181,15 +181,16 @@
         <div id="user-identity-section" class="mt-4 mb-12 max-w-2xl mx-auto px-4">
             <div class="glass-card rounded-3xl p-6 border border-white/10 text-center">
                 <div id="name-input-area" class="hidden">
-                    <p class="text-orange-200 uppercase tracking-widest text-xs mb-4 font-bold">Join the Community? Set your display name</p>
+                    <p class="text-orange-200 uppercase tracking-widest text-xs mb-4 font-bold">Join the Community? Enter your name</p>
                     <div class="flex flex-col sm:flex-row gap-3">
                         <input type="text" id="user-name-input" class="flex-grow bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50" placeholder="Enter your name">
                         <button id="join-btn" class="bg-gradient-to-r from-orange-500 to-rose-600 text-white font-bold px-6 py-3 rounded-xl hover:scale-105 transition-transform active:scale-95">Join Now</button>
                     </div>
                 </div>
                 <div id="name-display-area" class="hidden">
-                    <p class="text-gray-400 text-sm uppercase tracking-tighter mb-1">Signed in as</p>
+
                     <h2 class="text-2xl font-bold text-white">Welcome, <span id="display-name-span" class="text-orange-400"></span>!</h2>
+                    <button id="reset-btn" class="mt-2 text-xs text-gray-500 hover:text-white underline transition-colors">Change Name</button>
                 </div>
             </div>
         </div>
@@ -445,16 +446,41 @@
                     inputArea.classList.add('hidden');
                     displayArea.classList.remove('hidden');
                     nameSpan.textContent = name;
+                    
+                    
+                    // Header Name Display
+                    const headerDiv = document.querySelector('header div.flex');
+                    if (headerDiv && !document.getElementById('header-name-display')) {
+                        const hName = document.createElement('div');
+                        hName.id = 'header-name-display';
+                        hName.className = "flex items-center gap-2 px-3 py-1 bg-white/5 rounded-lg border border-white/10 text-[10px] md:text-xs font-bold text-orange-400";
+                        hName.innerHTML = `
+                            <div class="flex items-center gap-1">
+                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"></path></svg> 
+                                <span>${name}</span>
+                            </div>
+                            <button onclick="localStorage.removeItem('portal-username'); localStorage.removeItem('portal-userkey'); location.reload();" class="ml-1 text-[8px] text-gray-400 hover:text-white underline uppercase tracking-tighter">Change</button>
+                        `;
+                        headerDiv.insertBefore(hName, headerDiv.lastElementChild);
+                    }
+
+                    // Pre-fill Issue Form
+                    const formNameInput = document.querySelector('input[name="name"]');
+                    if (formNameInput) {
+                        formNameInput.value = name;
+                        formNameInput.readOnly = false;
+                        formNameInput.classList.remove('opacity-50', 'cursor-not-allowed');
+                    }
                 } else {
                     inputArea.classList.remove('hidden');
                     displayArea.classList.add('hidden');
                 }
 
-                // Update List
-                list.innerHTML = '<span class="px-6 py-3 bg-white/5 rounded-2xl text-gray-400 border border-white/10 text-lg font-medium">Hashim (Admin)</span>';
-                let activeCount = 0;
-                
-                if (users) {
+                // Update List (Only if users is not null, otherwise keep previous or show admin only)
+                if (users !== null) {
+                    list.innerHTML = '<span class="px-6 py-3 bg-white/5 rounded-2xl text-gray-400 border border-white/10 text-lg font-medium">Hashim (Admin)</span>';
+                    let activeCount = 0;
+                    
                     Object.keys(users).forEach(key => {
                         activeCount++;
                         const span = document.createElement('span');
@@ -462,16 +488,26 @@
                         span.textContent = users[key].username;
                         list.appendChild(span);
                     });
+                    countSpan.textContent = `(${activeCount + 1} Members)`;
+                } else if (!list.children.length) {
+                    list.innerHTML = '<span class="px-6 py-3 bg-white/5 rounded-2xl text-gray-400 border border-white/10 text-lg font-medium">Hashim (Admin)</span>';
+                    countSpan.textContent = `(1 Members)`;
                 }
-                countSpan.textContent = `(${activeCount + 1} Members)`;
-                console.log("User list updated from Firebase. Active members:", activeCount + 1);
             }
 
-            // Real-time listener
+            // Real-time listener (READ ONLY)
             onValue(usersRef, (snapshot) => {
                 const users = snapshot.val();
-                updateUI(users);
-                console.log("Real-time data fetch successful.");
+                console.log("Fetching users from Firebase");
+                console.log("Fetched data:", users);
+                console.log("Snapshot data:", snapshot.val());
+
+                if (!users) {
+                    console.log("Snapshot is empty. No users found in 'active_users'.");
+                    updateUI(null);
+                } else {
+                    updateUI(users);
+                }
             });
 
             async function join() {
@@ -490,19 +526,29 @@
                     return;
                 }
 
+                console.log("Adding user:", name);
                 localStorage.setItem('portal-username', name);
                 
                 // ONLY use push() to add new users (Permanent Storage)
-                push(usersRef, {
+                const newRef = push(usersRef, {
                     username: name,
                     timestamp: Date.now()
                 });
+                localStorage.setItem('portal-userkey', newRef.key);
                 
                 console.log("User added successfully:", name);
                 nameInput.value = "";
             }
 
             document.getElementById('join-btn').addEventListener('click', join);
+            document.getElementById('reset-btn').addEventListener('click', () => {
+                if(confirm("Do you want to change your display name?")) {
+                    // REMOVED destructive remove() call to ensure permanent storage
+                    localStorage.removeItem('portal-username');
+                    localStorage.removeItem('portal-userkey');
+                    location.reload();
+                }
+            });
 
 
             // Refresh UI once on load
