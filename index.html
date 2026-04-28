@@ -430,7 +430,7 @@
 
             const app = initializeApp(firebaseConfig);
             const db = getDatabase(app);
-            const usersRef = ref(db, 'active_users');
+            const usersRef = ref(db, 'users');
             
             console.log("Firebase connected");
             console.log("Firebase Configuration Loaded:", firebaseConfig);
@@ -469,7 +469,7 @@
                         activeCount++;
                         const span = document.createElement('span');
                         span.className = "px-6 py-3 bg-gradient-to-r from-cyan-400/30 to-blue-400/30 rounded-2xl text-white border border-white/20 text-lg font-bold transition-all hover:scale-110 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] shadow-xl backdrop-blur-sm";
-                        span.textContent = users[key].username;
+                        span.textContent = users[key].name;
                         list.appendChild(span);
                     });
                     countSpan.textContent = `(${activeCount + 1} Members)`;
@@ -487,7 +487,7 @@
                 console.log("Snapshot data:", snapshot.val());
 
                 if (!users) {
-                    console.log("Snapshot is empty. No users found in 'active_users'.");
+                    console.log("Snapshot is empty. No users found in 'users'.");
                     updateUI(null);
                 } else {
                     updateUI(users);
@@ -503,7 +503,7 @@
 
                 const snapshot = await get(usersRef);
                 const currentUsers = snapshot.val() || {};
-                const exists = Object.values(currentUsers).some(u => u.username.toLowerCase() === name.toLowerCase());
+                const exists = Object.values(currentUsers).some(u => u.name && u.name.toLowerCase() === name.toLowerCase());
 
                 if (exists) {
                     alert("This name is already taken! Please choose another.");
@@ -515,8 +515,8 @@
                 
                 // ONLY use push() to add new users (Permanent Storage)
                 const newRef = push(usersRef, {
-                    username: name,
-                    timestamp: Date.now()
+                    name: name,
+                    time: Date.now()
                 });
                 localStorage.setItem('portal-userkey', newRef.key);
                 
