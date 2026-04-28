@@ -467,7 +467,13 @@
                     console.log("Merged Total Users:", userCount);
 
                     Object.entries(allUsers).forEach(([id, user]) => {
-                        const displayName = user.name || user.username;
+                        let displayName = "";
+                        if (typeof user === 'string') {
+                            displayName = user;
+                        } else if (user && typeof user === 'object') {
+                            displayName = user.name || user.username || "";
+                        }
+                        
                         if (!displayName) return;
                         const span = document.createElement('span');
                         span.className = "user-card px-6 py-3 bg-gradient-to-r from-cyan-400/30 to-blue-400/30 rounded-2xl text-white border border-white/20 text-lg font-bold transition-all hover:scale-110 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] shadow-xl backdrop-blur-sm";
@@ -521,7 +527,7 @@
                 
                 console.log("User added successfully:", name);
                 nameInput.value = "";
-                updateUI(null); // Immediately update UI to hide input area
+                updateUI(); // Immediately update UI to hide input area
             }
 
             document.getElementById('join-btn').addEventListener('click', join);
@@ -536,7 +542,7 @@
 
 
             // Refresh UI once on load
-            updateUI(null);
+            updateUI();
         </script>
 
         <!-- Issue Report Form -->
