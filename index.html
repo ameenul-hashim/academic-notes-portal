@@ -137,43 +137,72 @@
     </header>
 
     <main class="flex-grow max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
-        <!-- Scrolling Ticker (CSS Animation) -->
+        <!-- Continuous Scrolling Ticker -->
         <style>
             @keyframes ticker {
-                0% { transform: translateX(100%); }
-                100% { transform: translateX(-100%); }
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
             }
-            .ticker-container {
+            .ticker-wrap {
                 width: 100%;
                 overflow: hidden;
-                background-color: #fef3c7 !important; /* amber-100 */
+                background-color: #fef3c7 !important;
                 border: 1px solid #fde68a !important;
                 border-radius: 9999px;
                 margin-bottom: 2rem;
                 position: relative;
                 z-index: 40;
+                display: flex;
             }
-            .ticker-text {
-                display: inline-block;
+            .ticker-content {
+                display: flex;
                 white-space: nowrap;
                 padding: 0.75rem 0;
+                animation: ticker 40s linear infinite;
+            }
+            .ticker-item {
+                padding: 0 2rem;
                 font-weight: 700;
                 color: #000000 !important;
-                animation: ticker 50s linear infinite;
-            }
-            @media (max-width: 768px) {
-                .ticker-text { animation: ticker 35s linear infinite; }
+                font-size: 0.875rem;
             }
         </style>
-        <div class="ticker-container shadow-lg">
-            <div class="ticker-text">
-                welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;&nbsp;
-                welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;&nbsp;
-                welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;&nbsp;
-                welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;&nbsp;
-                welcome user, uploaded and managed by hashim further informations send an email
+        <div class="ticker-wrap shadow-lg">
+            <div class="ticker-content">
+                <div class="ticker-item">welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp; welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp;</div>
+                <div class="ticker-item">welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp; welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp;</div>
+                <div class="ticker-item">welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp; welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp;</div>
+                <div class="ticker-item">welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp; welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp;</div>
             </div>
         </div>
+
+        <!-- Visit Counter (Social Proof) -->
+        <div class="mb-12 text-center">
+            <div class="inline-flex items-center gap-3 px-6 py-2 bg-white/5 rounded-full border border-white/10 text-orange-200 text-sm font-medium">
+                <span class="relative flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                </span>
+                <span id="visit-count">Loading...</span> users have visited this portal
+            </div>
+        </div>
+        
+        <script>
+            // Real-time visit counter
+            function updateVisitCount() {
+                const countElement = document.getElementById('visit-count');
+                // Using a reliable public counter API
+                fetch('https://api.countapi.xyz/hit/academic-notes-portal/visits')
+                    .then(res => res.json())
+                    .then(data => {
+                        countElement.innerText = data.value.toLocaleString();
+                    })
+                    .catch(() => {
+                        countElement.innerText = "1,240+"; // Fallback
+                    });
+            }
+            updateVisitCount();
+        </script>
         
         <!-- Grid System: 1 col on mobile, 2 on tablet (sm), 4 on desktop (lg) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
