@@ -468,10 +468,11 @@
                     if (users) {
                         console.log("Total Users:", Object.keys(users).length);
                         Object.entries(users).forEach(([id, user]) => {
-                            if (!user || !user.name) return;
+                            const displayName = user.name || user.username;
+                            if (!displayName) return;
                             const span = document.createElement('span');
-                            span.className = "user-card px-6 py-3 bg-gradient-to-r from-cyan-400/30 to-blue-400/30 rounded-2xl text-white border border-white/20 text-lg font-bold transition-all hover:scale-110 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] shadow-xl backdrop-blur-sm";
-                            span.textContent = user.name;
+                            span.className = "user-card px-6 py-3 bg-gradient-to-r from-cyan-400/30 to-blue-400/30 rounded-2xl text-white border border-white/20 text-lg font-bold transition-all hover:scale-110 hover:shadow-[0_0_20_rgba(6,182,212,0.4)] shadow-xl backdrop-blur-sm";
+                            span.textContent = displayName;
                             container.appendChild(span);
                         });
                         if (countSpan) countSpan.textContent = `(${Object.keys(users).length + 1} Members)`;
