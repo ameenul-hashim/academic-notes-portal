@@ -356,6 +356,61 @@
             </div>
         </div>
 
+        <!-- User Identity Section -->
+        <div id="user-identity-section" class="mt-20 max-w-2xl mx-auto px-4">
+            <div class="glass-card rounded-3xl p-6 border border-white/10 text-center">
+                <div id="name-input-area" class="hidden">
+                    <p class="text-orange-200 uppercase tracking-widest text-xs mb-4 font-bold">First Time? Set your display name</p>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input type="text" id="user-name-input" class="flex-grow bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50" placeholder="Enter your name">
+                        <button onclick="saveUserName()" class="bg-gradient-to-r from-orange-500 to-rose-600 text-white font-bold px-6 py-3 rounded-xl hover:scale-105 transition-transform active:scale-95">Save Name</button>
+                    </div>
+                </div>
+                <div id="name-display-area" class="hidden">
+                    <p class="text-gray-400 text-sm uppercase tracking-tighter mb-1">Active User Session</p>
+                    <h2 class="text-2xl font-bold text-white">Welcome, <span id="display-name-span" class="text-orange-400"></span>!</h2>
+                    <button onclick="resetUserName()" class="mt-2 text-xs text-gray-500 hover:text-white underline transition-colors">Change Name</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function updateIdentityUI() {
+                const name = localStorage.getItem('portal-username');
+                const inputArea = document.getElementById('name-input-area');
+                const displayArea = document.getElementById('name-display-area');
+                const nameSpan = document.getElementById('display-name-span');
+
+                if (name) {
+                    inputArea.classList.add('hidden');
+                    displayArea.classList.remove('hidden');
+                    nameSpan.textContent = name;
+                } else {
+                    inputArea.classList.remove('hidden');
+                    displayArea.classList.add('hidden');
+                }
+            }
+
+            function saveUserName() {
+                const input = document.getElementById('user-name-input');
+                const name = input.value.trim();
+                if (name) {
+                    localStorage.setItem('portal-username', name);
+                    updateIdentityUI();
+                }
+            }
+
+            function resetUserName() {
+                if(confirm("Do you want to change your display name?")) {
+                    localStorage.removeItem('portal-username');
+                    updateIdentityUI();
+                }
+            }
+
+            // Initialize on load
+            document.addEventListener('DOMContentLoaded', updateIdentityUI);
+        </script>
+
         <!-- Issue Report Form -->
         <div class="mt-20 max-w-2xl mx-auto px-4 pb-20">
             <div class="glass-card rounded-3xl p-8 md:p-12 border border-white/10 shadow-2xl relative overflow-hidden">
