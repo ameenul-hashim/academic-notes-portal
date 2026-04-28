@@ -1,4 +1,5 @@
 import os
+import re
 
 files = [
     'history.html', 'history-en.html', 'history-ml.html',
@@ -12,25 +13,29 @@ files = [
     'micro-economics.html', 'micro-economics-en.html', 'micro-economics-ml.html'
 ]
 
-# Updated script to inject username display WITH a change option in header (cleaning both keys)
+# Script to move username display UNDER the header and remove sticky behavior
 script_inject = """
     <script>
         (function() {
             const name = localStorage.getItem('portal-username');
-            if (name) {
-                const headerDiv = document.querySelector('header div.flex');
-                if (headerDiv) {
+            const header = document.querySelector('header');
+            if (header) {
+                // Remove sticky and z-index as requested
+                header.classList.remove('sticky', 'top-0', 'z-50');
+                
+                if (name) {
                     const nameContainer = document.createElement('div');
-                    nameContainer.className = "flex items-center gap-2 px-3 py-1 bg-white/5 rounded-lg border border-white/10 text-[10px] md:text-xs font-bold text-orange-400";
+                    // Separate bar under navbar, hidden on mobile
+                    nameContainer.id = 'header-name-display';
+                    nameContainer.className = "hidden md:flex justify-end max-w-7xl mx-auto px-4 mt-2 gap-3 items-center";
                     nameContainer.innerHTML = `
-                        <div class="flex items-center gap-1">
-                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"></path></svg> 
+                        <div class="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-lg border border-white/10 text-xs md:text-sm font-bold text-orange-400">
+                            <svg class="w-4 h-4 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"></path></svg> 
                             <span>${name}</span>
                         </div>
-                        <button onclick="localStorage.removeItem('portal-username'); localStorage.removeItem('portal-userkey'); location.reload();" class="ml-1 text-[8px] text-gray-400 hover:text-white underline uppercase tracking-tighter">Change</button>
+                        <button onclick="if(confirm('Change name?')){localStorage.removeItem('portal-username'); localStorage.removeItem('portal-userkey'); location.reload();}" class="text-[10px] text-gray-500 hover:text-white underline uppercase tracking-tighter transition-colors">Change Name</button>
                     `;
-                    // Insert before the theme selector
-                    headerDiv.insertBefore(nameContainer, headerDiv.lastElementChild);
+                    header.after(nameContainer);
                 }
             }
         })();
@@ -42,11 +47,8 @@ for filename in files:
         with open(filename, 'r', encoding='utf-8') as f:
             content = f.read()
         
-        # Remove old header script if exists (various versions)
-        content = content.replace('<script>\n        (function() {\n            const name = localStorage.getItem(\'portal-username\');\n            if (name) {\n                const headerDiv = document.querySelector(\'header div.flex\');\n                if (headerDiv) {\n                    const nameSpan = document.createElement(\'div\');\n                    nameSpan.className = \"hidden md:flex items-center gap-2 px-3 py-1 bg-white/5 rounded-lg border border-white/10 text-xs font-bold text-orange-400\";\n                    nameSpan.innerHTML = `<svg class=\"w-3 h-3\" fill=\"currentColor\" viewBox=\"0 0 20 20\"><path d=\"M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z\"></path></svg> ${name}`;\n                    // Insert before the theme selector (which is the last child of headerDiv)\n                    headerDiv.insertBefore(nameSpan, headerDiv.lastElementChild);\n                }\n            }\n        })();\n    </script>', '')
-        content = content.replace('<script>\n        (function() {\n            const name = localStorage.getItem(\'portal-username\');\n            if (name) {\n                const headerDiv = document.querySelector(\'header div.flex\');\n                if (headerDiv) {\n                    const nameSpan = document.createElement(\'div\');\n                    nameSpan.className = \"flex items-center gap-2 px-3 py-1 bg-white/5 rounded-lg border border-white/10 text-[10px] md:text-xs font-bold text-orange-400\";\n                    nameSpan.innerHTML = `<svg class=\"w-3 h-3\" fill=\"currentColor\" viewBox=\"0 0 20 20\"><path d=\"M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z\"></path></svg> ${name}`;\n                    // Insert before the theme selector (which is the last child of headerDiv)\n                    headerDiv.insertBefore(nameSpan, headerDiv.lastElementChild);\n                }\n            }\n        })();\n    </script>', '')
-        # Remove the version without portal-userkey removal
-        content = content.replace('<script>\n        (function() {\n            const name = localStorage.getItem(\'portal-username\');\n            if (name) {\n                const headerDiv = document.querySelector(\'header div.flex\');\n                if (headerDiv) {\n                    const nameContainer = document.createElement(\'div\');\n                    nameContainer.className = \"flex items-center gap-2 px-3 py-1 bg-white/5 rounded-lg border border-white/10 text-[10px] md:text-xs font-bold text-orange-400\";\n                    nameContainer.innerHTML = `\n                        <div class=\"flex items-center gap-1\">\n                            <svg class=\"w-3 h-3\" fill=\"currentColor\" viewBox=\"0 0 20 20\"><path d=\"M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z\"></path></svg> \n                            <span>${name}</span>\n                        </div>\n                        <button onclick=\"localStorage.removeItem(\'portal-username\'); location.reload();\" class=\"ml-1 text-[8px] text-gray-400 hover:text-white underline uppercase tracking-tighter\">Change</button>\n                    `;\n                    // Insert before the theme selector\n                    headerDiv.insertBefore(nameContainer, headerDiv.lastElementChild);\n                }\n            }\n        })();\n    </script>', '')
+        # Remove any previous versions of the script
+        content = re.sub(r'<script>\s*\(function\(\) \{\s*const name = localStorage\.getItem\(\'portal-username\'\);[\s\S]*?<\/script>', '', content)
 
         # Inject new script
         if 'portal-username' not in content:
@@ -55,6 +57,6 @@ for filename in files:
             if new_content != content:
                 with open(filename, 'w', encoding='utf-8') as f:
                     f.write(new_content)
-                print(f"Fixed change option in header for {filename}")
+                print(f"Moved username under header and removed sticky for {filename}")
 
 print("Done")
