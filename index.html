@@ -430,8 +430,11 @@
                 storageBucket: "academic-portal-135fd.firebasestorage.app",
                 messagingSenderId: "459730360375",
                 appId: "1:459730360375:web:151a615ff0bc30557347b2",
-                measurementId: "G-5M3CN8TS3Q"
+                measurementId: "G-5M3CN8TS3Q",
+                databaseURL: "https://academic-portal-135fd-default-rtdb.firebaseio.com/"
             };
+
+            console.log("Firebase Configuration:", firebaseConfig);
 
             const app = initializeApp(firebaseConfig);
             const db = getDatabase(app);
