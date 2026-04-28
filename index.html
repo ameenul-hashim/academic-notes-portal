@@ -472,7 +472,7 @@
             onValue(usersRef, (snapshot) => {
                 const users = snapshot.val();
                 updateUI(users);
-                cleanupInactiveUsers(users);
+                console.log("Real-time data fetch successful.");
             });
 
             async function join() {
@@ -492,25 +492,15 @@
                 }
 
                 localStorage.setItem('portal-username', name);
+                
+                // ONLY use push() to add new users (Permanent Storage)
                 push(usersRef, {
                     username: name,
                     timestamp: Date.now()
                 });
-                console.log("User added:", name);
-                nameInput.value = "";
-            }
-
-            async function cleanupInactiveUsers(users) {
-                if (!users) return;
-                const now = Date.now();
-                const timeout = 5 * 60 * 1000; // 5 minutes
                 
-                Object.keys(users).forEach(async (key) => {
-                    if (now - users[key].timestamp > timeout) {
-                        const userToRemove = ref(db, `active_users/${key}`);
-                        await remove(userToRemove);
-                    }
-                });
+                console.log("User added successfully:", name);
+                nameInput.value = "";
             }
 
             document.getElementById('join-btn').addEventListener('click', join);
