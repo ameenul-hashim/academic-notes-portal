@@ -443,50 +443,54 @@
             const countSpan = document.getElementById('member-count');
             const nameInput = document.getElementById('user-name-input');
 
-            function updateUI(users) {
+            function updateUI() {
                 const name = localStorage.getItem('portal-username');
                 if (name) {
                     inputArea.classList.add('hidden');
                     displayArea.classList.remove('hidden');
                     nameSpan.textContent = name;
                     
-                    // Pre-fill Issue Form
                     const formNameInput = document.querySelector('input[name="name"]');
-                    if (formNameInput) {
-                        formNameInput.value = name;
-                    }
+                    if (formNameInput) formNameInput.value = name;
                 } else {
                     inputArea.classList.remove('hidden');
                     displayArea.classList.add('hidden');
                 }
 
-                // Update List
+                // Merge and Update List
                 const container = document.getElementById("activeUsers");
                 if (container) {
                     container.innerHTML = '<span class="px-6 py-3 bg-white/5 rounded-2xl text-gray-400 border border-white/10 text-lg font-medium">Hashim (Admin)</span>';
                     
-                    if (users) {
-                        console.log("Total Users:", Object.keys(users).length);
-                        Object.entries(users).forEach(([id, user]) => {
-                            const displayName = user.name || user.username;
-                            if (!displayName) return;
-                            const span = document.createElement('span');
-                            span.className = "user-card px-6 py-3 bg-gradient-to-r from-cyan-400/30 to-blue-400/30 rounded-2xl text-white border border-white/20 text-lg font-bold transition-all hover:scale-110 hover:shadow-[0_0_20_rgba(6,182,212,0.4)] shadow-xl backdrop-blur-sm";
-                            span.textContent = displayName;
-                            container.appendChild(span);
-                        });
-                        if (countSpan) countSpan.textContent = `(${Object.keys(users).length + 1} Members)`;
-                    } else {
-                        if (countSpan) countSpan.textContent = `(1 Members)`;
-                    }
+                    const allUsers = { ...dbData.users, ...dbData.active_users };
+                    const userCount = Object.keys(allUsers).length;
+                    console.log("Merged Total Users:", userCount);
+
+                    Object.entries(allUsers).forEach(([id, user]) => {
+                        const displayName = user.name || user.username;
+                        if (!displayName) return;
+                        const span = document.createElement('span');
+                        span.className = "user-card px-6 py-3 bg-gradient-to-r from-cyan-400/30 to-blue-400/30 rounded-2xl text-white border border-white/20 text-lg font-bold transition-all hover:scale-110 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] shadow-xl backdrop-blur-sm";
+                        span.textContent = displayName;
+                        container.appendChild(span);
+                    });
+                    
+                    if (countSpan) countSpan.textContent = `(${userCount + 1} Members)`;
                 }
             }
 
-            // Real-time listener (READ ONLY)
-            onValue(usersRef, (snapshot) => {
-                const data = snapshot.val();
-                console.log("Firebase Data Received:", data);
-                updateUI(data);
+            const dbData = { users: {}, active_users: {} };
+
+            // Real-time listener for 'users'
+            onValue(ref(db, 'users'), (snapshot) => {
+                dbData.users = snapshot.val() || {};
+                updateUI();
+            });
+
+            // Real-time listener for 'active_users' (Legacy path)
+            onValue(ref(db, 'active_users'), (snapshot) => {
+                dbData.active_users = snapshot.val() || {};
+                updateUI();
             });
 
             async function join() {
