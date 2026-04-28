@@ -434,11 +434,12 @@
                 databaseURL: "https://academic-portal-135fd-default-rtdb.firebaseio.com/"
             };
 
-            console.log("Firebase Configuration:", firebaseConfig);
-
             const app = initializeApp(firebaseConfig);
             const db = getDatabase(app);
             const usersRef = ref(db, 'active_users');
+            
+            console.log("Firebase connected");
+            console.log("Firebase Configuration Loaded:", firebaseConfig);
 
             const localName = localStorage.getItem('portal-username');
             const inputArea = document.getElementById('name-input-area');
@@ -473,6 +474,7 @@
                     });
                 }
                 countSpan.textContent = `(${activeCount + 1} Members)`;
+                console.log("User list updated from Firebase. Active members:", activeCount + 1);
             }
 
             // Real-time listener
@@ -503,6 +505,7 @@
                     username: name,
                     timestamp: Date.now()
                 });
+                console.log("User added:", name);
                 nameInput.value = "";
             }
 
