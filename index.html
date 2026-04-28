@@ -460,38 +460,31 @@
                     displayArea.classList.add('hidden');
                 }
 
-                // Update List (Only if users is not null, otherwise keep previous or show admin only)
-                if (users !== null) {
-                    list.innerHTML = '<span class="px-6 py-3 bg-white/5 rounded-2xl text-gray-400 border border-white/10 text-lg font-medium">Hashim (Admin)</span>';
+                // Update List
+                const container = document.getElementById("activeUsers");
+                if (container) {
+                    container.innerHTML = '<span class="px-6 py-3 bg-white/5 rounded-2xl text-gray-400 border border-white/10 text-lg font-medium">Hashim (Admin)</span>';
                     let activeCount = 0;
                     
-                    Object.keys(users).forEach(key => {
-                        activeCount++;
-                        const span = document.createElement('span');
-                        span.className = "px-6 py-3 bg-gradient-to-r from-cyan-400/30 to-blue-400/30 rounded-2xl text-white border border-white/20 text-lg font-bold transition-all hover:scale-110 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] shadow-xl backdrop-blur-sm";
-                        span.textContent = users[key].name;
-                        list.appendChild(span);
-                    });
-                    countSpan.textContent = `(${activeCount + 1} Members)`;
-                } else if (!list.children.length) {
-                    list.innerHTML = '<span class="px-6 py-3 bg-white/5 rounded-2xl text-gray-400 border border-white/10 text-lg font-medium">Hashim (Admin)</span>';
-                    countSpan.textContent = `(1 Members)`;
+                    if (users) {
+                        for (let id in users) {
+                            activeCount++;
+                            const user = users[id];
+                            const span = document.createElement('span');
+                            span.className = "px-6 py-3 bg-gradient-to-r from-cyan-400/30 to-blue-400/30 rounded-2xl text-white border border-white/20 text-lg font-bold transition-all hover:scale-110 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] shadow-xl backdrop-blur-sm";
+                            span.textContent = user.name;
+                            container.appendChild(span);
+                        }
+                    }
+                    if (countSpan) countSpan.textContent = `(${activeCount + 1} Members)`;
                 }
             }
 
             // Real-time listener (READ ONLY)
             onValue(usersRef, (snapshot) => {
-                const users = snapshot.val();
+                const data = snapshot.val();
                 console.log("Fetching users from Firebase");
-                console.log("Fetched data:", users);
-                console.log("Snapshot data:", snapshot.val());
-
-                if (!users) {
-                    console.log("Snapshot is empty. No users found in 'users'.");
-                    updateUI(null);
-                } else {
-                    updateUI(users);
-                }
+                updateUI(data);
             });
 
             async function join() {
@@ -580,7 +573,7 @@
                 <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                 Active Website Users <span id="member-count" class="text-sm font-normal text-gray-500 ml-2"></span>
             </h2>
-            <div id="contributors-list" class="flex flex-wrap justify-center gap-4">
+            <div id="activeUsers" class="flex flex-wrap justify-center gap-4">
                 <span class="px-6 py-3 bg-white/5 rounded-2xl text-gray-400 border border-white/10 text-lg font-medium">Hashim (Admin)</span>
             </div>
         </div>
