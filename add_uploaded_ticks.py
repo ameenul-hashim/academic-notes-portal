@@ -19,9 +19,11 @@ for file in html_files:
             continue
             
         modal_content = parts[1][:2000]
-        if 'drive.google.com' in modal_content:
+        # Check for Google Drive or Google Docs links
+        if 'drive.google.com' in modal_content or 'docs.google.com' in modal_content:
+            # Flexible onclick regex to handle potential spaces or semicolons
             pattern = re.compile(
-                r'(onclick="document\.getElementById\(\'' + modal_id + r'\'\)\.classList\.remove\(\'hidden\'\)"[^>]*>.*?<h2[^>]*>)(.*?)(</h2>)',
+                r'(onclick="document\.getElementById\(\'' + modal_id + r'\'\)\.classList\.remove\(\'hidden\'\)[^"]*"[^>]*>.*?<h2[^>]*>)(.*?)(</h2>)',
                 re.DOTALL
             )
             
