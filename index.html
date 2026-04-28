@@ -159,7 +159,10 @@
                 padding: 0.75rem 0;
                 font-weight: 700;
                 color: #000000 !important;
-                animation: ticker 25s linear infinite;
+                animation: ticker 50s linear infinite;
+            }
+            @media (max-width: 768px) {
+                .ticker-text { animation: ticker 35s linear infinite; }
             }
         </style>
         <div class="ticker-container shadow-lg">
@@ -374,17 +377,42 @@
             </div>
         </div>
 
+        </div>
+
+        <!-- Community Contributors Section -->
+        <div class="mt-20 max-w-4xl mx-auto px-4 pb-20 text-center">
+            <h2 class="text-3xl font-bold text-white mb-8 flex items-center justify-center gap-3">
+                <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                Active Website Contributors
+            </h2>
+            <div id="contributors-list" class="flex flex-wrap justify-center gap-4">
+                <span class="px-6 py-3 bg-white/5 rounded-2xl text-gray-300 border border-white/10 text-lg font-medium">Hashim (Admin)</span>
+                <!-- User names will appear here -->
+            </div>
+            <p class="mt-6 text-[10px] text-gray-500 uppercase tracking-widest italic">Note: Global synchronization between users requires a database. Currently showing your local participation.</p>
+        </div>
+
         <script>
             function updateIdentityUI() {
                 const name = localStorage.getItem('portal-username');
                 const inputArea = document.getElementById('name-input-area');
                 const displayArea = document.getElementById('name-display-area');
                 const nameSpan = document.getElementById('display-name-span');
+                const list = document.getElementById('contributors-list');
 
                 if (name) {
                     inputArea.classList.add('hidden');
                     displayArea.classList.remove('hidden');
                     nameSpan.textContent = name;
+                    
+                    // Update Contributors List
+                    const existingNames = Array.from(list.querySelectorAll('span')).map(s => s.textContent);
+                    if (!existingNames.includes(name)) {
+                        const span = document.createElement('span');
+                        span.className = "px-6 py-3 bg-green-500/10 rounded-2xl text-green-300 border border-green-500/20 text-lg font-bold animate-pulse";
+                        span.textContent = name;
+                        list.appendChild(span);
+                    }
                 } else {
                     inputArea.classList.remove('hidden');
                     displayArea.classList.add('hidden');
@@ -404,10 +432,10 @@
                 if(confirm("Do you want to change your display name?")) {
                     localStorage.removeItem('portal-username');
                     updateIdentityUI();
+                    location.reload(); // Refresh to clear from list
                 }
             }
 
-            // Initialize on load
             document.addEventListener('DOMContentLoaded', updateIdentityUI);
         </script>
 
