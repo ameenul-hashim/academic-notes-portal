@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BA History Calicut Unofficial Notes</title>
+    <title>BA Programs Unofficial Notes</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -113,7 +113,7 @@
             <div class="w-10 md:w-24"></div>
             <div class="text-center">
                 <p class="text-sm text-orange-200 tracking-widest uppercase mb-1">Welcome</p>
-                <h1 class="font-bold text-xl md:text-3xl tracking-wider text-white">BA History Calicut Unofficial Notes</h1>
+                <h1 class="font-bold text-xl md:text-3xl tracking-wider text-white">BA Programs Unofficial Notes</h1>
             </div>
             <div>
                 <select id="theme-selector" class="bg-black/20 text-white backdrop-blur-md border border-white/10 rounded-lg px-2 py-1 text-xs outline-none cursor-pointer hover:bg-white/20 transition-all">
@@ -552,10 +552,12 @@
                     Report an Issue
                 </h2>
                 
-                <form id="issue-form" action="https://formsubmit.co/57b3baf5b0a7caab5c4ea779fbf63caf" method="POST" class="space-y-6 relative z-10">
-                    <input type="hidden" name="_subject" value="New Issue Report - Academic Notes Portal">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_template" value="table">
+                <form id="issue-form" action="https://api.web3forms.com/submit" method="POST" class="space-y-6 relative z-10">
+                    <!-- Web3Forms Access Key - Get yours at web3forms.com -->
+                    <input type="hidden" name="access_key" value="57b3baf5b0a7caab5c4ea779fbf63caf">
+                    <input type="hidden" name="subject" value="New Issue Report - Academic Notes Portal">
+                    <input type="hidden" name="from_name" value="Notes Portal Reporter">
+                    
                     <div>
                         <label class="block text-sm font-medium text-orange-200 mb-2 uppercase tracking-widest">Sender Name</label>
                         <input type="text" name="name" required class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 transition-all text-lg" placeholder="Your Name">
@@ -564,7 +566,7 @@
                         <label class="block text-sm font-medium text-orange-200 mb-2 uppercase tracking-widest">Describe the Issue</label>
                         <textarea name="message" required rows="4" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 transition-all text-lg resize-none" placeholder="Explain the problem here..."></textarea>
                     </div>
-                    <!-- Hidden field to specify your email if needed, but Formspree uses the ID in the URL -->
+                    
                     <button type="submit" class="w-full py-5 bg-gradient-to-r from-rose-600 to-red-700 hover:from-rose-500 hover:to-red-600 text-white font-bold rounded-2xl shadow-xl transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3 text-xl">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                         Submit Issue
