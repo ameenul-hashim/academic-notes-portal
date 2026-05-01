@@ -419,14 +419,10 @@
             const visitsRef = ref(db, 'site_visits');
             const visitCountElement = document.getElementById('visit-count');
             
-            // Check if this specific session has already been counted
-            if (!sessionStorage.getItem('visited_portal')) {
-                // Increment transaction
-                runTransaction(visitsRef, (currentVisits) => {
-                    return (currentVisits || 1240) + 1;
-                });
-                sessionStorage.setItem('visited_portal', 'true');
-            }
+            // Increment transaction on every page load
+            runTransaction(visitsRef, (currentVisits) => {
+                return (currentVisits || 1240) + 1;
+            });
 
             // Real-time listener for visit count
             onValue(visitsRef, (snapshot) => {
