@@ -205,23 +205,7 @@
             </div>
         </div>
         
-        <script>
-            // Real-time visit counter
-            function updateVisitCount() {
-                const countElement = document.getElementById('visit-count');
-                // Using a reliable public counter API
-                fetch('https://api.countapi.xyz/hit/academic-notes-portal/visits')
-                    .then(res => res.json())
-                    .then(data => {
-                        countElement.innerText = data.value.toLocaleString();
-                    })
-                    .catch(() => {
-                        countElement.innerText = "1,240+"; // Fallback
-                    });
-            }
-            updateVisitCount();
-        </script>
-        
+
         <!-- Grid System: 1 col on mobile, 2 on tablet (sm), 4 on desktop (lg) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
             
@@ -411,7 +395,7 @@
 
         <script type="module">
             import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
-            import { getDatabase, ref, set, push, onValue, get, remove, query, orderByChild } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
+            import { getDatabase, ref, set, push, onValue, get, remove, query, orderByChild, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
 
             const firebaseConfig = {
                 apiKey: "AIzaSyAc1eNCmAYDRYbnRZPWj8NQ7dOWJY-4d0o",
@@ -430,6 +414,27 @@
             
             console.log("Firebase connected");
             console.log("Firebase Configuration Loaded:", firebaseConfig);
+
+            // Visit Counter Logic
+            const visitsRef = ref(db, 'site_visits');
+            const visitCountElement = document.getElementById('visit-count');
+            
+            // Check if this specific session has already been counted
+            if (!sessionStorage.getItem('visited_portal')) {
+                // Increment transaction
+                runTransaction(visitsRef, (currentVisits) => {
+                    return (currentVisits || 1240) + 1;
+                });
+                sessionStorage.setItem('visited_portal', 'true');
+            }
+
+            // Real-time listener for visit count
+            onValue(visitsRef, (snapshot) => {
+                const count = snapshot.val() || 1240;
+                if (visitCountElement) {
+                    visitCountElement.innerText = count.toLocaleString();
+                }
+            });
 
             const localName = localStorage.getItem('portal-username');
             const inputArea = document.getElementById('name-input-area');
