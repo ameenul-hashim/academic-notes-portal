@@ -224,7 +224,7 @@
             const data = snapshot.val() || {};
             Object.entries(data).sort((a, b) => a[1].timestamp - b[1].timestamp).forEach(([id, msg]) => {
                 const isMe = msg.userId === userId;
-                const isAdmin = userName.toLowerCase() === 'hashim';
+                const isAdmin = userName.toLowerCase() === 'ameenulhashimh';
                 const bubble = document.createElement('div');
                 bubble.className = `bubble ${isMe ? 'bubble-me' : 'bubble-other'} flex flex-col group`;
                 
