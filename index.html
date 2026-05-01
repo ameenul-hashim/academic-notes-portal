@@ -115,24 +115,28 @@
                 <p class="text-sm text-orange-200 tracking-widest uppercase mb-1">Welcome</p>
                 <h1 class="font-bold text-xl md:text-3xl tracking-wider text-white">BA Calicut University Unofficial Notes And Classes</h1>
             </div>
-            <div>
-                <select id="theme-selector" class="bg-black/20 text-white backdrop-blur-md border border-white/10 rounded-lg px-2 py-1 text-xs outline-none cursor-pointer hover:bg-white/20 transition-all">
-                    <option value="rose">Reddish Brown</option>
-                    <option value="midnight">Midnight Purple</option>
-                    <option value="ocean">Ocean Blue</option>
-                    <option value="golden">Golden Amber</option>
-                    <option value="coffee">Warm Coffee</option>
-                    <option value="sunset">Sunset Glow</option>
-                    <option value="indigo">Deep Indigo</option>
-                    <option value="forest">Forest Deep</option>
-                    <option value="chocolate">Chocolate Dark</option>
-                    <option value="slate">Slate Minimal</option>
-                    <option value="emerald">Emerald Green</option>
-                    <option value="dark">Navy Blue</option>
-                    <option value="light">Classic Light</option>
-                    <option value="sky">Desert Gold (Light)</option>
-                </select>
-            </div>
+                <div class="flex items-center gap-3">
+                    <a href="chat.html" class="flex items-center gap-2 px-3 py-1 bg-blue-600/20 hover:bg-blue-600/40 border border-blue-500/30 rounded-lg text-blue-200 text-xs font-bold transition-all hover:scale-105 active:scale-95">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                        Realtime Chat
+                    </a>
+                    <select id="theme-selector" class="bg-black/20 text-white backdrop-blur-md border border-white/10 rounded-lg px-2 py-1 text-xs outline-none cursor-pointer hover:bg-white/20 transition-all">
+                        <option value="rose">Reddish Brown</option>
+                        <option value="midnight">Midnight Purple</option>
+                        <option value="ocean">Ocean Blue</option>
+                        <option value="golden">Golden Amber</option>
+                        <option value="coffee">Warm Coffee</option>
+                        <option value="sunset">Sunset Glow</option>
+                        <option value="indigo">Deep Indigo</option>
+                        <option value="forest">Forest Deep</option>
+                        <option value="chocolate">Chocolate Dark</option>
+                        <option value="slate">Slate Minimal</option>
+                        <option value="emerald">Emerald Green</option>
+                        <option value="dark">Navy Blue</option>
+                        <option value="light">Classic Light</option>
+                        <option value="sky">Desert Gold (Light)</option>
+                    </select>
+                </div>
         </div>
     </header>
 
@@ -201,7 +205,11 @@
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                 </span>
-                <span id="visit-count">Loading...</span> users have visited this portal
+                <span id="visit-count">0</span> users have visited this portal
+                <span class="mx-2 opacity-30">|</span>
+                <span class="text-green-400 flex items-center gap-1">
+                    <span id="online-count">1</span> Online Now
+                </span>
             </div>
         </div>
         
@@ -459,6 +467,31 @@
             const usersRef = ref(db, 'users');
             
             console.log("Firebase connected");
+            
+            // Presence System Logic
+            const onlineRef = ref(db, 'online_users');
+            const connectedRef = ref(db, '.info/connected');
+            const onlineCountElement = document.getElementById('online-count');
+
+            onValue(connectedRef, (snap) => {
+                if (snap.val() === true) {
+                    // Add this device to online users
+                    const myPresenceRef = push(onlineRef, {
+                        timestamp: Date.now()
+                    });
+                    // Remove when disconnected
+                    onDisconnect(myPresenceRef).remove();
+                }
+            });
+
+            // Sync online count UI
+            onValue(onlineRef, (snapshot) => {
+                const count = snapshot.val() ? Object.keys(snapshot.val()).length : 0;
+                if (onlineCountElement) {
+                    onlineCountElement.innerText = count;
+                }
+            });
+
             console.log("Firebase Configuration Loaded:", firebaseConfig);
 
             // Visit Counter Logic

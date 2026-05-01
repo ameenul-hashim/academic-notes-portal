@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realtime Community Chat - Academic Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+    <style>
+        .glass-card { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+        :root {
+            --bg-rose: linear-gradient(135deg, #450a0a 0%, #881337 50%, #7f1d1d 100%);
+            --bg-midnight: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #2e1065 100%);
+            --bg-ocean: linear-gradient(135deg, #083344 0%, #155e75 50%, #164e63 100%);
+            --bg-golden: linear-gradient(135deg, #451a03 0%, #78350f 50%, #92400e 100%);
+            --bg-coffee: linear-gradient(135deg, #1c1917 0%, #44403c 50%, #292524 100%);
+            --bg-sunset: linear-gradient(135deg, #7c2d12 0%, #9d174d 50%, #be123c 100%);
+            --bg-indigo: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #3730a3 100%);
+            --bg-forest: linear-gradient(135deg, #064e3b 0%, #14532d 50%, #065f46 100%);
+            --bg-chocolate: linear-gradient(135deg, #1c1917 0%, #3b2b07 50%, #451a03 100%);
+            --bg-slate: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            --bg-emerald: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%);
+            --bg-dark: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e293b 100%);
+            --bg-light: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+            --bg-desert: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #fde68a 100%);
+        }
+        [data-theme="rose"] { background: var(--bg-rose); color: #fff1f2; }
+        [data-theme="midnight"] { background: var(--bg-midnight); color: #f5f3ff; }
+        [data-theme="ocean"] { background: var(--bg-ocean); color: #ecfeff; }
+        [data-theme="golden"] { background: var(--bg-golden); color: #fffbeb; }
+        [data-theme="coffee"] { background: var(--bg-coffee); color: #fafaf9; }
+        [data-theme="sunset"] { background: var(--bg-sunset); color: #fff7ed; }
+        [data-theme="indigo"] { background: var(--bg-indigo); color: #e0e7ff; }
+        [data-theme="forest"] { background: var(--bg-forest); color: #f0fdf4; }
+        [data-theme="chocolate"] { background: var(--bg-chocolate); color: #fffbeb; }
+        [data-theme="slate"] { background: var(--bg-slate); color: #f1f5f9; }
+        [data-theme="emerald"] { background: var(--bg-emerald); color: #ecfdf5; }
+        [data-theme="dark"] { background: var(--bg-dark); color: #f8fafc; }
+        [data-theme="light"] { background: var(--bg-light); color: #0f172a; }
+        [data-theme="sky"] { background: var(--bg-desert); color: #451a03; }
+
+        .phone-container {
+            width: 380px;
+            height: 700px;
+            background: #111;
+            border: 12px solid #333;
+            border-radius: 48px;
+            position: relative;
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.5);
+            overflow: hidden;
+            display: flex;
+            flex-col;
+        }
+        .phone-screen {
+            flex: 1;
+            background: rgba(255,255,255,0.03);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chat-messages::-webkit-scrollbar { width: 4px; }
+        .chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        
+        .bubble-me {
+            background: linear-gradient(135deg, #0ea5e9, #2563eb);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .bubble-other {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        .bubble {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 18px;
+            margin-bottom: 8px;
+            position: relative;
+            animation: popIn 0.3s ease-out;
+            word-wrap: break-word;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .edit-controls { display: none; }
+        .bubble:hover .edit-controls { display: flex; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- Header / Nav -->
+    <nav class="w-full max-w-5xl mb-8 flex items-center justify-between">
+        <a href="index.html" class="flex items-center text-orange-200 hover:text-white transition-colors">
+            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Exit Chat
+        </a>
+        <h1 class="text-2xl font-bold text-white tracking-widest uppercase">Community Live Chat</h1>
+        <div id="online-badge" class="flex items-center gap-2 px-4 py-1 bg-green-500/10 border border-green-500/20 rounded-full text-green-400 text-sm">
+            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+            <span id="chat-online-count">1</span> Online
+        </div>
+    </nav>
+
+    <!-- Phone Display -->
+    <div class="phone-container">
+        <!-- Phone Top Notch -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-7 bg-[#333] rounded-b-3xl z-50 flex items-center justify-center">
+            <div class="w-12 h-1 bg-black/40 rounded-full"></div>
+        </div>
+
+        <div class="phone-screen mt-7">
+            <!-- Chat Header -->
+            <div class="p-4 border-b border-white/10 bg-white/5 backdrop-blur-md flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-400 to-rose-500 flex items-center justify-center text-white font-bold text-lg">C</div>
+                <div>
+                    <h2 class="text-sm font-bold text-white leading-tight">Public Room</h2>
+                    <p class="text-[10px] text-gray-400">All users can see and reply</p>
+                </div>
+            </div>
+
+            <!-- Messages Area -->
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-4 flex flex-col chat-messages">
+                <!-- Messages will load here -->
+            </div>
+
+            <!-- Input Area -->
+            <div class="p-4 border-t border-white/10 bg-white/5">
+                <div id="reply-preview" class="hidden text-[10px] text-gray-400 mb-2 italic flex justify-between items-center">
+                    <span>Replying to...</span>
+                    <button onclick="cancelReply()" class="text-rose-400 hover:text-rose-300">×</button>
+                </div>
+                <div class="flex gap-2 items-end">
+                    <textarea id="chat-input" rows="1" class="flex-1 bg-white/10 border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 placeholder-gray-500 resize-none" placeholder="Type a message..."></textarea>
+                    <button id="send-btn" class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white hover:bg-blue-500 transition-colors shadow-lg shadow-blue-600/20">
+                        <svg class="w-5 h-5 transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal (Hidden) -->
+    <div id="edit-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="glass-card w-full max-w-sm rounded-3xl p-6 border border-white/10">
+            <h3 class="text-lg font-bold text-white mb-4">Edit Message</h3>
+            <textarea id="edit-input" rows="3" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 mb-4 resize-none"></textarea>
+            <div class="flex gap-3">
+                <button onclick="closeEdit()" class="flex-1 py-3 rounded-xl bg-white/5 text-white hover:bg-white/10 font-medium">Cancel</button>
+                <button id="save-edit-btn" class="flex-1 py-3 rounded-xl bg-blue-600 text-white hover:bg-blue-500 font-bold">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, push, onValue, set, remove, serverTimestamp, onDisconnect, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAc1eNCmAYDRYbnRZPWj8NQ7dOWJY-4d0o",
+            authDomain: "academic-portal-135fd.firebaseapp.com",
+            projectId: "academic-portal-135fd",
+            storageBucket: "academic-portal-135fd.firebasestorage.app",
+            messagingSenderId: "459730360375",
+            appId: "1:459730360375:web:151a615ff0bc30557347b2",
+            databaseURL: "https://academic-portal-135fd-default-rtdb.firebaseio.com/"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const chatRef = ref(db, 'chat_messages');
+        const onlineRef = ref(db, 'online_users');
+        
+        let userName = localStorage.getItem('portal-username') || 'Anonymous';
+        let userId = localStorage.getItem('portal-userId');
+        if (!userId) {
+            userId = 'user_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('portal-userId', userId);
+        }
+
+        // Presence Logic
+        const myPresenceRef = push(onlineRef, { name: userName, userId: userId });
+        onDisconnect(myPresenceRef).remove();
+
+        onValue(onlineRef, (snapshot) => {
+            const online = snapshot.val() || {};
+            document.getElementById('chat-online-count').innerText = Object.keys(online).length;
+        });
+
+        // Chat Logic
+        const messagesDiv = document.getElementById('chat-messages');
+        const input = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('send-btn');
+
+        onValue(chatRef, (snapshot) => {
+            messagesDiv.innerHTML = '';
+            const data = snapshot.val() || {};
+            Object.entries(data).sort((a, b) => a[1].timestamp - b[1].timestamp).forEach(([id, msg]) => {
+                const isMe = msg.userId === userId;
+                const bubble = document.createElement('div');
+                bubble.className = `bubble ${isMe ? 'bubble-me' : 'bubble-other'} flex flex-col group`;
+                
+                let controls = '';
+                if (isMe) {
+                    controls = `
+                        <div class="edit-controls absolute -top-8 right-0 gap-2 bg-black/60 rounded-lg p-1 backdrop-blur-sm">
+                            <button onclick="openEdit('${id}', '${msg.text.replace(/'/g, "\\'")}')" class="text-[10px] text-blue-400 hover:text-white px-1">Edit</button>
+                            <button onclick="deleteMsg('${id}')" class="text-[10px] text-rose-400 hover:text-white px-1">Del</button>
+                        </div>
+                    `;
+                }
+
+                bubble.innerHTML = `
+                    <div class="flex justify-between items-center gap-4 mb-1">
+                        <span class="text-[10px] font-black uppercase opacity-70">${isMe ? 'You' : msg.sender}</span>
+                        <span class="text-[8px] opacity-50">${new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                    </div>
+                    <p class="text-sm leading-snug">${msg.text}</p>
+                    ${controls}
+                `;
+                messagesDiv.appendChild(bubble);
+            });
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        });
+
+        async function sendMessage() {
+            const text = input.value.trim();
+            if (!text) return;
+            
+            await push(chatRef, {
+                sender: userName,
+                text: text,
+                timestamp: serverTimestamp(),
+                userId: userId
+            });
+            input.value = '';
+            input.style.height = 'auto';
+        }
+
+        sendBtn.onclick = sendMessage;
+        input.onkeypress = (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } };
+
+        // Auto-expand textarea
+        input.oninput = () => {
+            input.style.height = 'auto';
+            input.style.height = (input.scrollHeight) + 'px';
+        };
+
+        // Edit/Delete handlers exposed to window
+        window.deleteMsg = (id) => {
+            if (confirm("Delete this message?")) {
+                remove(ref(db, `chat_messages/${id}`));
+            }
+        };
+
+        let currentEditId = null;
+        window.openEdit = (id, text) => {
+            currentEditId = id;
+            document.getElementById('edit-input').value = text;
+            document.getElementById('edit-modal').classList.remove('hidden');
+        };
+
+        window.closeEdit = () => {
+            document.getElementById('edit-modal').classList.add('hidden');
+        };
+
+        window.saveEdit = async () => {
+            const newText = document.getElementById('edit-input').value.trim();
+            if (newText && currentEditId) {
+                await update(ref(db, `chat_messages/${currentEditId}`), { text: newText });
+                closeEdit();
+            }
+        };
+        document.getElementById('save-edit-btn').onclick = window.saveEdit;
+
+    </script>
+</body>
+</html>
