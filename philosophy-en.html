@@ -344,6 +344,37 @@
     
 
     
+
+    <script>
+        // Global download fix for cross-origin Supabase links
+        document.addEventListener('click', async (e) => {
+            const a = e.target.closest('a[download]');
+            if (a && a.href.includes('supabase.co')) {
+                e.preventDefault();
+                const originalText = a.innerText;
+                a.innerText = 'Downloading...';
+                try {
+                    const response = await fetch(a.href);
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const tempA = document.createElement('a');
+                    tempA.href = url;
+                    tempA.download = a.getAttribute('download') || 'file.pdf';
+                    document.body.appendChild(tempA);
+                    tempA.click();
+                    document.body.removeChild(tempA);
+                    window.URL.revokeObjectURL(url);
+                } catch (err) {
+                    console.error('Download failed', err);
+                    // Fallback to opening in new tab if fetch fails (e.g. CORS)
+                    window.open(a.href, '_blank');
+                } finally {
+                    a.innerText = originalText;
+                }
+            }
+        });
+    </script>
+
 </body>
 </html>
 
