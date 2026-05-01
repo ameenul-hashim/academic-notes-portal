@@ -224,11 +224,12 @@
             const data = snapshot.val() || {};
             Object.entries(data).sort((a, b) => a[1].timestamp - b[1].timestamp).forEach(([id, msg]) => {
                 const isMe = msg.userId === userId;
+                const isAdmin = userName.toLowerCase() === 'hashim';
                 const bubble = document.createElement('div');
                 bubble.className = `bubble ${isMe ? 'bubble-me' : 'bubble-other'} flex flex-col group`;
                 
                 let controls = '';
-                if (isMe) {
+                if (isMe || isAdmin) {
                     controls = `
                         <div class="edit-controls absolute -top-8 right-0 gap-2 bg-black/60 rounded-lg p-1 backdrop-blur-sm">
                             <button onclick="openEdit('${id}', '${msg.text.replace(/'/g, "\\'")}')" class="text-[10px] text-blue-400 hover:text-white px-1">Edit</button>
