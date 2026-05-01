@@ -465,14 +465,18 @@
             const visitsRef = ref(db, 'site_visits');
             const visitCountElement = document.getElementById('visit-count');
             
-            // Increment transaction on every page load
+            // Increment transaction on every page load (every session/refresh)
             runTransaction(visitsRef, (currentVisits) => {
-                return (currentVisits || 1240) + 1;
+                return (currentVisits || 0) + 1;
+            }).then(() => {
+                console.log("Visit count incremented successfully");
+            }).catch((err) => {
+                console.error("Visit count increment failed:", err);
             });
 
             // Real-time listener for visit count
             onValue(visitsRef, (snapshot) => {
-                const count = snapshot.val() || 1240;
+                const count = snapshot.val() || 0;
                 if (visitCountElement) {
                     visitCountElement.innerText = count.toLocaleString();
                 }
