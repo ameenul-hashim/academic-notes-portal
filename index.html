@@ -456,7 +456,7 @@
                 // Merge and Update List
                 const container = document.getElementById("activeUsers");
                 if (container) {
-                    container.innerHTML = '<span class="flex items-center justify-center w-full h-14 px-3 bg-white/5 rounded-2xl text-gray-400 border border-white/10 text-sm sm:text-base font-medium overflow-hidden text-ellipsis whitespace-nowrap">Hashim (Admin)</span>';
+                    container.innerHTML = '<span class="flex items-center justify-center w-full h-16 px-3 bg-white/5 rounded-2xl text-gray-400 border border-white/10 text-sm sm:text-base font-medium break-words text-center leading-tight">Hashim (Admin)</span>';
                     
                     const allUsers = { ...dbData.users, ...dbData.active_users };
                     const userCount = Object.keys(allUsers).length;
@@ -475,7 +475,13 @@
                     
                     sortedNames.sort((a, b) => a.localeCompare(b, undefined, {sensitivity: 'base'})).forEach(displayName => {
                         const span = document.createElement('span');
-                        span.className = "user-card flex items-center justify-center w-full h-14 px-3 bg-gradient-to-r from-cyan-400/30 to-blue-400/30 rounded-2xl text-white border border-white/20 text-sm sm:text-base font-bold transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] shadow-xl backdrop-blur-sm overflow-hidden text-ellipsis whitespace-nowrap";
+                        let textSize = "text-sm sm:text-base";
+                        if (displayName.length > 20) {
+                            textSize = "text-[11px] sm:text-xs";
+                        } else if (displayName.length > 14) {
+                            textSize = "text-xs sm:text-sm";
+                        }
+                        span.className = `user-card flex items-center justify-center text-center w-full h-16 px-2 bg-gradient-to-r from-cyan-400/30 to-blue-400/30 rounded-2xl text-white border border-white/20 ${textSize} font-bold transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] shadow-xl backdrop-blur-sm break-words leading-tight`;
                         span.textContent = displayName;
                         container.appendChild(span);
                     });
@@ -577,7 +583,7 @@
                 Active Website Users <span id="member-count" class="text-sm font-normal text-gray-500 ml-2"></span>
             </h2>
             <div id="activeUsers" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                <span class="flex items-center justify-center w-full h-14 px-3 bg-white/5 rounded-2xl text-gray-400 border border-white/10 text-sm sm:text-base font-medium overflow-hidden text-ellipsis whitespace-nowrap">Hashim (Admin)</span>
+                <span class="flex items-center justify-center w-full h-16 px-3 bg-white/5 rounded-2xl text-gray-400 border border-white/10 text-sm sm:text-base font-medium break-words text-center leading-tight">Hashim (Admin)</span>
             </div>
         </div>
     </main>
