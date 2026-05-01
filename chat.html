@@ -200,7 +200,7 @@
 
                 updatePresence();
                 onDisconnect(myPresenceRef).remove();
-                setInterval(updatePresence, 30000);
+                setInterval(updatePresence, 3000 /* 3s heartbeat */);
             }
         });
 
@@ -209,7 +209,7 @@
             const users = snapshot.val() || {};
             let activeCount = 0;
             Object.values(users).forEach(u => {
-                if (u.lastActive && (now - u.lastActive < 60000)) activeCount++;
+                if (u.lastActive && (now - u.lastActive < 10000 /* 10s stale check */)) activeCount++;
             });
             document.getElementById('chat-online-count').innerText = Math.max(1, activeCount);
         });

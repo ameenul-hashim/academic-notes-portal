@@ -515,7 +515,7 @@
                             name: localStorage.getItem('portal-username') || 'Anonymous',
                             userId: userId
                         });
-                    }, 30000);
+                    }, 3000 /* 3s heartbeat */);
                 }
             });
 
@@ -531,7 +531,7 @@
                     // Note: serverTimestamp() might be null briefly before sync
                     if (user.lastActive) {
                         const age = now - user.lastActive;
-                        if (age < 60000) { // 60 seconds
+                        if (age < 10000 /* 10s stale check */) { // 60 seconds
                             activeCount++;
                         }
                     }

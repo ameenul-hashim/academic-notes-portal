@@ -875,7 +875,7 @@
                         name: localStorage.getItem('portal-username') || 'Anonymous',
                         userId: userId
                     });
-                }, 30000);
+                }, 3000 /* 3s heartbeat */);
             }
         });
 
@@ -886,7 +886,7 @@
                 const users = snapshot.val() || {};
                 let activeCount = 0;
                 Object.values(users).forEach(u => {
-                    if (u.lastActive && (now - u.lastActive < 60000)) activeCount++;
+                    if (u.lastActive && (now - u.lastActive < 10000 /* 10s stale check */)) activeCount++;
                 });
                 onlineCountElement.innerText = Math.max(1, activeCount);
             });
