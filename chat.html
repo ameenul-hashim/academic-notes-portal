@@ -181,26 +181,37 @@
         let userName = localStorage.getItem('portal-username') || 'Anonymous';
         let userId = localStorage.getItem('portal-userId');
         if (!userId) {
-            userId = 'u_' + Math.random().toString(36).substr(2, 9);
+            userId = 'u_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             localStorage.setItem('portal-userId', userId);
         }
 
-        // Presence Logic
+        // Self-Healing Presence Logic
         onValue(ref(db, '.info/connected'), (snap) => {
             if (snap.val() === true) {
                 const myPresenceRef = ref(db, `online_users/${userId}`);
-                set(myPresenceRef, {
-                    name: userName,
-                    userId: userId,
-                    timestamp: serverTimestamp()
-                });
+                
+                const updatePresence = () => {
+                    set(myPresenceRef, {
+                        name: userName,
+                        userId: userId,
+                        lastActive: serverTimestamp()
+                    });
+                };
+
+                updatePresence();
                 onDisconnect(myPresenceRef).remove();
+                setInterval(updatePresence, 30000);
             }
         });
 
         onValue(onlineRef, (snapshot) => {
-            const online = snapshot.val() || {};
-            document.getElementById('chat-online-count').innerText = Object.keys(online).length;
+            const now = Date.now();
+            const users = snapshot.val() || {};
+            let activeCount = 0;
+            Object.values(users).forEach(u => {
+                if (u.lastActive && (now - u.lastActive < 60000)) activeCount++;
+            });
+            document.getElementById('chat-online-count').innerText = Math.max(1, activeCount);
         });
 
         // Chat Logic

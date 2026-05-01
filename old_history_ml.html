@@ -342,7 +342,8 @@
     </script>
 
     
-    <!-- Firebase Presence System -->
+    
+    <!-- Firebase Presence System (Self-Healing) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
         import { getDatabase, ref, onValue, set, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
@@ -364,7 +365,7 @@
 
         let userId = localStorage.getItem('portal-userId');
         if (!userId) {
-            userId = 'u_' + Math.random().toString(36).substr(2, 9);
+            userId = 'u_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             localStorage.setItem('portal-userId', userId);
         }
 
@@ -372,20 +373,34 @@
             if (snap.val() === true) {
                 const myPresenceRef = ref(db, `online_users/${userId}`);
                 set(myPresenceRef, {
-                    timestamp: serverTimestamp(),
-                    name: localStorage.getItem('portal-username') || 'Anonymous'
+                    lastActive: serverTimestamp(),
+                    name: localStorage.getItem('portal-username') || 'Anonymous',
+                    userId: userId
                 });
                 onDisconnect(myPresenceRef).remove();
+                setInterval(() => {
+                    set(myPresenceRef, {
+                        lastActive: serverTimestamp(),
+                        name: localStorage.getItem('portal-username') || 'Anonymous',
+                        userId: userId
+                    });
+                }, 30000);
             }
         });
 
         const onlineCountElement = document.getElementById('online-count');
         if (onlineCountElement) {
             onValue(onlineRef, (snapshot) => {
-                const count = snapshot.val() ? Object.keys(snapshot.val()).length : 0;
-                onlineCountElement.innerText = count;
+                const now = Date.now();
+                const users = snapshot.val() || {};
+                let activeCount = 0;
+                Object.values(users).forEach(u => {
+                    if (u.lastActive && (now - u.lastActive < 60000)) activeCount++;
+                });
+                onlineCountElement.innerText = Math.max(1, activeCount);
             });
         }
     </script>
-\n</body>
+
+</body>
 </html>
