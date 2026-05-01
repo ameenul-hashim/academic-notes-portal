@@ -211,16 +211,14 @@
             </div>
         </div>
 
-        <!-- Visit Counter (Social Proof) -->
+        <!-- Online Users Badge (Real-time) -->
         <div class="mb-12 text-center">
             <div class="inline-flex items-center gap-3 px-6 py-2 bg-white/5 rounded-full border border-white/10 text-orange-200 text-sm font-medium">
                 <span class="relative flex h-3 w-3">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                 </span>
-                <span id="visit-count">0</span> users have visited this portal
-                <span class="mx-2 opacity-30">|</span>
-                <span class="text-green-400 flex items-center gap-1">
+                <span class="text-green-400 font-bold">
                     <span id="online-count">1</span> Online Now
                 </span>
             </div>
@@ -512,27 +510,6 @@
             });
 
             console.log("Firebase Configuration Loaded:", firebaseConfig);
-
-            // Visit Counter Logic
-            const visitsRef = ref(db, 'site_visits');
-            const visitCountElement = document.getElementById('visit-count');
-            
-            // Increment transaction on every page load (every session/refresh)
-            runTransaction(visitsRef, (currentVisits) => {
-                return (currentVisits || 0) + 1;
-            }).then(() => {
-                console.log("Visit count incremented successfully");
-            }).catch((err) => {
-                console.error("Visit count increment failed:", err);
-            });
-
-            // Real-time listener for visit count
-            onValue(visitsRef, (snapshot) => {
-                const count = snapshot.val() || 0;
-                if (visitCountElement) {
-                    visitCountElement.innerText = count.toLocaleString();
-                }
-            });
 
             const localName = localStorage.getItem('portal-username');
             const inputArea = document.getElementById('name-input-area');
