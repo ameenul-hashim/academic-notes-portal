@@ -303,7 +303,7 @@
                     </h2>
                     <p class="text-orange-200/60 text-center mb-10 text-sm md:text-base font-medium tracking-wide">Real-time status of academic notes and study materials</p>
 
-                    <div class="overflow-x-auto rounded-3xl border border-white/10 bg-black/20 backdrop-blur-md">
+                    <div class="overflow-x-auto rounded-3xl border border-white/10 bg-gradient-to-br from-indigo-950/40 to-blue-950/40 backdrop-blur-xl shadow-2xl">
                         <table class="w-full text-left border-collapse min-w-[700px]">
                             <thead>
                                 <tr class="bg-white/10 border-b border-white/20">
@@ -471,18 +471,24 @@
             
             console.log("Firebase connected");
             
-            // Presence System Logic
+            // Presence System Logic (Unique Users)
             const onlineRef = ref(db, 'online_users');
             const connectedRef = ref(db, '.info/connected');
             const onlineCountElement = document.getElementById('online-count');
+            
+            let userId = localStorage.getItem('portal-userId');
+            if (!userId) {
+                userId = 'u_' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('portal-userId', userId);
+            }
 
             onValue(connectedRef, (snap) => {
                 if (snap.val() === true) {
-                    // Add this device to online users
-                    const myPresenceRef = push(onlineRef, {
-                        timestamp: Date.now()
+                    const myPresenceRef = ref(db, `online_users/${userId}`);
+                    set(myPresenceRef, {
+                        timestamp: serverTimestamp(),
+                        name: localStorage.getItem('portal-username') || 'Anonymous'
                     });
-                    // Remove when disconnected
                     onDisconnect(myPresenceRef).remove();
                 }
             });

@@ -373,5 +373,43 @@
         });
     </script>
 
+
+    <!-- Firebase Presence -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, onValue, set, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAc1eNCmAYDRYbnRZPWj8NQ7dOWJY-4d0o",
+            authDomain: "academic-portal-135fd.firebaseapp.com",
+            projectId: "academic-portal-135fd",
+            storageBucket: "academic-portal-135fd.firebasestorage.app",
+            messagingSenderId: "459730360375",
+            appId: "1:459730360375:web:151a615ff0bc30557347b2",
+            databaseURL: "https://academic-portal-135fd-default-rtdb.firebaseio.com/"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const connectedRef = ref(db, '.info/connected');
+
+        let userId = localStorage.getItem('portal-userId');
+        if (!userId) {
+            userId = 'u_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('portal-userId', userId);
+        }
+
+        onValue(connectedRef, (snap) => {
+            if (snap.val() === true) {
+                const myPresenceRef = ref(db, `online_users/${userId}`);
+                set(myPresenceRef, {
+                    timestamp: serverTimestamp(),
+                    name: localStorage.getItem('portal-username') || 'Anonymous'
+                });
+                onDisconnect(myPresenceRef).remove();
+            }
+        });
+    </script>
+
 </body>
 </html>

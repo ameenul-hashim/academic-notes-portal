@@ -187,13 +187,22 @@
         let userName = localStorage.getItem('portal-username') || 'Anonymous';
         let userId = localStorage.getItem('portal-userId');
         if (!userId) {
-            userId = 'user_' + Math.random().toString(36).substr(2, 9);
+            userId = 'u_' + Math.random().toString(36).substr(2, 9);
             localStorage.setItem('portal-userId', userId);
         }
 
         // Presence Logic
-        const myPresenceRef = push(onlineRef, { name: userName, userId: userId });
-        onDisconnect(myPresenceRef).remove();
+        onValue(ref(db, '.info/connected'), (snap) => {
+            if (snap.val() === true) {
+                const myPresenceRef = ref(db, `online_users/${userId}`);
+                set(myPresenceRef, {
+                    name: userName,
+                    userId: userId,
+                    timestamp: serverTimestamp()
+                });
+                onDisconnect(myPresenceRef).remove();
+            }
+        });
 
         onValue(onlineRef, (snapshot) => {
             const online = snapshot.val() || {};
