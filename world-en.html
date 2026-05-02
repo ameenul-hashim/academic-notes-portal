@@ -897,18 +897,54 @@
     </script>
 
 <script>
-        // Global download fix for cross-origin PDF links
-        document.addEventListener('click', (e) => {
+        // Advanced global download handler for iPhone/Mobile and Cross-Origin
+        document.addEventListener('click', async (e) => {
             const a = e.target.closest('a[download]');
-            if (a) {
-                const url = new URL(a.href);
-                if (url.hostname.includes('supabase.co')) {
-                    const downloadName = a.getAttribute('download') || 'file.pdf';
-                    if (!url.searchParams.has('download')) {
-                        e.preventDefault();
-                        url.searchParams.set('download', downloadName);
-                        window.location.href = url.toString();
-                    }
+            if (a && a.href.includes('supabase.co')) {
+                // If it's already a blob, let it proceed
+                if (a.href.startsWith('blob:')) return;
+                
+                e.preventDefault();
+                const originalContent = a.innerHTML;
+                const downloadName = a.getAttribute('download') || 'file.pdf';
+                
+                try {
+                    // Visual feedback
+                    a.style.pointerEvents = 'none';
+                    a.innerHTML = '<span class="flex items-center justify-center gap-2"><svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Downloading...</span>';
+                    
+                    const response = await fetch(a.href, { mode: 'cors' });
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    
+                    const blob = await response.blob();
+                    const blobUrl = window.URL.createObjectURL(blob);
+                    
+                    const tempA = document.createElement('a');
+                    tempA.href = blobUrl;
+                    tempA.setAttribute('download', downloadName);
+                    document.body.appendChild(tempA);
+                    tempA.click();
+                    document.body.removeChild(tempA);
+                    
+                    // Cleanup
+                    setTimeout(() => {
+                        window.URL.revokeObjectURL(blobUrl);
+                        a.style.pointerEvents = 'auto';
+                        a.innerHTML = originalContent;
+                    }, 1000);
+                    
+                } catch (err) {
+                    console.error('Advanced download failed, falling back to server-side:', err);
+                    // Fallback to direct redirect with download parameter
+                    const url = new URL(a.href);
+                    url.searchParams.set('download', downloadName);
+                    window.location.href = url.toString();
+                    
+                    // Reset UI after a delay (since we redirected, this might not even be seen)
+                    setTimeout(() => {
+                        a.style.pointerEvents = 'auto';
+                        a.innerHTML = originalContent;
+                    }, 2000);
                 }
             }
         });
