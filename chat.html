@@ -218,6 +218,7 @@
         const sendBtn = document.getElementById('send-btn');
 
         onValue(chatRef, (snapshot) => {
+            localStorage.setItem('chat_last_read', Date.now());
             messagesDiv.innerHTML = '';
             const data = snapshot.val() || {};
             Object.entries(data).sort((a, b) => a[1].timestamp - b[1].timestamp).forEach(([id, msg]) => {

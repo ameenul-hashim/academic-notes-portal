@@ -98,6 +98,20 @@
             background: white !important;
             color: #0f172a !important;
         }
+
+        /* Notification Bell Animation */
+        @keyframes swing {
+            0% { transform: rotate(0deg); }
+            20% { transform: rotate(15deg); }
+            40% { transform: rotate(-10deg); }
+            60% { transform: rotate(5deg); }
+            80% { transform: rotate(-5deg); }
+            100% { transform: rotate(0deg); }
+        }
+        .animate-swing {
+            animation: swing 2s ease infinite;
+            transform-origin: top center;
+        }
     </style>
     <script>
         (function() {
@@ -126,12 +140,10 @@
             </div>
 
             <div class="flex flex-col items-center gap-3 w-full md:w-auto md:flex-row md:absolute md:right-4">
-                <a href="chat.html" class="w-full md:w-40 flex items-center justify-center gap-2 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 border border-blue-400/40 rounded-full text-white text-xs font-black uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-95 shadow-[0_0_20px_rgba(37,99,235,0.4)] backdrop-blur-md">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-300 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-400"></span>
-                    </span>
+                <a href="chat.html" class="w-full md:w-48 flex items-center justify-center gap-3 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 border border-blue-400/40 rounded-full text-white text-xs font-black uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-95 shadow-[0_0_20px_rgba(37,99,235,0.4)] backdrop-blur-md relative">
+                    <svg class="w-4 h-4 text-white animate-swing" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
                     Realtime Chat
+                    <span id="unread-count-badge" class="hidden absolute -top-2 -right-1 bg-rose-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-white/20 shadow-lg animate-pulse">0</span>
                 </a>
                 <select id="theme-selector" class="w-full md:w-40 bg-white/10 text-white backdrop-blur-md border border-white/20 rounded-full px-6 py-2.5 text-[10px] md:text-xs font-black uppercase tracking-widest outline-none cursor-pointer hover:bg-white/20 transition-all appearance-none text-center">
                     <option value="">Choose Theme</option>
@@ -619,6 +631,30 @@
             onValue(ref(db, 'active_users'), (snapshot) => {
                 dbData.active_users = snapshot.val() || {};
                 updateUI();
+            });
+
+            // Real-time Chat Notifications
+            const chatRef = ref(db, 'chat_messages');
+            const unreadBadge = document.getElementById('unread-count-badge');
+            
+            onValue(chatRef, (snapshot) => {
+                const messages = snapshot.val() || {};
+                const lastRead = parseInt(localStorage.getItem('chat_last_read') || '0');
+                let unreadCount = 0;
+                
+                Object.values(messages).forEach(msg => {
+                    // Only count messages from others that are newer than our last read
+                    if (msg.timestamp > lastRead && msg.userId !== userId) {
+                        unreadCount++;
+                    }
+                });
+                
+                if (unreadCount > 0) {
+                    unreadBadge.innerText = unreadCount > 99 ? '99+' : unreadCount;
+                    unreadBadge.classList.remove('hidden');
+                } else {
+                    unreadBadge.classList.add('hidden');
+                }
             });
 
             async function join() {
