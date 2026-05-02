@@ -238,6 +238,10 @@
                     <span id="online-count">0</span> Online Now
                 </span>
             </div>
+            <!-- Online Usernames List -->
+            <div id="online-users-names" class="mt-4 flex flex-wrap justify-center gap-2 max-w-3xl mx-auto px-4">
+                <!-- Online names will appear here -->
+            </div>
         </div>
         <!-- Grid System: 1 col on mobile, 2 on tablet (sm), 4 on desktop (lg) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
@@ -536,22 +540,37 @@
                 const now = Date.now();
                 const users = snapshot.val() || {};
                 let activeCount = 0;
+                let activeNames = [];
                 
-                // Only count users active in the last 60 seconds
+                // Only count users active in the last 10 seconds
                 Object.values(users).forEach(user => {
-                    // Firebase timestamp is in ms. If it's too old, we don't count it.
-                    // Note: serverTimestamp() might be null briefly before sync
                     if (user.lastActive) {
                         const age = now - user.lastActive;
-                        if (age < 10000 /* 10s stale check */) { // 60 seconds
+                        if (age < 15000 /* 15s stale check */) { 
                             activeCount++;
+                            if (user.name) activeNames.push(user.name);
                         }
                     }
                 });
 
                 if (onlineCountElement) {
-                    // Ensure count is at least 1 (the current user)
                     onlineCountElement.innerText = Math.max(1, activeCount);
+                }
+
+                // Update Online Names Display (Admin Only)
+                const namesContainer = document.getElementById('online-users-names');
+                const isAdmin = (localStorage.getItem('portal-username') || '').toLowerCase() === 'ameenulhashimh';
+                
+                if (namesContainer && isAdmin) {
+                    namesContainer.innerHTML = '';
+                    activeNames.forEach(name => {
+                        const span = document.createElement('span');
+                        span.className = "px-4 py-1.5 bg-green-500/10 text-green-400 text-[10px] font-black uppercase tracking-widest rounded-full border border-green-500/20 shadow-[0_0_15px_rgba(34,197,94,0.1)] transition-all hover:scale-110";
+                        span.innerText = name;
+                        namesContainer.appendChild(span);
+                    });
+                } else if (namesContainer) {
+                    namesContainer.innerHTML = '';
                 }
             });
 
