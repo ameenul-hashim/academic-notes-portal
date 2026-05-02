@@ -650,12 +650,12 @@
                 updateUI();
             });
 
-            // Cleanup Logic: Automatically remove numeric usernames (like '8921552682')
+            // Cleanup Logic: Automatically remove numeric-only usernames (like '8921552682')
             onValue(ref(db, 'users'), (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
                     Object.entries(data).forEach(([key, user]) => {
-                        if (user.name && /\d/.test(user.name)) {
+                        if (user.name && /^\d+$/.test(user.name.replace(/\s/g, ''))) {
                             remove(ref(db, `users/${key}`));
                         }
                     });
@@ -666,7 +666,7 @@
                 const data = snapshot.val();
                 if (data) {
                     Object.entries(data).forEach(([key, name]) => {
-                        if (typeof name === 'string' && /\d/.test(name)) {
+                        if (typeof name === 'string' && /^\d+$/.test(name.replace(/\s/g, ''))) {
                             remove(ref(db, `active_users/${key}`));
                         }
                     });
@@ -704,9 +704,13 @@
                     return;
                 }
 
-                // Validation: Only characters allowed (no digits)
-                if (/\d/.test(name)) {
-                    alert("Usernames cannot contain digits. Please use only letters.");
+                // Validation: Alphanumeric allowed, but must contain at least one letter
+                if (!/[a-zA-Z]/.test(name)) {
+                    alert("Usernames must contain at least one letter. Numeric-only names are not allowed.");
+                    return;
+                }
+                if (!/^[a-zA-Z0-9 ]+$/.test(name)) {
+                    alert("Usernames can only contain letters, numbers, and spaces.");
                     return;
                 }
 
