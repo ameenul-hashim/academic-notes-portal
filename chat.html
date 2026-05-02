@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Realtime Community Chat - Academic Portal</title>
+    <meta name="description" content="Join the Realtime Community Chat for BA Calicut University. Discuss notes, share resources, and connect with fellow students.">
+    <meta name="keywords" content="Calicut University Chat, Student Community, BA Notes Discussion, Realtime Chat">
+    <meta name="author" content="Hashim">
+    <meta name="theme-color" content="#881337">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         (function() {
@@ -202,7 +206,7 @@
 
                 updatePresence();
                 onDisconnect(myPresenceRef).remove();
-                setInterval(updatePresence, 3000 /* 3s heartbeat */);
+                setInterval(updatePresence, 15000 /* 15s heartbeat optimized */);
             }
         });
 

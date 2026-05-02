@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BA Calicut University Unofficial Notes And Classes</title>
+    <meta name="description" content="Official Unofficial Academic Notes Portal for BA Calicut University. Access study materials, community chat, and real-time updates.">
+    <meta name="keywords" content="Calicut University, BA Notes, Academic Portal, Malayalam Medium, English Medium, University Study Materials">
+    <meta name="author" content="Hashim">
+    <meta name="theme-color" content="#881337">
+    <link rel="canonical" href="https://academic-portal-135fd.web.app/">
+    
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
     
     <script>
         // Apply theme early to avoid flash
@@ -244,7 +249,7 @@
             </div>
         </div>
         <!-- Grid System: 1 col on mobile, 2 on tablet (sm), 4 on desktop (lg) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
             
             <!-- Subject Card 1 -->
             <a href="history.html" class="block outline-none">
@@ -524,14 +529,14 @@
                     // Remove on disconnect (backup)
                     onDisconnect(myPresenceRef).remove();
 
-                    // Optional: Update heartbeat every 30 seconds
+                    // Heartbeat every 15 seconds (Optimized from 3s to reduce CPU usage)
                     setInterval(() => {
                         set(myPresenceRef, {
                             lastActive: serverTimestamp(),
                             name: localStorage.getItem('portal-username') || 'Anonymous',
                             userId: userId
                         });
-                    }, 3000 /* 3s heartbeat */);
+                    }, 15000);
                 }
             });
 
