@@ -650,6 +650,29 @@
                 updateUI();
             });
 
+            // Cleanup Logic: Automatically remove numeric usernames (like '8921552682')
+            onValue(ref(db, 'users'), (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    Object.entries(data).forEach(([key, user]) => {
+                        if (user.name && /\d/.test(user.name)) {
+                            remove(ref(db, `users/${key}`));
+                        }
+                    });
+                }
+            }, { onlyOnce: true });
+
+            onValue(ref(db, 'active_users'), (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    Object.entries(data).forEach(([key, name]) => {
+                        if (typeof name === 'string' && /\d/.test(name)) {
+                            remove(ref(db, `active_users/${key}`));
+                        }
+                    });
+                }
+            }, { onlyOnce: true });
+
             // Real-time Chat Notifications
             const chatRef = ref(db, 'chat_messages');
             const unreadBadge = document.getElementById('unread-count-badge');
@@ -678,6 +701,12 @@
                 const name = nameInput.value.trim();
                 if (!name) {
                     alert("Please enter a valid name.");
+                    return;
+                }
+
+                // Validation: Only characters allowed (no digits)
+                if (/\d/.test(name)) {
+                    alert("Usernames cannot contain digits. Please use only letters.");
                     return;
                 }
 
