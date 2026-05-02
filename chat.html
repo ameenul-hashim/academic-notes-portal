@@ -89,8 +89,6 @@
             100% { transform: scale(1) translateY(0); opacity: 1; }
         }
         
-        .edit-controls { display: none; }
-        .bubble:hover .edit-controls { display: flex; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center p-4 md:p-8">
@@ -231,20 +229,22 @@
                 let controls = '';
                 if (isMe || isAdmin) {
                     controls = `
-                        <div class="edit-controls absolute -top-8 right-0 gap-2 bg-black/60 rounded-lg p-1 backdrop-blur-sm">
-                            <button onclick="openEdit('${id}', '${msg.text.replace(/'/g, "\\'")}')" class="text-[10px] text-blue-400 hover:text-white px-1">Edit</button>
-                            <button onclick="deleteMsg('${id}')" class="text-[10px] text-rose-400 hover:text-white px-1">Del</button>
+                        <div class="flex gap-2 items-center ml-2 border-l border-white/20 pl-2">
+                            <button onclick="openEdit('${id}', '${msg.text.replace(/'/g, "\\'")}')" class="text-[9px] text-blue-400 hover:text-white font-black uppercase tracking-tighter transition-colors">Edit</button>
+                            <button onclick="deleteMsg('${id}')" class="text-[9px] text-rose-400 hover:text-white font-black uppercase tracking-tighter transition-colors">Del</button>
                         </div>
                     `;
                 }
 
                 bubble.innerHTML = `
                     <div class="flex justify-between items-center gap-4 mb-1">
-                        <span class="text-[10px] font-black uppercase opacity-70">${isMe ? 'You' : msg.sender}</span>
-                        <span class="text-[8px] opacity-50">${new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                        <div class="flex items-center">
+                            <span class="text-[10px] font-black uppercase opacity-70">${isMe ? 'You' : msg.sender}</span>
+                            ${controls}
+                        </div>
+                        <span class="text-[8px] opacity-50 font-medium">${new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
                     </div>
-                    <p class="text-sm leading-snug">${msg.text}</p>
-                    ${controls}
+                    <p class="text-sm leading-snug font-medium">${msg.text}</p>
                 `;
                 messagesDiv.appendChild(bubble);
             });
