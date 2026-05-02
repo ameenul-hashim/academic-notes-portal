@@ -184,8 +184,8 @@
             
             <!-- Chapter Card 1 -->
             <div>
-                <div onclick="document.getElementById('modal-ch1').classList.remove('hidden')" class="glass-card h-40 flex items-center justify-center p-6 cursor-pointer rounded-xl text-center transition-all hover:-translate-y-1 bg-rose-500/10 border-rose-500/20 text-rose-100 hover:shadow-[0_0_30px_rgba(244,63,94,0.1)]">
-                    <h2 class="text-2xl font-bold text-white">Chapter 1</h2>
+                <div onclick="document.getElementById('modal-ch1').classList.remove('hidden')" class="glass-card h-40 flex items-center justify-center p-6 cursor-pointer rounded-xl text-center transition-all hover:-translate-y-1 bg-emerald-500/10 border-emerald-500/20 text-emerald-100 hover:shadow-[0_0_30px_rgba(16,185,129,0.2)]">
+                    <h2 class="flex items-center justify-center gap-2 text-2xl font-bold text-white">Chapter 1 <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></h2>
                 </div>
 
                 <!-- Modal for Chapter 1 -->
@@ -193,22 +193,13 @@
                     <div class="glass-card rounded-2xl p-8 max-w-sm w-full relative" onclick="event.stopPropagation()">
                         <button onclick="document.getElementById('modal-ch1').classList.add('hidden')" class="absolute top-4 right-4 text-gray-300 hover:text-white text-2xl">&times;</button>
                         <h3 class="text-2xl font-bold text-white mb-6 text-center">Chapter 1</h3>
-                                                <div class="flex flex-col gap-4">
-                            <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-rose-900/40 to-red-950/40 backdrop-blur-lg border border-rose-500/30 shadow-2xl relative overflow-hidden group">
-                                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                                <svg class="w-16 h-16 mx-auto mb-4 text-rose-300 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                                </svg>
-                                <h4 class="text-xl font-bold text-rose-100 mb-2">Content Coming Soon</h4>
-                                <p class="text-rose-200/80 leading-relaxed text-sm">Our team is currently preparing these notes.</p>
-                                <div class="mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-xs font-medium text-rose-300">
-                                    <span class="relative flex h-2 w-2">
-                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-                                        <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
-                                    </span>
-                                    Processing Upload
-                                </div>
-                        </div>
+                        <div class="flex flex-col gap-4">
+                            <!-- You can put your custom link here -->
+                            <a href="https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/malayalam/malayalam%20notes/chapter1/malayalam%20chapter1.pdf" target="_blank" class="text-orange-300 hover:text-orange-100 underline text-center font-medium">View PDF</a>
+                            <!-- Download PDF Option -->
+                            <a href="https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/malayalam/malayalam%20notes/chapter1/malayalam%20chapter1.pdf?download=Malayalam_Chapter1.pdf" download="Malayalam_Chapter1.pdf" class="btn-glass text-center py-3 px-4 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white/10 text-white mt-2">
+                                Download PDF
+                            </a>
                         </div>
                     </div>
                 </div>
