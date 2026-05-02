@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        (function() {
+            if (!localStorage.getItem('portal-username')) {
+                alert("Access Denied: Please set a username in the portal first!");
+                window.location.href = 'index.html';
+            }
+        })();
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>English for BA Programs (Malayalam) - Chapters</title>

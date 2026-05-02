@@ -3,6 +3,15 @@
 <html lang="en">
 
 <head>
+    <script>
+        (function() {
+            if (!localStorage.getItem('portal-username')) {
+                alert("Access Denied: Please set a username in the portal first!");
+                window.location.href = 'index.html';
+            }
+        })();
+    </script>
+
 
     <meta charset="UTF-8">
 
