@@ -557,20 +557,18 @@
                     onlineCountElement.innerText = Math.max(1, activeCount);
                 }
 
-                // Update Online Names Display (Admin Only)
+                // Update Online Names Display (Visible to All)
                 const namesContainer = document.getElementById('online-users-names');
-                const isAdmin = (localStorage.getItem('portal-username') || '').toLowerCase() === 'ameenulhashimh';
                 
-                if (namesContainer && isAdmin) {
+                if (namesContainer) {
                     namesContainer.innerHTML = '';
                     activeNames.forEach(name => {
                         const span = document.createElement('span');
-                        span.className = "px-4 py-1.5 bg-green-500/10 text-green-400 text-[10px] font-black uppercase tracking-widest rounded-full border border-green-500/20 shadow-[0_0_15px_rgba(34,197,94,0.1)] transition-all hover:scale-110";
+                        // Using the requested card format similar to active website users
+                        span.className = "flex items-center justify-center text-center min-w-[120px] px-4 py-3 bg-gradient-to-r from-green-400/20 to-emerald-500/20 rounded-2xl text-white border border-green-400/30 text-xs font-black uppercase tracking-widest shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(34,197,94,0.3)]";
                         span.innerText = name;
                         namesContainer.appendChild(span);
                     });
-                } else if (namesContainer) {
-                    namesContainer.innerHTML = '';
                 }
             });
 
