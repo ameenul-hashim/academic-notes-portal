@@ -176,7 +176,11 @@
         const chatRef = ref(db, 'chat_messages');
         const onlineRef = ref(db, 'presence_v2');
         
-        let userName = localStorage.getItem('portal-username') || 'Anonymous';
+        let userName = localStorage.getItem('portal-username');
+        if (!userName) {
+            alert("Please set a username before entering the chat!");
+            window.location.href = 'index.html';
+        }
         let userId = localStorage.getItem('portal-userId');
         if (!userId) {
             userId = 'u_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
