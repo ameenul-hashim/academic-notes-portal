@@ -197,7 +197,7 @@
                             <!-- You can put your custom link here -->
                             <a href="https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/english/english%20language%20malayalam/chapter1/translated%20english%20chapter1.pdf" target="_blank" class="text-orange-300 hover:text-orange-100 underline text-center font-medium">View PDF</a>
                             <!-- Download PDF Option -->
-                            <a href="https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/english/english%20language%20malayalam/chapter1/translated%20english%20chapter1.pdf" download="English_Chapter_1_Malayalam.pdf" class="btn-glass text-center py-3 px-4 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white/10 text-white mt-2">
+                            <a href="https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/english/english%20language%20malayalam/chapter1/translated%20english%20chapter1.pdf?download=English_Chapter_1_Malayalam.pdf" download="English_Chapter_1_Malayalam.pdf" class="btn-glass text-center py-3 px-4 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white/10 text-white mt-2">
                                 Download PDF
                             </a>
                         </div>
@@ -219,7 +219,7 @@
                             <!-- You can put your custom link here -->
                             <a href="https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/english/english%20language%20malayalam/chapter2/translated%20english%20chapter2.pdf" target="_blank" class="text-orange-300 hover:text-orange-100 underline text-center font-medium">View PDF</a>
                             <!-- Download PDF Option -->
-                            <a href="https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/english/english%20language%20malayalam/chapter2/translated%20english%20chapter2.pdf" download="English_Chapter_2_Malayalam.pdf" class="btn-glass text-center py-3 px-4 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white/10 text-white mt-2">
+                            <a href="https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/english/english%20language%20malayalam/chapter2/translated%20english%20chapter2.pdf?download=English_Chapter_2_Malayalam.pdf" download="English_Chapter_2_Malayalam.pdf" class="btn-glass text-center py-3 px-4 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white/10 text-white mt-2">
                                 Download PDF
                             </a>
                         </div>
@@ -241,7 +241,7 @@
                             <!-- You can put your custom link here -->
                             <a href="https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/english/english%20language%20malayalam/chapter3/Translated%20%20english%20chapter%203.pdf" target="_blank" class="text-orange-300 hover:text-orange-100 underline text-center font-medium">View PDF</a>
                             <!-- Download PDF Option -->
-                            <a href="https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/english/english%20language%20malayalam/chapter3/Translated%20%20english%20chapter%203.pdf" download="English_Chapter_3_Malayalam.pdf" class="btn-glass text-center py-3 px-4 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white/10 text-white mt-2">
+                            <a href="https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/english/english%20language%20malayalam/chapter3/Translated%20%20english%20chapter%203.pdf?download=English_Chapter_3_Malayalam.pdf" download="English_Chapter_3_Malayalam.pdf" class="btn-glass text-center py-3 px-4 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white/10 text-white mt-2">
                                 Download PDF
                             </a>
                         </div>
@@ -358,30 +358,18 @@
     
 
     <script>
-        // Global download fix for cross-origin Supabase links
-        document.addEventListener('click', async (e) => {
+        // Global download fix for cross-origin PDF links
+        document.addEventListener('click', (e) => {
             const a = e.target.closest('a[download]');
-            if (a && a.href.includes('supabase.co')) {
-                e.preventDefault();
-                const originalText = a.innerText;
-                a.innerText = 'Downloading...';
-                try {
-                    const response = await fetch(a.href);
-                    const blob = await response.blob();
-                    const url = window.URL.createObjectURL(blob);
-                    const tempA = document.createElement('a');
-                    tempA.href = url;
-                    tempA.download = a.getAttribute('download') || 'file.pdf';
-                    document.body.appendChild(tempA);
-                    tempA.click();
-                    document.body.removeChild(tempA);
-                    window.URL.revokeObjectURL(url);
-                } catch (err) {
-                    console.error('Download failed', err);
-                    // Fallback to opening in new tab if fetch fails (e.g. CORS)
-                    window.open(a.href, '_blank');
-                } finally {
-                    a.innerText = originalText;
+            if (a) {
+                const url = new URL(a.href);
+                if (url.hostname.includes('supabase.co')) {
+                    const downloadName = a.getAttribute('download') || 'file.pdf';
+                    if (!url.searchParams.has('download')) {
+                        e.preventDefault();
+                        url.searchParams.set('download', downloadName);
+                        window.location.href = url.toString();
+                    }
                 }
             }
         });

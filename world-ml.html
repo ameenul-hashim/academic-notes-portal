@@ -905,6 +905,23 @@
         }
     </script>
 
+<script>
+        // Global download fix for cross-origin PDF links
+        document.addEventListener('click', (e) => {
+            const a = e.target.closest('a[download]');
+            if (a) {
+                const url = new URL(a.href);
+                if (url.hostname.includes('supabase.co')) {
+                    const downloadName = a.getAttribute('download') || 'file.pdf';
+                    if (!url.searchParams.has('download')) {
+                        e.preventDefault();
+                        url.searchParams.set('download', downloadName);
+                        window.location.href = url.toString();
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
 
