@@ -219,15 +219,18 @@
         <div id="user-identity-section" class="mt-4 mb-12 max-w-2xl mx-auto px-4">
             <div class="glass-card rounded-3xl p-6 border border-white/10 text-center">
                 <div id="name-input-area" class="hidden">
-                    <p class="text-orange-200 uppercase tracking-widest text-xs mb-4 font-bold">Join the Community? Enter your name</p>
+                    <p id="name-prompt" class="text-orange-200 uppercase tracking-widest text-xs mb-4 font-bold">Join the Community? Enter your name</p>
                     <div class="flex flex-col sm:flex-row gap-3">
                         <input type="text" id="user-name-input" class="flex-grow bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50" placeholder="Enter your name">
-                        <button id="join-btn" class="bg-gradient-to-r from-orange-500 to-rose-600 text-white font-bold px-6 py-3 rounded-xl hover:scale-105 transition-transform active:scale-95">Join Now</button>
+                        <div class="flex gap-2">
+                            <button id="join-btn" class="flex-grow bg-gradient-to-r from-orange-500 to-rose-600 text-white font-bold px-6 py-3 rounded-xl hover:scale-105 transition-transform active:scale-95">Join Now</button>
+                            <button id="cancel-name-btn" class="hidden px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-gray-400 hover:text-white transition-colors">Cancel</button>
+                        </div>
                     </div>
                 </div>
                 <div id="name-display-area" class="hidden">
-
                     <h2 class="text-2xl font-bold text-white mb-2">Welcome, <span id="display-name-span" class="text-orange-400"></span>!</h2>
+                    <button id="change-name-btn" class="text-xs text-orange-200/60 hover:text-orange-400 underline transition-colors uppercase tracking-widest font-bold">Change Name</button>
                 </div>
             </div>
         </div>
@@ -704,8 +707,15 @@
 
             async function join() {
                 const name = nameInput.value.trim();
+                const oldName = localStorage.getItem('portal-username');
+
                 if (!name) {
                     alert("Please enter a valid name.");
+                    return;
+                }
+
+                if (name === oldName) {
+                    updateUI();
                     return;
                 }
 
@@ -728,22 +738,58 @@
                     return;
                 }
 
-                console.log("Adding user:", name);
+                console.log("Saving user:", name);
                 localStorage.setItem('portal-username', name);
                 
-                // ONLY use push() to add new users (Permanent Storage)
-                const newRef = push(usersRef, {
+                const userKey = localStorage.getItem('portal-userkey');
+                if (userKey) {
+                    // Update existing user
+                    await set(ref(db, `users/${userKey}`), {
+                        name: name,
+                        time: Date.now()
+                    });
+                } else {
+                    // Create new user
+                    const newRef = push(usersRef, {
+                        name: name,
+                        time: Date.now()
+                    });
+                    localStorage.setItem('portal-userkey', newRef.key);
+                }
+
+                // Update Presence immediately
+                const myPresenceRef = ref(db, `presence_v2/${userId}`);
+                set(myPresenceRef, {
+                    lastActive: serverTimestamp(),
                     name: name,
-                    time: Date.now()
+                    userId: userId
                 });
-                localStorage.setItem('portal-userkey', newRef.key);
                 
-                console.log("User added successfully:", name);
+                console.log("User updated successfully:", name);
                 nameInput.value = "";
-                updateUI(); // Immediately update UI to hide input area
+                updateUI();
+            }
+
+            function openChangeName() {
+                const currentName = localStorage.getItem('portal-username');
+                document.getElementById('name-prompt').textContent = "Update your name";
+                document.getElementById('user-name-input').value = currentName || "";
+                document.getElementById('join-btn').textContent = "Update Name";
+                document.getElementById('cancel-name-btn').classList.remove('hidden');
+                document.getElementById('name-input-area').classList.remove('hidden');
+                document.getElementById('name-display-area').classList.add('hidden');
+            }
+
+            function cancelChangeName() {
+                document.getElementById('name-prompt').textContent = "Join the Community? Enter your name";
+                document.getElementById('join-btn').textContent = "Join Now";
+                document.getElementById('cancel-name-btn').classList.add('hidden');
+                updateUI();
             }
 
             document.getElementById('join-btn').addEventListener('click', join);
+            document.getElementById('change-name-btn').addEventListener('click', openChangeName);
+            document.getElementById('cancel-name-btn').addEventListener('click', cancelChangeName);
 
 
             // Refresh UI once on load
