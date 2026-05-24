@@ -1,0 +1,21 @@
+{
+  "name": "BA Calicut University Notes",
+  "short_name": "BA Notes",
+  "description": "Official Unofficial Academic Notes Portal for BA Calicut University",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#881337",
+  "theme_color": "#881337",
+  "icons": [
+    {
+      "src": "assets/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

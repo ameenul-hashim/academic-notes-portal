@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
 
     <script>
         (function() {
@@ -407,40 +409,56 @@
                     });
                 };
                 updatePresence();
-                // Removed onDisconnect().remove() to keep user online during page transitions
-                setInterval(updatePresence, 10000 /* 10s heartbeat */);
+                onDisconnect(myPresenceRef).remove();
+                    setInterval(updatePresence, 10000 /* 10s heartbeat */);
             }
         });
 
         const onlineCountElement = document.getElementById('online-count');
         if (onlineCountElement) {
             let latestPresenceData = {};
+            let displayCache = {};
             
             onValue(onlineRef, (snapshot) => {
                 latestPresenceData = snapshot.val() || {};
+                const now = Date.now();
+                Object.keys(latestPresenceData).forEach(key => {
+                    displayCache[key] = { user: latestPresenceData[key], lastSeenInDB: now };
+                });
                 updateOnlineCount();
             });
 
             function updateOnlineCount() {
                 const now = Date.now();
                 let activeCount = 0;
-                Object.keys(latestPresenceData).forEach(key => {
-                    const u = latestPresenceData[key];
-                    if (u.lastActive) {
-                        const age = now - u.lastActive;
+                Object.keys(displayCache).forEach(key => {
+                    const cached = displayCache[key];
+                    const stillInDB = latestPresenceData[key] !== undefined;
+                    
+                    if (stillInDB && cached.user.lastActive) {
+                        const age = now - cached.user.lastActive;
                         if (age < 35000 /* 35s stale check */) {
                             activeCount++;
                         } else if (age > 90000 /* 90s cleanup */) {
                             set(ref(db, `presence_v2/${key}`), null);
+                            delete displayCache[key];
+                        }
+                    } else if (!stillInDB) {
+                        const timeSinceLastSeen = now - cached.lastSeenInDB;
+                        if (timeSinceLastSeen < 6000 /* 6s grace */) {
+                            activeCount++;
+                        } else {
+                            delete displayCache[key];
                         }
                     } else {
                         set(ref(db, `presence_v2/${key}`), null);
+                        delete displayCache[key];
                     }
                 });
                 onlineCountElement.innerText = Math.max(1, activeCount);
             }
 
-            setInterval(updateOnlineCount, 5000);
+            setInterval(updateOnlineCount, 3000);
         }
     </script>
 

@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -574,10 +576,16 @@
                 }
             });
 
-            // Smart Online Count (Filters out stale users & performs self-healing cleanup)
+            // Smart Online Count with Grace Cache (prevents flicker during page transitions)
             let latestPresenceData = {};
+            let displayCache = {};
+
             onValue(onlineRef, (snapshot) => {
                 latestPresenceData = snapshot.val() || {};
+                const now = Date.now();
+                Object.keys(latestPresenceData).forEach(key => {
+                    displayCache[key] = { user: latestPresenceData[key], lastSeenInDB: now };
+                });
                 updateOnlineUI();
             });
 
@@ -586,20 +594,31 @@
                 let activeCount = 0;
                 let activeNames = [];
                 
-                Object.keys(latestPresenceData).forEach(key => {
-                    const user = latestPresenceData[key];
-                    if (user.lastActive) {
-                        const age = now - user.lastActive;
+                Object.keys(displayCache).forEach(key => {
+                    const cached = displayCache[key];
+                    const stillInDB = latestPresenceData[key] !== undefined;
+                    
+                    if (stillInDB && cached.user.lastActive) {
+                        const age = now - cached.user.lastActive;
                         if (age < 35000 /* 35s stale check */) { 
                             activeCount++;
-                            if (user.name) activeNames.push(user.name);
+                            if (cached.user.name) activeNames.push(cached.user.name);
                         } else if (age > 90000 /* 90s cleanup */) {
-                            // Clean up inactive users from DB (Self-Healing)
                             set(ref(db, `presence_v2/${key}`), null);
+                            delete displayCache[key];
+                        }
+                    } else if (!stillInDB) {
+                        // User disconnected - grace period for page navigation
+                        const timeSinceLastSeen = now - cached.lastSeenInDB;
+                        if (timeSinceLastSeen < 6000 /* 6s grace */) {
+                            activeCount++;
+                            if (cached.user.name) activeNames.push(cached.user.name);
+                        } else {
+                            delete displayCache[key];
                         }
                     } else {
-                        // Clean up malformed records
                         set(ref(db, `presence_v2/${key}`), null);
+                        delete displayCache[key];
                     }
                 });
 
@@ -621,8 +640,8 @@
                 }
             }
 
-            // Run UI update every 5 seconds to keep timestamps/stale check fresh in real-time
-            setInterval(updateOnlineUI, 5000);
+            // Run UI update every 3 seconds to keep timestamps/stale check fresh in real-time
+            setInterval(updateOnlineUI, 3000);
 
             console.log("Firebase Configuration Loaded:", firebaseConfig);
 
