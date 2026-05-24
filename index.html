@@ -18,11 +18,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <script>
-        // Apply theme early to avoid flash
-        (function() {
-            const savedTheme = localStorage.getItem('preferred-theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-        })();
+       // Admin flag detection and persistence
+(function() {
+  const name = localStorage.getItem('portal-username');
+  const ADMIN_KEY = 'portal-is-admin';
+  if (name && name.toLowerCase() === 'ameenulhashim') {
+    localStorage.setItem(ADMIN_KEY, 'true');
+    window.isAdmin = true;
+  } else if (localStorage.getItem(ADMIN_KEY) === 'true') {
+    window.isAdmin = true;
+  } else {
+    window.isAdmin = false;
+  }
+})();
     </script>
             <style>
         /* Modern Glassmorphism System */

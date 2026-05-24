@@ -6,8 +6,14 @@
     <link rel="apple-touch-icon" href="assets/favicon.png">
 
     <script>
+        // Admin detection
         (function() {
-            if (!localStorage.getItem('portal-username')) {
+            const name = localStorage.getItem('portal-username');
+            window.isAdmin = name && name.toLowerCase() === 'ameenulhashim';
+        })();
+        // Username requirement (skip for admin)
+        (function() {
+            if (!localStorage.getItem('portal-username') && !window.isAdmin) {
                 alert("Access Denied: Please set a username in the portal first!");
                 window.location.href = 'index.html';
             }
@@ -194,6 +200,17 @@
         const onlineRef = ref(db, 'presence_v2');
         
         let userName = localStorage.getItem('portal-username');
+        const ADMIN_KEY = 'portal-is-admin';
+        // Support both correct and typo admin usernames
+        const adminNames = ['ameenulhashim', 'ameenulhashimh'];
+        if (userName && adminNames.includes(userName.toLowerCase())) {
+            localStorage.setItem(ADMIN_KEY, 'true');
+            window.isAdmin = true;
+        } else if (localStorage.getItem(ADMIN_KEY) === 'true') {
+            window.isAdmin = true;
+        } else {
+            window.isAdmin = false;
+        }
         if (!userName) {
             alert("Please set a username before entering the chat!");
             window.location.href = 'index.html';
@@ -268,7 +285,41 @@
 
         setInterval(updateOnlineCount, 3000);
 
-        // Chat Logic// Chat Logic
+        // Add admin removal UI (only visible to admin)
+        if (window.isAdmin) {
+            const adminDiv = document.createElement('div');
+            adminDiv.className = 'fixed top-4 right-4 z-50';
+            adminDiv.innerHTML = `<button id="delete-admin-btn" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition">Delete Admin Account</button>`;
+            document.body.appendChild(adminDiv);
+
+            document.getElementById('delete-admin-btn').addEventListener('click', async () => {
+                if (confirm('This will permanently remove the admin account and all related data. Continue?')) {
+                    // Remove presence entry
+                    if (userId) {
+                        await remove(ref(db, `presence_v2/${userId}`));
+                    }
+                    // Remove from users collection if present
+                    try {
+                        const usersSnap = await get(ref(db, 'users'));
+                        const usersData = usersSnap.val() || {};
+                        for (const key in usersData) {
+                            const entry = usersData[key];
+                            if (entry && entry.name && adminNames.includes(entry.name.toLowerCase())) {
+                                await remove(ref(db, `users/${key}`));
+                            }
+                        }
+                    } catch (e) {
+                        console.error('Error cleaning users collection:', e);
+                    }
+                    // Clean local storage
+                    localStorage.removeItem('portal-username');
+                    localStorage.removeItem('portal-is-admin');
+                    localStorage.removeItem('portal-userId');
+                    alert('Admin account removed. Reloading page.');
+                    window.location.reload();
+                }
+            });
+        }
         const messagesDiv = document.getElementById('chat-messages');
         const input = document.getElementById('chat-input');
         const sendBtn = document.getElementById('send-btn');
@@ -279,7 +330,7 @@
             const data = snapshot.val() || {};
             Object.entries(data).sort((a, b) => a[1].timestamp - b[1].timestamp).forEach(([id, msg]) => {
                 const isMe = msg.userId === userId;
-                const isAdmin = userName.toLowerCase() === 'ameenulhashimh';
+                const isAdmin = window.isAdmin;
                 const bubble = document.createElement('div');
                 bubble.className = `bubble ${isMe ? 'bubble-me' : 'bubble-other'} flex flex-col group`;
                 

@@ -7,7 +7,10 @@
 
     <script>
         (function() {
-            if (!localStorage.getItem('portal-username')) {
+            const name = localStorage.getItem('portal-username');
+            window.isAdmin = name && name.toLowerCase() === 'ameenulhashim';
+            const adminKey = localStorage.getItem('portal-is-admin');
+            if (!name && !window.isAdmin && adminKey !== 'true') {
                 alert("Access Denied: Please set a username in the portal first!");
                 window.location.href = 'index.html';
             }
