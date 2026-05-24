@@ -119,6 +119,34 @@
             animation: swing 2s ease infinite;
             transform-origin: top center;
         }
+
+        /* Username Required Overlay */
+        .username-lock-overlay {
+            position: relative;
+        }
+        .username-lock-overlay::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            z-index: 40;
+            pointer-events: all;
+        }
+        .username-lock-overlay .lock-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 41;
+            text-align: center;
+            pointer-events: none;
+        }
+        .username-lock-overlay a {
+            pointer-events: none !important;
+        }
     </style>
     <script>
         (function() {
@@ -220,7 +248,7 @@
         <!-- User Identity Section (Moved to top) -->
         <div id="user-identity-section" class="mt-4 mb-12 max-w-2xl mx-auto px-4">
             <div class="glass-card rounded-3xl p-6 border border-white/10 text-center">
-                <div id="name-input-area" class="hidden">
+                <div id="name-input-area">
                     <p id="name-prompt" class="text-orange-200 uppercase tracking-widest text-xs mb-4 font-bold">Join the Community? Enter your name</p>
                     <div class="flex flex-col sm:flex-row gap-3">
                         <input type="text" id="user-name-input" class="flex-grow bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50" placeholder="Enter your name">
@@ -254,6 +282,14 @@
             </div>
         </div>
         <!-- Grid System: 1 col on mobile, 2 on tablet (sm), 4 on desktop (lg) -->
+        <div id="subjects-grid-wrapper" class="relative">
+        <div id="lock-overlay-message" class="lock-message hidden">
+            <div class="flex flex-col items-center gap-3">
+                <svg class="w-16 h-16 text-orange-400 drop-shadow-[0_0_15px_rgba(249,115,22,0.5)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                <p class="text-white text-xl font-bold">Set Your Username First</p>
+                <p class="text-orange-200/70 text-sm">Enter your name above to unlock all subjects & notes</p>
+            </div>
+        </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
             
             <!-- Subject Card 1 -->
@@ -321,6 +357,7 @@
                 </div>
             </a>
 
+        </div>
         </div>
 
         <!-- Reference Table Section -->
@@ -599,6 +636,9 @@
 
             function updateUI() {
                 const name = localStorage.getItem('portal-username');
+                const gridWrapper = document.getElementById('subjects-grid-wrapper');
+                const lockMsg = document.getElementById('lock-overlay-message');
+                
                 if (name) {
                     inputArea.classList.add('hidden');
                     displayArea.classList.remove('hidden');
@@ -606,9 +646,17 @@
                     
                     const formNameInput = document.querySelector('input[name="name"]');
                     if (formNameInput) formNameInput.value = name;
+                    
+                    // Unlock subjects
+                    if (gridWrapper) gridWrapper.classList.remove('username-lock-overlay');
+                    if (lockMsg) lockMsg.classList.add('hidden');
                 } else {
                     inputArea.classList.remove('hidden');
                     displayArea.classList.add('hidden');
+                    
+                    // Lock subjects
+                    if (gridWrapper) gridWrapper.classList.add('username-lock-overlay');
+                    if (lockMsg) lockMsg.classList.remove('hidden');
                 }
 
                 // Merge and Update List
