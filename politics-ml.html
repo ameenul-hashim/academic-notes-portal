@@ -399,19 +399,16 @@
         onValue(connectedRef, (snap) => {
             if (snap.val() === true) {
                 const myPresenceRef = ref(db, `presence_v2/${userId}`);
-                set(myPresenceRef, {
-                    lastActive: serverTimestamp(),
-                    name: localStorage.getItem('portal-username') || 'Anonymous',
-                    userId: userId
-                });
-                onDisconnect(myPresenceRef).remove();
-                setInterval(() => {
+                const updatePresence = () => {
                     set(myPresenceRef, {
                         lastActive: serverTimestamp(),
                         name: localStorage.getItem('portal-username') || 'Anonymous',
                         userId: userId
                     });
-                }, 15000 /* 15s heartbeat optimized */);
+                };
+                updatePresence();
+                // Removed onDisconnect().remove() to keep user online during page transitions
+                setInterval(updatePresence, 10000 /* 10s heartbeat */);
             }
         });
 
@@ -421,9 +418,23 @@
                 const now = Date.now();
                 const users = snapshot.val() || {};
                 let activeCount = 0;
-                Object.values(users).forEach(u => {
-                    if (u.lastActive && (now - u.lastActive < 10000 /* 10s stale check */)) activeCount++;
+                Object.keys(users).forEach(key => {
+                    const u = users[key];
+                    if (u.lastActive) {
+                        const age = now - u.lastActive;
+                        if (age < 35000 /* 35s stale check */) {
+                            activeCount++;
+                        } else if (age > 90000 /* 90s cleanup */) {
+                            // Clean up inactive users from DB (Self-Healing)
+                            set(ref(db, `presence_v2/${key}`), null);
+                        }
+                    } else {
+                        // Clean up malformed records
+                        set(ref(db, `presence_v2/${key}`), null);
+                    }
                 });
+                onlineCountElement.innerText = Math.max(1, activeCount);
+            });
                 onlineCountElement.innerText = Math.max(1, activeCount);
             });
         }
