@@ -534,29 +534,33 @@
 
         const onlineCountElement = document.getElementById('online-count');
         if (onlineCountElement) {
+            let latestPresenceData = {};
+            
             onValue(onlineRef, (snapshot) => {
+                latestPresenceData = snapshot.val() || {};
+                updateOnlineCount();
+            });
+
+            function updateOnlineCount() {
                 const now = Date.now();
-                const users = snapshot.val() || {};
                 let activeCount = 0;
-                Object.keys(users).forEach(key => {
-                    const u = users[key];
+                Object.keys(latestPresenceData).forEach(key => {
+                    const u = latestPresenceData[key];
                     if (u.lastActive) {
                         const age = now - u.lastActive;
                         if (age < 35000 /* 35s stale check */) {
                             activeCount++;
                         } else if (age > 90000 /* 90s cleanup */) {
-                            // Clean up inactive users from DB (Self-Healing)
                             set(ref(db, `presence_v2/${key}`), null);
                         }
                     } else {
-                        // Clean up malformed records
                         set(ref(db, `presence_v2/${key}`), null);
                     }
                 });
                 onlineCountElement.innerText = Math.max(1, activeCount);
-            });
-                onlineCountElement.innerText = Math.max(1, activeCount);
-            });
+            }
+
+            setInterval(updateOnlineCount, 5000);
         }
     </script>
 
