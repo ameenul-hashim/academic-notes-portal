@@ -1,11 +1,11 @@
 import os
 import re
-import glob
 
 def count_chapters(file_path):
+    if not os.path.exists(file_path):
+        return None
     with open(file_path, 'r', encoding='utf-8') as f:
         content = f.read()
-    
     modals = re.findall(r'id="(modal-ch\d+)"', content)
     total = len(set(modals))
     uploaded = 0
@@ -13,98 +13,84 @@ def count_chapters(file_path):
         parts = content.split(f'id="{modal_id}"')
         if len(parts) >= 2:
             modal_content = parts[1][:2000]
-            if 'drive.google.com' in modal_content or 'docs.google.com' in modal_content:
+            # Check for drive, docs, or supabase links, and make sure it doesn't say "Content Coming Soon"
+            has_link = 'drive.google.com' in modal_content or 'docs.google.com' in modal_content or 'supabase.co' in modal_content
+            has_placeholder = 'Content Coming Soon' in modal_content
+            if has_link and not has_placeholder:
                 uploaded += 1
     return total, uploaded
 
-stats = {}
-# Mapping from subject title in index.html to file prefixes
 subject_map = {
     "Philosophy of Education": "history",
-    "Philosophy of Artificial Intelligence": "world",
+    "Philosophy of AI": "world",
     "English for BA Programs": "kerala",
-    "Literature in Malayalam": "politics",
-    "History of Keralam upto 12th Century": "economics",
-    "Development Issues in Indian Economy": "philosophy",
+    "Literary Malayalam": "politics",
+    "History of Keralam": "economics",
+    "Development Issues": "philosophy",
     "Sociology": "sociology",
-    "Micro Economic Foundations": "micro-economics",
+    "Micro Economics": "micro-economics",
     "Fundamentals of Ethics": "ethics"
 }
 
-for subject, prefix in subject_map.items():
-    en_file = f"{prefix}-en.html"
-    ml_file = f"{prefix}-ml.html"
+def make_col(stats):
+    if stats is None:
+        return '''<td class="py-6 px-8 text-center">
+                                        <span class="text-gray-500 text-sm italic font-medium px-4">Not Applicable</span>
+                                    </td>'''
     
-    en_total, en_uploaded = count_chapters(en_file) if os.path.exists(en_file) else (0, 0)
-    ml_total, ml_uploaded = count_chapters(ml_file) if os.path.exists(ml_file) else (0, 0)
+    total, uploaded = stats
     
-    stats[subject] = {
-        "en": f"{en_uploaded} / {en_total}",
-        "ml": f"{ml_uploaded} / {ml_total}",
-        "en_status": "green" if en_uploaded > 0 else "red",
-        "ml_status": "green" if ml_uploaded > 0 else "red"
-    }
-    # Special case: if some but not all, maybe yellow?
-    if 0 < en_uploaded < en_total: stats[subject]["en_status"] = "yellow"
-    if 0 < ml_uploaded < ml_total: stats[subject]["ml_status"] = "yellow"
-    if en_uploaded == en_total and en_total > 0: stats[subject]["en_status"] = "green"
-    if ml_uploaded == ml_total and ml_total > 0: stats[subject]["ml_status"] = "green"
+    if uploaded == 0:
+        badge_class = "bg-red-500/10 text-red-300 border border-red-500/30 shadow-[0_0_10px_rgba(239,68,68,0.1)]"
+        dot_class = "bg-red-400 animate-pulse"
+    elif uploaded == total:
+        badge_class = "bg-green-500/10 text-green-300 border border-green-500/30 shadow-[0_0_10px_rgba(34,197,94,0.1)]"
+        dot_class = "bg-green-400"
+    else:
+        badge_class = "bg-yellow-500/10 text-yellow-300 border border-yellow-500/30 shadow-[0_0_10px_rgba(234,179,8,0.1)]"
+        dot_class = "bg-yellow-400 animate-pulse"
+        
+    return f'''<td class="py-6 px-8 text-center">
+                                        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold {badge_class}">
+                                            <span class="w-1.5 h-1.5 rounded-full {dot_class}"></span> {uploaded} / {total} Uploaded
+                                        </span>
+                                    </td>'''
 
-# Now update index.html
+def make_row(subject, en_stats, ml_stats):
+    tr_class = 'group hover:bg-white/[0.07] transition-all duration-300'
+    if subject == "Micro Economics":
+        tr_class += ' border-b border-white/5'
+        
+    en_html = make_col(en_stats)
+    ml_html = make_col(ml_stats)
+    
+    return f'''<tr class="{tr_class}">
+                                    <td class="py-6 px-8 font-semibold text-lg group-hover:text-orange-300 transition-colors">{subject}</td>
+                                    {en_html}
+                                    {ml_html}
+                                </tr>'''
+
+# Read index.html
 with open('index.html', 'r', encoding='utf-8') as f:
     index_content = f.read()
 
-for subject, data in stats.items():
-    # Find the row for this subject
-    # Pattern: Subject name followed by two columns of status spans
+# Update each subject row in index.html
+for subject, prefix in subject_map.items():
+    en_stats = count_chapters(f"{prefix}-en.html")
+    ml_stats = count_chapters(f"{prefix}-ml.html")
+    
+    new_row = make_row(subject, en_stats, ml_stats)
+    
+    # Match the row using regex
     pattern = re.compile(
-        r'(<td[^>]*>' + re.escape(subject) + r'</td>\s*<td[^>]*>\s*<span[^>]*>)(.*?)(</span>\s*</td>\s*<td[^>]*>\s*<span[^>]*>)(.*?)(</span>)',
+        r'<tr[^>]*>\s*<td[^>]*>' + re.escape(subject) + r'</td>.*?</tr>',
         re.DOTALL
     )
     
-    def replacer(match):
-        prefix1 = match.group(1)
-        # update color in prefix1 if needed
-        color_en = data["en_status"]
-        prefix1 = re.sub(r'bg-\w+-500/20', f'bg-{color_en}-500/20', prefix1)
-        prefix1 = re.sub(r'text-\w+-300', f'text-{color_en}-300', prefix1)
-        prefix1 = re.sub(r'border-\w+-500/30', f'border-{color_en}-500/30', prefix1)
-        
-        mid = match.group(3)
-        color_ml = data["ml_status"]
-        mid = re.sub(r'bg-\w+-500/20', f'bg-{color_ml}-500/20', mid)
-        mid = re.sub(r'text-\w+-300', f'text-{color_ml}-300', mid)
-        mid = re.sub(r'border-\w+-500/30', f'border-{color_ml}-500/30', mid)
-        
-        return f"{prefix1}{data['en']}{match.group(2) if 'Uploaded' in match.group(2) else ' Uploaded'}{mid}{data['ml']}{match.group(4) if 'Uploaded' in match.group(4) else ' Uploaded'}{match.group(5)}"
+    index_content = pattern.sub(new_row, index_content)
 
-    # If the span content already has "Uploaded", we don't want to duplicate it.
-    # The stats[subject]["en"] is just "X / Y".
-    
-    def replacer_v2(match):
-        # Group 1: <td>Subject</td><td><span>
-        # Group 2: X / Y Uploaded
-        # Group 3: </span></td><td><span>
-        # Group 4: X / Y Uploaded
-        # Group 5: </span>
-        
-        p1 = match.group(1)
-        c_en = data["en_status"]
-        p1 = re.sub(r'bg-\w+-500/20', f'bg-{c_en}-500/20', p1)
-        p1 = re.sub(r'text-\w+-300', f'text-{c_en}-300', p1)
-        p1 = re.sub(r'border-\w+-500/30', f'border-{c_en}-500/30', p1)
-        
-        p3 = match.group(3)
-        c_ml = data["ml_status"]
-        p3 = re.sub(r'bg-\w+-500/20', f'bg-{c_ml}-500/20', p3)
-        p3 = re.sub(r'text-\w+-300', f'text-{c_ml}-300', p3)
-        p3 = re.sub(r'border-\w+-500/30', f'border-{c_ml}-500/30', p3)
-        
-        return f"{p1}{data['en']} Uploaded{p3}{data['ml']} Uploaded{match.group(5)}"
-
-    index_content = pattern.sub(replacer_v2, index_content)
-
+# Write updated index.html
 with open('index.html', 'w', encoding='utf-8') as f:
     f.write(index_content)
 
-print("Updated index.html status table")
+print("Successfully synchronized Academic Progress Dashboard in index.html!")
