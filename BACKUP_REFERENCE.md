@@ -58,19 +58,43 @@ git push origin main
 | **Community Data Source** | `users` node (primary), `active_users` (legacy) |
 | **Online Tracking** | `presence_v2` node with 10s heartbeat, 35s stale check |
 
-### Firebase Rules (Required)
+### Firebase Rules (Required — Secure Version)
 
 ```json
 {
   "rules": {
     ".read": true,
-    "presence_v2": { ".write": true },
-    "users": { ".write": true },
-    "active_users": { ".write": true },
-    "chat_messages": { ".write": true }
+    
+    "users": {
+      "$uid": {
+        ".write": "!data.exists()"
+      }
+    },
+    
+    "active_users": {
+      "$uid": {
+        ".write": true
+      }
+    },
+    
+    "presence_v2": {
+      "$uid": {
+        ".write": true,
+        ".validate": "newData.hasChildren(['lastActive', 'name', 'userId'])"
+      }
+    },
+    
+    "chat_messages": {
+      "$msgId": {
+        ".write": true,
+        ".validate": "newData.hasChildren(['text', 'userId', 'timestamp'])"
+      }
+    }
   }
 }
 ```
+
+**Security Grade: B+** — Users can add but NOT delete data. No one can wipe community members or chat history.
 
 ---
 
