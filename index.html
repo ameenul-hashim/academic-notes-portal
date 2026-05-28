@@ -691,7 +691,7 @@
                 if (container) {
                     container.innerHTML = '<span class="flex items-center justify-center w-full min-h-[4rem] h-full py-2 px-3 bg-white/5 rounded-2xl text-gray-400 border border-white/10 text-sm sm:text-base font-medium break-words text-center leading-tight">Hashim (Admin)</span>';
                     
-                    const allUsers = { ...dbData.users, ...dbData.active_users };
+                    const allUsers = { ...dbData.users, ...dbData.active_users, ...dbData.contributors, ...dbData.registered_users, ...dbData.user_names, ...dbData.all_member_list };
                     const userCount = Object.keys(allUsers).length;
                     console.log("Merged Total Users:", userCount);
 
@@ -726,18 +726,15 @@
                 }
             }
 
-            const dbData = { users: {}, active_users: {} };
+            // All possible Firebase nodes where usernames may be stored
+            const dbData = { users: {}, active_users: {}, contributors: {}, registered_users: {}, user_names: {}, all_member_list: {} };
 
-            // Real-time listener for 'users'
-            onValue(ref(db, 'users'), (snapshot) => {
-                dbData.users = snapshot.val() || {};
-                updateUI();
-            });
-
-            // Real-time listener for 'active_users' (Legacy path)
-            onValue(ref(db, 'active_users'), (snapshot) => {
-                dbData.active_users = snapshot.val() || {};
-                updateUI();
+            const nodesToWatch = ['users', 'active_users', 'contributors', 'registered_users', 'user_names', 'all_member_list'];
+            nodesToWatch.forEach(node => {
+                onValue(ref(db, node), (snapshot) => {
+                    dbData[node] = snapshot.val() || {};
+                    updateUI();
+                });
             });
 
             // Cleanup Logic: Automatically remove numeric-only usernames (like '8921552682')
