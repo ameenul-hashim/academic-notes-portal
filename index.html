@@ -6,21 +6,21 @@
     <title>BA Calicut University Unofficial Notes And Classes</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    
     <script>
         // Apply theme early to avoid flash
         (function() {
-            const savedTheme = localStorage.getItem('preferred-theme') || 'dark';
+            const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
             document.documentElement.setAttribute('data-theme', savedTheme);
         })();
     </script>
-            <style>
+    <style>
         /* Modern Glassmorphism System */
         .glass-card {
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
         }
         
         /* Theme Definitions */
@@ -41,7 +41,6 @@
             --bg-desert: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #fde68a 100%);
         }
 
-        /* Global Theme Application */
         html, body {
             min-height: 100vh !important;
             margin: 0 !important;
@@ -64,59 +63,27 @@
         [data-theme="light"] { background: var(--bg-light) !important; color: #0f172a !important; }
         [data-theme="sky"] { background: var(--bg-desert) !important; color: #451a03 !important; }
 
-        /* Card Visibility Fix */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05) !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        }
-        [data-theme="light"] .glass-card, [data-theme="sky"] .glass-card {
-            background: rgba(255, 255, 255, 0.7) !important;
-            border: 1px solid rgba(0, 0, 0, 0.1) !important;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1) !important;
-        }
+        [data-theme="light"] .text-white, [data-theme="light"] .text-orange-200 { color: #0f172a !important; }
+        [data-theme="sky"] .text-white, [data-theme="sky"] .text-orange-200 { color: #451a03 !important; }
 
-        /* Text Overrides */
-        [data-theme="light"] .text-white, [data-theme="light"] .text-gray-100, [data-theme="light"] .text-orange-200 { color: #0f172a !important; }
-        [data-theme="sky"] .text-white, [data-theme="sky"] .text-gray-100, [data-theme="sky"] .text-orange-200 { color: #451a03 !important; }
-
-        /* Header Dropdown Fix */
         #theme-selector {
             background: rgba(0,0,0,0.5) !important;
             color: white !important;
             border: 1px solid rgba(255,255,255,0.2) !important;
         }
-        #theme-selector option {
-            background: #1e293b !important;
-            color: white !important;
-        }
-        [data-theme="light"] #theme-selector, [data-theme="sky"] #theme-selector {
-            background: rgba(255,255,255,0.8) !important;
-            color: #0f172a !important;
-            border: 1px solid rgba(0,0,0,0.1) !important;
-        }
-        [data-theme="light"] #theme-selector option, [data-theme="sky"] #theme-selector option {
-            background: white !important;
-            color: #0f172a !important;
-        }
     </style>
-    <script>
-        (function() {
-            const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-        })();
-    </script></head>
-<body class="min-h-screen text-base font-sans antialiased flex flex-col bg-transparent">
+</head>
+<body class="min-h-screen font-sans antialiased flex flex-col bg-transparent">
 
-    <!-- Header Section -->
-        <header class="glass-card sticky top-0 z-50 shadow-lg py-4">
+    <header class="glass-card sticky top-0 z-50 shadow-lg py-4">
         <div class="max-w-screen-2xl mx-auto px-4 flex items-center justify-between">
-            <div class="w-10 md:w-24"></div>
+            <div class="w-10"></div>
             <div class="text-center">
-                <p class="text-sm text-orange-200 tracking-widest uppercase mb-1">Welcome</p>
+                <p class="text-xs text-orange-200 tracking-widest uppercase mb-1">Welcome</p>
                 <h1 class="font-bold text-xl md:text-3xl tracking-wider text-white">BA Calicut University Unofficial Notes And Classes</h1>
             </div>
             <div>
-                <select id="theme-selector" class="bg-black/20 text-white backdrop-blur-md border border-white/10 rounded-lg px-2 py-1 text-xs outline-none cursor-pointer hover:bg-white/20 transition-all">
+                <select id="theme-selector" class="rounded-lg px-2 py-1 text-xs outline-none cursor-pointer">
                     <option value="rose">Reddish Brown</option>
                     <option value="midnight">Midnight Purple</option>
                     <option value="ocean">Ocean Blue</option>
@@ -136,50 +103,19 @@
         </div>
     </header>
 
-    <main class="flex-grow max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <!-- Continuous Scrolling Ticker -->
-        <style>
-            @keyframes ticker {
-                0% { transform: translateX(0); }
-                100% { transform: translateX(-50%); }
-            }
-            .ticker-wrap {
-                width: 100%;
-                overflow: hidden;
-                background-color: #fef3c7 !important;
-                border: 1px solid #fde68a !important;
-                border-radius: 9999px;
-                margin-top: 0;
-                margin-bottom: 1rem;
-                position: relative;
-                z-index: 40;
-                display: flex;
-            }
-            .ticker-content {
-                display: flex;
-                white-space: nowrap;
-                padding: 0.75rem 0;
-                animation: ticker 40s linear infinite;
-            }
-            .ticker-item {
-                padding: 0 2rem;
-                font-weight: 700;
-                color: #000000 !important;
-                font-size: 0.875rem;
-            }
-        </style>
-        <div class="ticker-wrap shadow-lg">
-            <div class="ticker-content">
-                <div class="ticker-item">welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp; welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp;</div>
-                <div class="ticker-item">welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp; welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp;</div>
-                <div class="ticker-item">welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp; welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp;</div>
-                <div class="ticker-item">welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp; welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp;</div>
+    <main class="flex-grow max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8">
+        <!-- Ticker -->
+        <div class="overflow-hidden bg-[#fef3c7] border border-[#fde68a] rounded-full mb-8 shadow-lg">
+            <div class="whitespace-nowrap py-3 animate-[ticker_40s_linear_infinite] flex">
+                <div class="px-8 font-bold text-black text-sm">welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp; welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp;</div>
+                <div class="px-8 font-bold text-black text-sm">welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp; welcome user, uploaded and managed by hashim further informations send an email &nbsp;&nbsp;&bull;&nbsp;&nbsp;</div>
             </div>
         </div>
+        <style>@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }</style>
 
-        <!-- User Identity Section (Moved to top) -->
-        <div id="user-identity-section" class="mt-4 mb-12 max-w-2xl mx-auto px-4">
-            <div class="glass-card rounded-3xl p-6 border border-white/10 text-center">
+        <!-- Identity -->
+        <div id="user-identity-section" class="max-w-2xl mx-auto mb-12">
+            <div class="glass-card rounded-3xl p-6 text-center">
                 <div id="name-input-area" class="hidden">
                     <p class="text-orange-200 uppercase tracking-widest text-xs mb-4 font-bold">Join the Community? Enter your name</p>
                     <div class="flex flex-col sm:flex-row gap-3">
@@ -188,18 +124,14 @@
                     </div>
                 </div>
                 <div id="name-display-area" class="hidden">
-
                     <h2 class="text-2xl font-bold text-white mb-2">Welcome, <span id="display-name-span" class="text-orange-400"></span>!</h2>
-                    <button id="reset-btn" class="inline-flex items-center gap-1.5 px-4 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-[11px] font-bold text-gray-400 hover:text-white transition-all">
-                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                        Change Name
-                    </button>
+                    <button id="reset-btn" class="text-xs text-orange-200/60 hover:text-orange-400 underline uppercase tracking-widest font-bold">Change Name</button>
                 </div>
             </div>
         </div>
 
-        <!-- Online Users Badge -->
-        <div class="mb-12 text-center">
+        <!-- Presence -->
+        <div class="text-center mb-12">
             <div class="inline-flex items-center gap-3 px-6 py-2 bg-white/5 rounded-full border border-white/10 text-orange-200 text-sm font-medium">
                 <span class="relative flex h-3 w-3">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -209,502 +141,159 @@
                     <span id="online-count">0</span> Active Now
                 </span>
             </div>
-            <!-- Online Usernames List (Hashim & Arun cards here) -->
-            <div id="online-users-names" class="mt-6 flex flex-wrap justify-center gap-3 max-w-4xl mx-auto px-4">
-                <!-- Real-time cards appear/disappear here -->
-            </div>
-        </div>
-        
-        <script>
-            // Real-time visit counter
-            function updateVisitCount() {
-                const countElement = document.getElementById('visit-count');
-                // Using a reliable public counter API
-                fetch('https://api.countapi.xyz/hit/academic-notes-portal/visits')
-                    .then(res => res.json())
-                    .then(data => {
-                        countElement.innerText = data.value.toLocaleString();
-                    })
-                    .catch(() => {
-                        countElement.innerText = "1,240+"; // Fallback
-                    });
-            }
-            updateVisitCount();
-        </script>
-        
-        <!-- Grid System: 1 col on mobile, 2 on tablet (sm), 4 on desktop (lg) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-            
-            <!-- Subject Card 1 -->
-            <a href="history.html" class="block outline-none">
-                <div class="glass-card h-64 flex items-center justify-center p-8 rounded-2xl text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)]">
-                    <h2 class="text-2xl font-bold text-white">Philosophy of Education</h2>
-                </div>
-            </a>
-
-            <!-- Subject Card 2 -->
-            <a href="world.html" class="block outline-none">
-                <div class="glass-card h-64 flex items-center justify-center p-8 rounded-2xl text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)]">
-                    <h2 class="text-2xl font-bold text-white">Philosophy of Artificial Intelligence</h2>
-                </div>
-            </a>
-
-            <!-- Subject Card 3 -->
-            <a href="kerala.html" class="block outline-none">
-                <div class="glass-card h-64 flex items-center justify-center p-8 rounded-2xl text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)]">
-                    <h2 class="text-2xl font-bold text-white">English for BA Programs</h2>
-                </div>
-            </a>
-
-            <!-- Subject Card 4 -->
-            <a href="politics.html" class="block outline-none">
-                <div class="glass-card h-64 flex items-center justify-center p-8 rounded-2xl text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)]">
-                    <h2 class="text-2xl font-bold text-white">Literature in Malayalam</h2>
-                </div>
-            </a>
-
-            <!-- Subject Card 5 -->
-            <a href="history.html" class="block outline-none">
-                <div class="glass-card h-64 flex items-center justify-center p-8 rounded-2xl text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)]">
-                    <h2 class="text-2xl font-bold text-white">History of Keralam upto 12th Century</h2>
-                </div>
-            </a>
-
-            <!-- Subject Card 6 -->
-
-            <!-- Subject Card: Sociology -->
-            <a href="sociology.html" class="block outline-none">
-                <div class="glass-card h-64 flex items-center justify-center p-8 rounded-2xl text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)]">
-                    <h2 class="text-2xl font-bold text-white">Sociology</h2>
-                </div>
-            </a>
-    
-            <!-- Subject Card: Micro Economic Foundations -->
-
-            <!-- Subject Card: Fundamentals of Ethics -->
-            <a href="ethics.html" class="block outline-none">
-                <div class="glass-card h-64 flex items-center justify-center p-8 rounded-2xl text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)]">
-                    <h2 class="text-2xl font-bold text-white">Fundamentals of Ethics</h2>
-                </div>
-            </a>
-    
-            <a href="micro-economics.html" class="block outline-none">
-                <div class="glass-card h-64 flex items-center justify-center p-8 rounded-2xl text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)]">
-                    <h2 class="text-2xl font-bold text-white">Micro Economic Foundations</h2>
-                </div>
-            </a>
-    
-            <a href="philosophy.html" class="block outline-none">
-                <div class="glass-card h-64 flex items-center justify-center p-8 rounded-2xl text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)]">
-                    <h2 class="text-2xl font-bold text-white">Development Issues in Indian Economy</h2>
-                </div>
-            </a>
-
+            <div id="online-users-names" class="mt-6 flex flex-wrap justify-center gap-3 px-4"></div>
         </div>
 
-        <!-- Reference Table Section -->
-        <div class="mt-20">
-            <div class="glass-card rounded-3xl p-8 md:p-12 overflow-hidden relative">
-                <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-cyan-500/20 blur-3xl rounded-full"></div>
-                <div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-purple-500/20 blur-3xl rounded-full"></div>
-                
-                <h2 class="text-3xl font-bold text-white mb-8 text-center flex items-center justify-center gap-3">
-                    <svg class="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
-                    Notes Upload Status
-                </h2>
+        <!-- Subjects -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-20">
+            <a href="history.html" class="block glass-card h-64 flex items-center justify-center p-8 rounded-2xl text-center hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)] transition-all">
+                <h2 class="text-2xl font-bold text-white">Philosophy of Education</h2>
+            </a>
+            <a href="world.html" class="block glass-card h-64 flex items-center justify-center p-8 rounded-2xl text-center hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)] transition-all">
+                <h2 class="text-2xl font-bold text-white">Philosophy of AI</h2>
+            </a>
+            <a href="kerala.html" class="block glass-card h-64 flex items-center justify-center p-8 rounded-2xl text-center hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)] transition-all">
+                <h2 class="text-2xl font-bold text-white">English for BA</h2>
+            </a>
+            <a href="politics.html" class="block glass-card h-64 flex items-center justify-center p-8 rounded-2xl text-center hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)] transition-all">
+                <h2 class="text-2xl font-bold text-white">Literature in Malayalam</h2>
+            </a>
+            <a href="history.html" class="block glass-card h-64 flex items-center justify-center p-8 rounded-2xl text-center hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)] transition-all">
+                <h2 class="text-2xl font-bold text-white">History of Keralam</h2>
+            </a>
+            <a href="sociology.html" class="block glass-card h-64 flex items-center justify-center p-8 rounded-2xl text-center hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)] transition-all">
+                <h2 class="text-2xl font-bold text-white">Sociology</h2>
+            </a>
+            <a href="ethics.html" class="block glass-card h-64 flex items-center justify-center p-8 rounded-2xl text-center hover:scale-105 hover:shadow-[0_0_25_rgba(251,113,133,0.5)] transition-all">
+                <h2 class="text-2xl font-bold text-white">Fundamentals of Ethics</h2>
+            </a>
+            <a href="micro-economics.html" class="block glass-card h-64 flex items-center justify-center p-8 rounded-2xl text-center hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)] transition-all">
+                <h2 class="text-2xl font-bold text-white">Micro Economics</h2>
+            </a>
+            <a href="philosophy.html" class="block glass-card h-64 flex items-center justify-center p-8 rounded-2xl text-center hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)] transition-all">
+                <h2 class="text-2xl font-bold text-white">Development Issues</h2>
+            </a>
+        </div>
 
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse min-w-[600px]">
-                        <thead>
-                            <tr class="border-b border-white/20 text-orange-200 uppercase text-sm tracking-widest">
-                                <th class="py-5 px-6">Subject</th>
-                                <th class="py-5 px-6 text-center">English Medium</th>
-                                <th class="py-5 px-6 text-center">Malayalam Medium</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-gray-100 divide-y divide-white/5">
-                            <tr class="group hover:bg-white/[0.07] transition-all duration-300">
-                                    <td class="py-6 px-8 font-semibold text-lg group-hover:text-orange-300 transition-colors">Philosophy of Education</td>
-                                    <td class="py-6 px-8 text-center">
-                                        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold bg-yellow-500/10 text-yellow-300 border border-yellow-500/30 shadow-[0_0_10px_rgba(234,179,8,0.1)]">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse"></span> 3 / 5 Uploaded
-                                        </span>
-                                    </td>
-                                    <td class="py-6 px-8 text-center">
-                                        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold bg-yellow-500/10 text-yellow-300 border border-yellow-500/30 shadow-[0_0_10px_rgba(234,179,8,0.1)]">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse"></span> 3 / 5 Uploaded
-                                        </span>
-                                    </td>
-                                </tr>
-                            <tr class="hover:bg-white/5 transition-colors group">
-                                <td class="py-6 px-6 font-medium group-hover:text-yellow-300 transition-colors">Philosophy of Artificial Intelligence</td>
-                                <td class="py-6 px-6 text-center">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">5 / 21 Uploaded</span>
-                                </td>
-                                <td class="py-6 px-6 text-center">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">4 / 21 Uploaded</span>
-                                </td>
-                            </tr>
-                            <tr class="group hover:bg-white/[0.07] transition-all duration-300">
-                                    <td class="py-6 px-8 font-semibold text-lg group-hover:text-orange-300 transition-colors">English for BA Programs</td>
-                                    <td class="py-6 px-8 text-center">
-                                        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold bg-yellow-500/10 text-yellow-300 border border-yellow-500/30 shadow-[0_0_10px_rgba(234,179,8,0.1)]">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse"></span> 3 / 5 Uploaded
-                                        </span>
-                                    </td>
-                                    <td class="py-6 px-8 text-center">
-                                        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold bg-yellow-500/10 text-yellow-300 border border-yellow-500/30 shadow-[0_0_10px_rgba(234,179,8,0.1)]">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse"></span> 3 / 5 Uploaded
-                                        </span>
-                                    </td>
-                                </tr>
-                            <tr class="hover:bg-white/5 transition-colors group">
-                                <td class="py-6 px-6 font-medium group-hover:text-red-300 transition-colors">Literature in Malayalam</td>
-                                <td class="py-6 px-6 text-center">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-red-500/20 text-red-300 border border-red-500/30">0 / 5 Uploaded</span>
-                                </td>
-                                <td class="py-6 px-6 text-center">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-red-500/20 text-red-300 border border-red-500/30">0 / 5 Uploaded</span>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-white/5 transition-colors group">
-                                <td class="py-6 px-6 font-medium group-hover:text-yellow-300 transition-colors">History of Keralam upto 12th Century</td>
-                                <td class="py-6 px-6 text-center">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">1 / 5 Uploaded</span>
-                                </td>
-                                <td class="py-6 px-6 text-center">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">1 / 5 Uploaded</span>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-white/5 transition-colors group">
-                                <td class="py-6 px-6 font-medium group-hover:text-yellow-300 transition-colors">Development Issues in Indian Economy</td>
-                                <td class="py-6 px-6 text-center">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">1 / 5 Uploaded</span>
-                                </td>
-                                <td class="py-6 px-6 text-center">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">1 / 5 Uploaded</span>
-                                </td>
-                            </tr>
-                        
-                            <tr class="group hover:bg-white/[0.07] transition-all duration-300">
-                                    <td class="py-6 px-8 font-semibold text-lg group-hover:text-orange-300 transition-colors">Sociology</td>
-                                    <td class="py-6 px-8 text-center">
-                                        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold bg-green-500/10 text-green-300 border border-green-500/30 shadow-[0_0_10px_rgba(34,197,94,0.1)]">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span> 1 / 1 Uploaded
-                                        </span>
-                                    </td>
-                                    <td class="py-6 px-8 text-center">
-                                        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold bg-green-500/10 text-green-300 border border-green-500/30 shadow-[0_0_10px_rgba(34,197,94,0.1)]">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span> 1 / 1 Uploaded
-                                        </span>
-                                    </td>
-                                </tr>
-    
-                            <tr class="hover:bg-white/5 transition-colors group">
-                                <td class="py-6 px-6 font-medium group-hover:text-green-300 transition-colors">Micro Economic Foundations</td>
-                                <td class="py-6 px-6 text-center">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-green-500/20 text-green-300 border border-green-500/30">5 / 5 Uploaded</span>
-                                </td>
-                                <td class="py-6 px-6 text-center">
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-green-500/20 text-green-300 border border-green-500/30">5 / 5 Uploaded</span>
-                                </td>
-                            </tr>
-                            
-                            <tr class="group hover:bg-white/[0.07] transition-all duration-300">
-                                    <td class="py-6 px-8 font-semibold text-lg group-hover:text-orange-300 transition-colors">Fundamentals of Ethics</td>
-                                    <td class="py-6 px-8 text-center">
-                                        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold bg-yellow-500/10 text-yellow-300 border border-yellow-500/30 shadow-[0_0_10px_rgba(234,179,8,0.1)]">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse"></span> 1 / 5 Uploaded
-                                        </span>
-                                    </td>
-                                    <td class="py-6 px-8 text-center">
-                                        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold bg-yellow-500/10 text-yellow-300 border border-yellow-500/30 shadow-[0_0_10px_rgba(234,179,8,0.1)]">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse"></span> 1 / 5 Uploaded
-                                        </span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                    </table>
-                </div>
-                <p class="mt-8 text-center text-gray-400 text-sm italic">
-                    * Status is updated based on recent content uploads.
-                </p>
+        <!-- Table -->
+        <div class="glass-card rounded-3xl p-8 mb-20">
+             <h2 class="text-3xl font-bold text-white mb-8 text-center flex items-center justify-center gap-3">
+                <svg class="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                Notes Upload Status
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left min-w-[600px]">
+                    <thead class="border-b border-white/20 text-orange-200 uppercase text-xs tracking-widest">
+                        <tr><th class="py-5 px-6">Subject</th><th class="py-5 px-6 text-center">English</th><th class="py-5 px-6 text-center">Malayalam</th></tr>
+                    </thead>
+                    <tbody id="dashboard-body" class="text-gray-100 divide-y divide-white/5">
+                        <!-- Rows updated by script -->
+                    </tbody>
+                </table>
             </div>
         </div>
 
-
-
-
-            // REAL-TIME PRESENCE SYSTEM
-            const onlineRef = ref(db, 'presence_v2');
-            const connectedRef = ref(db, '.info/connected');
-            const onlineCountElement = document.getElementById('online-count');
-            const onlineNamesContainer = document.getElementById('online-users-names');
-
-            let userId = localStorage.getItem('portal-userId');
-            if (!userId) {
-                userId = 'u_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-                localStorage.setItem('portal-userId', userId);
-            }
-
-            // Connection/Disconnection Handler
-            onValue(connectedRef, (snap) => {
-                if (snap.val() === true) {
-                    const myPresenceRef = ref(db, `presence_v2/${userId}`);
-                    
-                    const updateMyPresence = () => {
-                        set(myPresenceRef, {
-                            lastActive: serverTimestamp(),
-                            name: localStorage.getItem('portal-username') || 'Member',
-                            userId: userId
-                        });
-                    };
-
-                    updateMyPresence();
-                    
-                    // FIXED: This ensures the user is REMOVED immediately when tab is closed
-                    onDisconnect(myPresenceRef).remove();
-                    
-                    // Keep connection alive every 10 seconds
-                    setInterval(updateMyPresence, 10000);
-                }
-            });
-
-            // Online Users Listener (Hashim & Arun Logic)
-            onValue(onlineRef, (snapshot) => {
-                const now = Date.now();
-                const users = snapshot.val() || {};
-                let activeCount = 0;
-                let activeNames = [];
-                
-                onlineNamesContainer.innerHTML = '';
-
-                Object.entries(users).forEach(([id, user]) => {
-                    if (user && user.lastActive) {
-                        const age = now - user.lastActive;
-                        if (age < 30000 /* 30s stale window */) {
-                            activeCount++;
-                            const displayName = user.name || 'Member';
-                            
-                            // Display as a Card (Special Style)
-                            const card = document.createElement('div');
-                            card.className = "flex items-center justify-center px-5 py-3 bg-gradient-to-r from-emerald-500/20 to-teal-600/20 rounded-2xl text-white border border-emerald-400/30 text-xs font-black uppercase tracking-widest shadow-xl backdrop-blur-md animate-pulse transition-all hover:scale-110";
-                            card.innerText = displayName;
-                            onlineNamesContainer.appendChild(card);
-                        }
-                    }
-                });
-
-                if (onlineCountElement) onlineCountElement.innerText = activeCount;
-            });
-
-            function updateUI() {
-                const name = localStorage.getItem('portal-username');
-                if (name) {
-                    inputArea.classList.add('hidden');
-                    displayArea.classList.remove('hidden');
-                    nameSpan.textContent = name;
-                } else {
-                    inputArea.classList.remove('hidden');
-                    displayArea.classList.add('hidden');
-                }
-
-                // Community Area (Static + Dynamic)
-                const container = document.getElementById("activeUsers");
-                if (container) {
-                    container.innerHTML = '<span class="px-6 py-3 bg-gradient-to-r from-orange-500/30 to-rose-600/30 rounded-2xl text-white border border-white/20 text-lg font-bold shadow-xl backdrop-blur-sm">Hashim (Admin)</span>';
-                    
-                    const allUsers = { ...dbData.users, ...dbData.active_users };
-                    
-                    // Add Dynamic Users
-                    Object.entries(allUsers).forEach(([id, user]) => {
-                        let displayName = (typeof user === 'string') ? user : (user.name || user.username || "");
-                        if (!displayName || displayName === "Hashim (Admin)") return;
-                        
-                        const span = document.createElement('span');
-                        span.className = "user-card px-6 py-3 bg-gradient-to-r from-cyan-400/30 to-blue-400/30 rounded-2xl text-white border border-white/20 text-lg font-bold transition-all hover:scale-110 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] shadow-xl backdrop-blur-sm";
-                        span.textContent = displayName;
-                        container.appendChild(span);
-                    });
-                    
-                    // Add 367 Static Members
-                    for (let i = 1; i <= 367; i++) {
-                        const span = document.createElement('span');
-                        span.className = "px-6 py-3 bg-white/5 rounded-2xl text-gray-400/40 border border-white/5 text-sm font-medium opacity-50";
-                        span.textContent = `Member ${i}`;
-                        container.appendChild(span);
-                    }
-
-                    const dynamicCount = Object.keys(allUsers).length;
-                    if (countSpan) countSpan.textContent = `(${367 + dynamicCount + 1} Members)`;
-                // Community Area (Dynamic from Firebase 'users')
-                const container = document.getElementById("activeUsers");
-                if (container) {
-                    container.innerHTML = '<span class="px-6 py-4 bg-gradient-to-r from-orange-500/30 to-rose-600/30 rounded-2xl text-white border border-white/10 text-lg font-bold shadow-xl backdrop-blur-sm text-center flex items-center justify-center min-h-[4.5rem]">Hashim (Admin)</span>';
-                    
-                    const allUsers = { ...dbData.users, ...dbData.active_users };
-                    
-                    // Display all users found in Firebase
-                    Object.entries(allUsers).forEach(([id, user]) => {
-                        let displayName = (typeof user === 'string') ? user : (user.name || user.username || "");
-                        if (!displayName || displayName === "Hashim (Admin)") return;
-                        
-                        const span = document.createElement('span');
-                        span.className = "user-card px-6 py-4 bg-gradient-to-r from-cyan-400/30 to-blue-400/30 rounded-2xl text-white border border-white/10 text-lg font-bold transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] shadow-xl backdrop-blur-sm text-center flex items-center justify-center min-h-[4.5rem] break-words";
-                        span.textContent = displayName;
-                        container.appendChild(span);
-                    });
-                    
-                    const totalCount = Object.keys(allUsers).length;
-                    if (countSpan) countSpan.textContent = `(${totalCount + 1} Members)`;
-                }
-            }
-
-            const dbData = { users: {}, active_users: {} };
-
-            onValue(ref(db, 'users'), (snapshot) => {
-                dbData.users = snapshot.val() || {};
-                updateUI();
-            });
-
-            onValue(ref(db, 'active_users'), (snapshot) => {
-                dbData.active_users = snapshot.val() || {};
-                updateUI();
-            });
-
-            document.getElementById('join-btn').addEventListener('click', join);
-
-            // Refresh UI once on load
-            updateUI();
-        </script>
-
-        <!-- Issue Report Form -->
-        <div class="mt-20 max-w-2xl mx-auto px-4 pb-20">
-            <div class="glass-card rounded-3xl p-8 md:p-12 border border-white/10 shadow-2xl relative overflow-hidden">
-                <div class="absolute top-0 right-0 -mt-10 -mr-10 w-32 h-32 bg-rose-500/10 blur-3xl rounded-full"></div>
-                
-                <h2 class="text-3xl font-bold text-white mb-8 flex items-center justify-center gap-3">
-                    <svg class="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                    Report an Issue
-                </h2>
-                
-                <form id="issue-form" action="https://api.web3forms.com/submit" method="POST" class="space-y-6 relative z-10">
-                    <!-- Web3Forms Access Key - Get yours at web3forms.com -->
-                    <input type="hidden" name="access_key" value="44ebeeca-221c-4fef-925d-abe8dafbc0f5">
-                    <input type="hidden" name="subject" value="New Issue Report - Academic Notes Portal">
-                    <input type="hidden" name="from_name" value="unofficial-notes">
-                    
-                    <div>
-                        <label class="block text-sm font-medium text-orange-200 mb-2 uppercase tracking-widest">Sender Name</label>
-                        <input type="text" name="name" required class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 transition-all text-lg" placeholder="Your Name">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-orange-200 mb-2 uppercase tracking-widest">Describe the Issue</label>
-                        <textarea name="message" required rows="4" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 transition-all text-lg resize-none" placeholder="Explain the problem here..."></textarea>
-                    </div>
-                    
-                    <button type="submit" class="w-full py-5 bg-gradient-to-r from-rose-600 to-red-700 hover:from-rose-500 hover:to-red-600 text-white font-bold rounded-2xl shadow-xl transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3 text-xl">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                        Submit Issue
-                    </button>
-                </form>
-                <div id="form-status" class="hidden mt-6 p-4 rounded-xl text-center font-bold"></div>
-            </div>
-        </div>
-
-        <!-- Community Contributors List (Moved to bottom) -->
-        <div class="mt-20 max-w-4xl mx-auto px-4 text-center pb-20">
+        <!-- Community -->
+        <div class="text-center pb-20">
             <h2 class="text-3xl font-bold text-white mb-8 flex items-center justify-center gap-3">
                 <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                Active Website Users <span id="member-count" class="text-sm font-normal text-gray-500 ml-2"></span>
+                Active Website Users <span id="member-count" class="text-sm font-normal text-gray-400 ml-2"></span>
             </h2>
-            <div id="activeUsers" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch">
-                <!-- User cards will be injected here dynamically -->
-            </div>
+            <div id="activeUsers" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="glass-card py-6 text-center text-gray-300 border-t-0 border-r-0 border-l-0 mt-auto">
+    <footer class="glass-card py-6 text-center text-gray-300 border-t border-white/10">
         <p>&copy; 2026 Unofficial Notes Portal. Created by Hashim</p>
     </footer>
 
-    <script>
-        const form = document.getElementById("issue-form");
-        const status = document.getElementById("form-status");
+    <!-- Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+        import { getDatabase, ref, set, push, onValue, serverTimestamp, onDisconnect } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
 
-        async function handleSubmit(event) {
-            event.preventDefault();
-            const data = new FormData(event.target);
-            
-            // Show loading state
-            const btn = event.target.querySelector('button');
-            const originalBtnText = btn.innerHTML;
-            btn.innerHTML = '<svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Sending...';
-            btn.disabled = true;
+        const firebaseConfig = {
+            apiKey: "AIzaSyAc1eNCmAYDRYbnRZPWj8NQ7dOWJY-4d0o",
+            authDomain: "academic-portal-135fd.firebaseapp.com",
+            projectId: "academic-portal-135fd",
+            storageBucket: "academic-portal-135fd.firebasestorage.app",
+            messagingSenderId: "459730360375",
+            appId: "1:459730360375:web:151a615ff0bc30557347b2",
+            databaseURL: "https://academic-portal-135fd-default-rtdb.firebaseio.com/"
+        };
 
-            fetch(event.target.action, {
-                method: form.method,
-                body: data,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            }).then(response => {
-                btn.disabled = false;
-                btn.innerHTML = originalBtnText;
-                
-                if (response.ok) {
-                    status.innerHTML = "✅ Success! Your report has been sent.";
-                    status.classList.remove("hidden", "bg-red-500/20", "text-red-300");
-                    status.classList.add("bg-green-500/20", "text-green-300");
-                    form.reset();
-                } else {
-                    response.json().then(data => {
-                        if (Object.hasOwn(data, 'errors')) {
-                            status.innerHTML = "❌ " + data["errors"].map(error => error["message"]).join(", ");
-                        } else {
-                            status.innerHTML = "❌ Oops! There was a problem submitting your form";
-                        }
-                        status.classList.remove("hidden", "bg-green-500/20", "text-green-300");
-                        status.classList.add("bg-red-500/20", "text-red-300");
-                    })
-                }
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const usersRef = ref(db, 'users');
+        const onlineRef = ref(db, 'presence_v2');
+        const connectedRef = ref(db, '.info/connected');
 
-                // Hide message after 5 seconds
-                setTimeout(() => {
-                    status.classList.add("hidden");
-                }, 5000);
+        let userId = localStorage.getItem('portal-userId') || 'u_' + Date.now();
+        localStorage.setItem('portal-userId', userId);
 
-            }).catch(error => {
-                btn.disabled = false;
-                btn.innerHTML = originalBtnText;
-                status.innerHTML = "❌ Oops! There was a problem connecting to the server";
-                status.classList.remove("hidden", "bg-green-500/20", "text-green-300");
-                status.classList.add("bg-red-500/20", "text-red-300");
-
-                // Hide message after 5 seconds
-                setTimeout(() => {
-                    status.classList.add("hidden");
-                }, 5000);
-            });
-        }
-        form.addEventListener("submit", handleSubmit);
-    </script>
-    
-        <script>
-        (function() {
-            const selector = document.getElementById('theme-selector');
-            const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
-            if (selector) {
-                selector.value = savedTheme;
-                selector.addEventListener('change', (e) => {
-                    const theme = e.target.value;
-                    document.documentElement.setAttribute('data-theme', theme);
-                    localStorage.setItem('preferred-theme', theme);
-                });
+        // Presence
+        onValue(connectedRef, (snap) => {
+            if (snap.val() === true) {
+                const myRef = ref(db, `presence_v2/${userId}`);
+                const update = () => set(myRef, { lastActive: serverTimestamp(), name: localStorage.getItem('portal-username') || 'Member', userId });
+                update();
+                onDisconnect(myRef).remove();
+                setInterval(update, 10000);
             }
-        })();
+        });
+
+        onValue(onlineRef, (snap) => {
+            const data = snap.val() || {};
+            const container = document.getElementById('online-users-names');
+            container.innerHTML = '';
+            let count = 0;
+            Object.values(data).forEach(u => {
+                if (u.lastActive && (Date.now() - u.lastActive < 30000)) {
+                    count++;
+                    const card = document.createElement('div');
+                    card.className = "px-6 py-3 bg-gradient-to-r from-emerald-500/20 to-teal-600/20 rounded-2xl text-white border border-emerald-400/30 text-xs font-black uppercase tracking-widest shadow-xl backdrop-blur-md animate-pulse";
+                    card.innerText = u.name || 'Member';
+                    container.appendChild(card);
+                }
+            });
+            document.getElementById('online-count').innerText = count;
+        });
+
+        // UI Update
+        function updateUI(usersData) {
+            const name = localStorage.getItem('portal-username');
+            document.getElementById('name-input-area').classList.toggle('hidden', !!name);
+            document.getElementById('name-display-area').classList.toggle('hidden', !name);
+            if(name) document.getElementById('display-name-span').innerText = name;
+
+            const container = document.getElementById("activeUsers");
+            container.innerHTML = '<span class="px-6 py-4 bg-gradient-to-r from-orange-500/30 to-rose-600/30 rounded-2xl text-white border border-white/20 text-lg font-bold shadow-xl backdrop-blur-sm flex items-center justify-center min-h-[4.5rem]">Hashim (Admin)</span>';
+            
+            const users = Object.values(usersData || {}).map(u => typeof u === 'string' ? u : u.name).filter(n => n && n !== 'Hashim (Admin)');
+            users.forEach(n => {
+                const span = document.createElement('span');
+                span.className = "px-6 py-4 bg-gradient-to-r from-cyan-400/30 to-blue-400/30 rounded-2xl text-white border border-white/10 text-lg font-bold shadow-xl backdrop-blur-sm flex items-center justify-center min-h-[4.5rem] text-center break-words";
+                span.innerText = n;
+                container.appendChild(span);
+            });
+            document.getElementById('member-count').innerText = `(${users.length + 1} Members)`;
+        }
+
+        onValue(usersRef, (snap) => updateUI(snap.val()));
+
+        document.getElementById('join-btn').onclick = () => {
+            const val = document.getElementById('user-name-input').value.trim();
+            if(val) { localStorage.setItem('portal-username', val); push(usersRef, { name: val }); location.reload(); }
+        };
+        document.getElementById('reset-btn').onclick = () => { if(confirm("Change Name?")) { localStorage.removeItem('portal-username'); location.reload(); } };
+        
+        // Theme
+        const selector = document.getElementById('theme-selector');
+        selector.value = localStorage.getItem('preferred-theme') || 'rose';
+        selector.onchange = (e) => {
+            document.documentElement.setAttribute('data-theme', e.target.value);
+            localStorage.setItem('preferred-theme', e.target.value);
+        };
     </script>
 </body>
 </html>
-
