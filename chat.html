@@ -325,7 +325,36 @@
             localStorage.setItem('chat_last_read', Date.now());
             messagesDiv.innerHTML = '';
             const data = snapshot.val() || {};
+            let lastDateLabel = null;
+
             Object.entries(data).sort((a, b) => a[1].timestamp - b[1].timestamp).forEach(([id, msg]) => {
+                let dateStr = 'Unknown Date';
+                if (msg.timestamp) {
+                    const msgDate = new Date(msg.timestamp);
+                    const today = new Date();
+                    const yesterday = new Date(today);
+                    yesterday.setDate(yesterday.getDate() - 1);
+                    
+                    if (msgDate.toDateString() === today.toDateString()) {
+                        dateStr = 'Today';
+                    } else if (msgDate.toDateString() === yesterday.toDateString()) {
+                        dateStr = 'Yesterday';
+                    } else {
+                        dateStr = msgDate.toLocaleDateString('en-GB');
+                    }
+                }
+
+                if (dateStr !== lastDateLabel && msg.timestamp) {
+                    const divider = document.createElement('div');
+                    divider.className = 'flex justify-center my-4 w-full';
+                    const divText = document.createElement('span');
+                    divText.className = 'bg-white/10 text-white/80 text-[10px] font-bold uppercase tracking-widest px-4 py-1 rounded-full backdrop-blur-md border border-white/20 shadow-sm';
+                    divText.textContent = dateStr;
+                    divider.appendChild(divText);
+                    messagesDiv.appendChild(divider);
+                    lastDateLabel = dateStr;
+                }
+
                 const isMe = msg.userId === userId;
                 const isAdmin = window.isAdmin;
                 const bubble = document.createElement('div');
