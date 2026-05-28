@@ -6,10 +6,13 @@
     <link rel="apple-touch-icon" href="assets/favicon.png">
 
     <script>
-        // Admin detection
+        // Admin detection - always verify username, never trust localStorage flags
         (function() {
             const name = localStorage.getItem('portal-username');
-            window.isAdmin = name && name.toLowerCase() === 'ameenulhashim';
+            const adminNames = ['ameenulhashim', 'ameenulhashimh'];
+            window.isAdmin = !!(name && adminNames.includes(name.toLowerCase()));
+            // Clear stale admin flag if username doesn't match
+            if (!window.isAdmin) localStorage.removeItem('portal-is-admin');
         })();
         // Username requirement (skip for admin)
         (function() {
@@ -200,17 +203,11 @@
         const onlineRef = ref(db, 'presence_v2');
         
         let userName = localStorage.getItem('portal-username');
-        const ADMIN_KEY = 'portal-is-admin';
         // Support both correct and typo admin usernames
         const adminNames = ['ameenulhashim', 'ameenulhashimh'];
-        if (userName && adminNames.includes(userName.toLowerCase())) {
-            localStorage.setItem(ADMIN_KEY, 'true');
-            window.isAdmin = true;
-        } else if (localStorage.getItem(ADMIN_KEY) === 'true') {
-            window.isAdmin = true;
-        } else {
-            window.isAdmin = false;
-        }
+        // Always verify username — never trust localStorage flags alone
+        window.isAdmin = !!(userName && adminNames.includes(userName.toLowerCase()));
+        if (!window.isAdmin) localStorage.removeItem('portal-is-admin');
         if (!userName) {
             alert("Please set a username before entering the chat!");
             window.location.href = 'index.html';
@@ -333,27 +330,53 @@
                 const isAdmin = window.isAdmin;
                 const bubble = document.createElement('div');
                 bubble.className = `bubble ${isMe ? 'bubble-me' : 'bubble-other'} flex flex-col group`;
-                
-                let controls = '';
+
+                // Build header row safely using DOM methods (prevents XSS)
+                const headerDiv = document.createElement('div');
+                headerDiv.className = 'flex justify-between items-center gap-4 mb-1';
+
+                const leftDiv = document.createElement('div');
+                leftDiv.className = 'flex items-center';
+
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'text-[10px] font-black uppercase opacity-70';
+                nameSpan.textContent = isMe ? 'You' : (msg.sender || 'Anonymous');
+                leftDiv.appendChild(nameSpan);
+
+                // Add edit/delete controls safely with addEventListener (no onclick injection)
                 if (isMe || isAdmin) {
-                    controls = `
-                        <div class="flex gap-2 items-center ml-2 border-l border-white/20 pl-2">
-                            <button onclick="openEdit('${id}', '${msg.text.replace(/'/g, "\\'")}')" class="text-[9px] text-blue-400 hover:text-white font-black uppercase tracking-tighter transition-colors">Edit</button>
-                            <button onclick="deleteMsg('${id}')" class="text-[9px] text-rose-400 hover:text-white font-black uppercase tracking-tighter transition-colors">Del</button>
-                        </div>
-                    `;
+                    const controlsDiv = document.createElement('div');
+                    controlsDiv.className = 'flex gap-2 items-center ml-2 border-l border-white/20 pl-2';
+
+                    const editBtn = document.createElement('button');
+                    editBtn.className = 'text-[9px] text-blue-400 hover:text-white font-black uppercase tracking-tighter transition-colors';
+                    editBtn.textContent = 'Edit';
+                    editBtn.addEventListener('click', () => window.openEdit(id, msg.text || ''));
+
+                    const delBtn = document.createElement('button');
+                    delBtn.className = 'text-[9px] text-rose-400 hover:text-white font-black uppercase tracking-tighter transition-colors';
+                    delBtn.textContent = 'Del';
+                    delBtn.addEventListener('click', () => window.deleteMsg(id));
+
+                    controlsDiv.appendChild(editBtn);
+                    controlsDiv.appendChild(delBtn);
+                    leftDiv.appendChild(controlsDiv);
                 }
 
-                bubble.innerHTML = `
-                    <div class="flex justify-between items-center gap-4 mb-1">
-                        <div class="flex items-center">
-                            <span class="text-[10px] font-black uppercase opacity-70">${isMe ? 'You' : msg.sender}</span>
-                            ${controls}
-                        </div>
-                        <span class="text-[8px] opacity-50 font-medium">${new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
-                    </div>
-                    <p class="text-sm leading-snug font-medium">${msg.text}</p>
-                `;
+                const timeSpan = document.createElement('span');
+                timeSpan.className = 'text-[8px] opacity-50 font-medium';
+                timeSpan.textContent = msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '';
+
+                headerDiv.appendChild(leftDiv);
+                headerDiv.appendChild(timeSpan);
+
+                // Message text — use textContent to prevent XSS
+                const textP = document.createElement('p');
+                textP.className = 'text-sm leading-snug font-medium';
+                textP.textContent = msg.text || '';
+
+                bubble.appendChild(headerDiv);
+                bubble.appendChild(textP);
                 messagesDiv.appendChild(bubble);
             });
             messagesDiv.scrollTop = messagesDiv.scrollHeight;

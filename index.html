@@ -18,18 +18,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <script>
-       // Admin flag detection and persistence
+       // Admin flag detection — always verify username, never trust localStorage flags alone
 (function() {
   const name = localStorage.getItem('portal-username');
-  const ADMIN_KEY = 'portal-is-admin';
-  if (name && name.toLowerCase() === 'ameenulhashim') {
-    localStorage.setItem(ADMIN_KEY, 'true');
-    window.isAdmin = true;
-  } else if (localStorage.getItem(ADMIN_KEY) === 'true') {
-    window.isAdmin = true;
-  } else {
-    window.isAdmin = false;
-  }
+  const adminNames = ['ameenulhashim', 'ameenulhashimh'];
+  window.isAdmin = !!(name && adminNames.includes(name.toLowerCase()));
+  // Clear stale admin flag if username doesn't match
+  if (!window.isAdmin) localStorage.removeItem('portal-is-admin');
 })();
     </script>
             <style>
