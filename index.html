@@ -653,30 +653,20 @@
                 }
             }
 
-            const dbData = { users: {}, active_users: {}, presence_v2: {}, contributors: {} };
+            const dbData = { users: {}, active_users: {}, presence_v2: {}, contributors: {}, user: {}, active_user: {}, member: {}, Users: {}, Presence: {}, ActiveUsers: {}, all_member_list: {}, registered_users: {}, user_names: {} };
 
-            // Real-time listener for 'users'
-            onValue(ref(db, 'users'), (snapshot) => {
-                dbData.users = snapshot.val() || {};
-                updateUI();
-            });
+            // Robust Multi-Node Listeners
+            const nodesToSync = [
+                'users', 'active_users', 'presence_v2', 'contributors', 
+                'user', 'active_user', 'member', 'Users', 'Presence', 
+                'ActiveUsers', 'all_member_list', 'registered_users', 'user_names'
+            ];
 
-            // Real-time listener for 'active_users' (Legacy path)
-            onValue(ref(db, 'active_users'), (snapshot) => {
-                dbData.active_users = snapshot.val() || {};
-                updateUI();
-            });
-
-            // New: Real-time listener for 'presence_v2' to capture current/recent viewers
-            onValue(ref(db, 'presence_v2'), (snapshot) => {
-                dbData.presence_v2 = snapshot.val() || {};
-                updateUI();
-            });
-
-            // New: Real-time listener for 'contributors' node
-            onValue(ref(db, 'contributors'), (snapshot) => {
-                dbData.contributors = snapshot.val() || {};
-                updateUI();
+            nodesToSync.forEach(node => {
+                onValue(ref(db, node), (snapshot) => {
+                    dbData[node] = snapshot.val() || {};
+                    updateUI();
+                });
             });
 
             // Cleanup Logic: Automatically remove numeric-only usernames (like '8921552682')
