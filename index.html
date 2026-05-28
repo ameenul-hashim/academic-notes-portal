@@ -604,16 +604,22 @@
                     displayArea.classList.add('hidden');
                 }
 
-                // Merge and Update List
+                // Merge and Update List from all nodes
                 const container = document.getElementById("activeUsers");
                 if (container) {
                     container.innerHTML = '<span class="flex items-center justify-center w-full min-h-[4rem] h-full py-2 px-3 bg-white/5 rounded-2xl text-gray-400 border border-white/10 text-sm sm:text-base font-medium break-words text-center leading-tight">Hashim (Admin)</span>';
                     
-                    const allUsers = { ...dbData.users, ...dbData.active_users };
-                    const userCount = Object.keys(allUsers).length;
-                    console.log("Merged Total Users:", userCount);
-
+                    const allUsers = { 
+                        ...dbData.users, 
+                        ...dbData.active_users, 
+                        ...dbData.presence_v2,
+                        ...dbData.contributors 
+                    };
+                    
                     const sortedNames = [];
+                    const seen = new Set();
+                    seen.add("Hashim (Admin)");
+
                     Object.entries(allUsers).forEach(([id, user]) => {
                         let displayName = "";
                         if (typeof user === 'string') {
@@ -621,7 +627,8 @@
                         } else if (user && typeof user === 'object') {
                             displayName = user.name || user.username || "";
                         }
-                        if (displayName) {
+                        if (displayName && !seen.has(displayName)) {
+                            seen.add(displayName);
                             displayName = displayName.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
                             sortedNames.push(displayName);
                         }
@@ -640,11 +647,12 @@
                         container.appendChild(span);
                     });
                     
-                    if (countSpan) countSpan.textContent = `(${userCount + 1} Members)`;
+                    const totalCount = sortedNames.length + 1;
+                    if (countSpan) countSpan.textContent = `(${totalCount} Members)`;
                 }
             }
 
-            const dbData = { users: {}, active_users: {} };
+            const dbData = { users: {}, active_users: {}, presence_v2: {}, contributors: {} };
 
             // Real-time listener for 'users'
             onValue(ref(db, 'users'), (snapshot) => {
@@ -655,6 +663,18 @@
             // Real-time listener for 'active_users' (Legacy path)
             onValue(ref(db, 'active_users'), (snapshot) => {
                 dbData.active_users = snapshot.val() || {};
+                updateUI();
+            });
+
+            // New: Real-time listener for 'presence_v2' to capture current/recent viewers
+            onValue(ref(db, 'presence_v2'), (snapshot) => {
+                dbData.presence_v2 = snapshot.val() || {};
+                updateUI();
+            });
+
+            // New: Real-time listener for 'contributors' node
+            onValue(ref(db, 'contributors'), (snapshot) => {
+                dbData.contributors = snapshot.val() || {};
                 updateUI();
             });
 
