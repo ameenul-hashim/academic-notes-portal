@@ -543,20 +543,23 @@
                 }
             });
 
-            // Smart Online Count (Filters out stale users)
+            // Smart Online Count & Names Display
             onValue(onlineRef, (snapshot) => {
                 const now = Date.now();
                 const users = snapshot.val() || {};
                 let activeCount = 0;
                 let activeNames = [];
                 
-                // Only count users active in the last 10 seconds
+                // Count users active in the last 60 seconds (more generous for name display)
                 Object.values(users).forEach(user => {
                     if (user.lastActive) {
                         const age = now - user.lastActive;
-                        if (age < 15000 /* 15s stale check */) { 
+                        if (age < 60000 /* 1 min stale check */) { 
                             activeCount++;
-                            if (user.name) activeNames.push(user.name);
+                            const displayName = user.name || 'Visitor';
+                            if (!activeNames.includes(displayName)) {
+                                activeNames.push(displayName);
+                            }
                         }
                     }
                 });
@@ -565,15 +568,13 @@
                     onlineCountElement.innerText = Math.max(1, activeCount);
                 }
 
-                // Update Online Names Display (Visible to All)
+                // Update Online Names Display (Just below the count)
                 const namesContainer = document.getElementById('online-users-names');
-                
                 if (namesContainer) {
                     namesContainer.innerHTML = '';
                     activeNames.forEach(name => {
                         const span = document.createElement('span');
-                        // Using the requested card format similar to active website users
-                        span.className = "flex items-center justify-center text-center min-w-[120px] px-4 py-3 bg-gradient-to-r from-green-400/20 to-emerald-500/20 rounded-2xl text-white border border-green-400/30 text-xs font-black uppercase tracking-widest shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(34,197,94,0.3)]";
+                        span.className = "flex items-center justify-center text-center px-4 py-2 bg-gradient-to-r from-emerald-400/20 to-teal-500/20 rounded-xl text-white border border-emerald-400/30 text-[10px] font-bold uppercase tracking-wider shadow-lg backdrop-blur-md animate-pulse";
                         span.innerText = name;
                         namesContainer.appendChild(span);
                     });
