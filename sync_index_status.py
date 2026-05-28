@@ -26,10 +26,10 @@ subject_map = {
     "English for BA Programs": "kerala",
     "Literary Malayalam": "politics",
     "History of Keralam": "economics",
-    "Development Issues": "philosophy",
     "Sociology": "sociology",
     "Micro Economics": "micro-economics",
-    "Fundamentals of Ethics": "ethics"
+    "Fundamentals of Ethics": "ethics",
+    "Development Issues": "philosophy"
 }
 
 def make_col(stats):
