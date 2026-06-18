@@ -805,10 +805,27 @@
 
                 const snapshot = await get(usersRef);
                 const currentUsers = snapshot.val() || {};
-                const exists = Object.values(currentUsers).some(u => u.name && u.name.toLowerCase() === name.toLowerCase());
+                let existingKey = null;
+                Object.entries(currentUsers).forEach(([k, u]) => {
+                    if (u.name && u.name.toLowerCase() === name.toLowerCase()) {
+                        existingKey = k;
+                    }
+                });
 
-                if (exists) {
-                    alert("This name is already taken! Please choose another.");
+                if (existingKey) {
+                    console.log("Welcome back:", name);
+                    localStorage.setItem('portal-username', name);
+                    localStorage.setItem('portal-userkey', existingKey);
+                    
+                    const myPresenceRef = ref(db, `presence_v2/${userId}`);
+                    set(myPresenceRef, {
+                        lastActive: serverTimestamp(),
+                        name: name,
+                        userId: userId
+                    });
+                    
+                    nameInput.value = "";
+                    updateUI();
                     return;
                 }
 
