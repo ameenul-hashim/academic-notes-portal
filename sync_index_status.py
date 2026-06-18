@@ -6,7 +6,7 @@ def count_chapters(file_path):
         return None
     with open(file_path, 'r', encoding='utf-8') as f:
         content = f.read()
-    modals = re.findall(r'id="(modal-ch\d+|modal-discussion)"', content)
+    modals = re.findall(r'id="(modal-ch[\d_]+|modal-discussion)"', content)
     total = len(set(modals))
     uploaded = 0
     for modal_id in set(modals):
