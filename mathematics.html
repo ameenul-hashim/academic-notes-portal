@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+
+    <script>
+        (function() {
+            if (!localStorage.getItem('portal-username')) {
+                alert("Access Denied: Please set a username in the portal first!");
+                window.location.href = 'index.html';
+            }
+        })();
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics - BA Calicut University Notes</title>
+    <meta name="description" content="Mathematics study materials and notes for BA Calicut University students.">
+    <meta name="keywords" content="Calicut University, BA Notes, Mathematics, Academic Portal, Study Materials">
+    <meta name="theme-color" content="#881337">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('preferred-theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+    <style>
+        .glass-card {
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        :root {
+            --bg-rose: linear-gradient(135deg, #450a0a 0%, #881337 50%, #7f1d1d 100%);
+            --bg-midnight: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #2e1065 100%);
+            --bg-ocean: linear-gradient(135deg, #083344 0%, #155e75 50%, #164e63 100%);
+            --bg-golden: linear-gradient(135deg, #451a03 0%, #78350f 50%, #92400e 100%);
+            --bg-coffee: linear-gradient(135deg, #1c1917 0%, #44403c 50%, #292524 100%);
+            --bg-sunset: linear-gradient(135deg, #7c2d12 0%, #9d174d 50%, #be123c 100%);
+            --bg-indigo: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #3730a3 100%);
+            --bg-forest: linear-gradient(135deg, #064e3b 0%, #14532d 50%, #065f46 100%);
+            --bg-chocolate: linear-gradient(135deg, #1c1917 0%, #3b2b07 50%, #451a03 100%);
+            --bg-slate: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            --bg-emerald: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%);
+            --bg-dark: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e293b 100%);
+            --bg-light: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+            --bg-desert: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #fde68a 100%);
+        }
+        html, body { min-height: 100vh !important; margin: 0 !important; padding: 0 !important; background-attachment: fixed !important; }
+        [data-theme="rose"] { background: var(--bg-rose) !important; color: #fff1f2 !important; }
+        [data-theme="midnight"] { background: var(--bg-midnight) !important; color: #f5f3ff !important; }
+        [data-theme="ocean"] { background: var(--bg-ocean) !important; color: #ecfeff !important; }
+        [data-theme="golden"] { background: var(--bg-golden) !important; color: #fffbeb !important; }
+        [data-theme="coffee"] { background: var(--bg-coffee) !important; color: #fafaf9 !important; }
+        [data-theme="sunset"] { background: var(--bg-sunset) !important; color: #fff7ed !important; }
+        [data-theme="indigo"] { background: var(--bg-indigo) !important; color: #e0e7ff !important; }
+        [data-theme="forest"] { background: var(--bg-forest) !important; color: #f0fdf4 !important; }
+        [data-theme="chocolate"] { background: var(--bg-chocolate) !important; color: #fffbeb !important; }
+        [data-theme="slate"] { background: var(--bg-slate) !important; color: #f1f5f9 !important; }
+        [data-theme="emerald"] { background: var(--bg-emerald) !important; color: #ecfdf5 !important; }
+        [data-theme="dark"] { background: var(--bg-dark) !important; color: #f8fafc !important; }
+        [data-theme="light"] { background: var(--bg-light) !important; color: #0f172a !important; }
+        [data-theme="sky"] { background: var(--bg-desert) !important; color: #451a03 !important; }
+        .glass-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); }
+        [data-theme="light"] .glass-card, [data-theme="sky"] .glass-card { background: rgba(255,255,255,0.7) !important; border: 1px solid rgba(0,0,0,0.1) !important; box-shadow: 0 8px 32px rgba(0,0,0,0.1) !important; }
+        [data-theme="light"] .text-white, [data-theme="light"] .text-gray-100, [data-theme="light"] .text-orange-200 { color: #0f172a !important; }
+        [data-theme="sky"] .text-white, [data-theme="sky"] .text-gray-100, [data-theme="sky"] .text-orange-200 { color: #451a03 !important; }
+        #theme-selector { background: rgba(0,0,0,0.5) !important; color: white !important; border: 1px solid rgba(255,255,255,0.2) !important; }
+        #theme-selector option { background: #1e293b !important; color: white !important; }
+        [data-theme="light"] #theme-selector, [data-theme="sky"] #theme-selector { background: rgba(255,255,255,0.8) !important; color: #0f172a !important; border: 1px solid rgba(0,0,0,0.1) !important; }
+        [data-theme="light"] #theme-selector option, [data-theme="sky"] #theme-selector option { background: white !important; color: #0f172a !important; }
+    </style>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+</head>
+<body class="bg-gradient-to-br from-red-950 via-rose-900 to-red-900 min-h-screen text-white font-sans antialiased flex flex-col">
+
+    <!-- Header -->
+    <header class="hidden md:block glass-card sticky top-0 z-50 shadow-lg py-4">
+        <div class="max-w-screen-2xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0 relative">
+            <div class="flex items-center justify-between w-full md:w-auto md:absolute md:left-4">
+                <a href="index.html" class="flex items-center text-orange-200 hover:text-white transition-colors">
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Back
+                </a>
+            </div>
+            <div class="text-center w-full px-2">
+                <p class="text-[10px] md:text-sm text-orange-200 tracking-[0.2em] uppercase mb-1 font-bold">Subject</p>
+                <h1 class="font-black text-lg md:text-2xl lg:text-3xl tracking-tight text-white leading-tight">
+                    BA Calicut University Unofficial Notes And Classes
+                </h1>
+            </div>
+            <div class="flex flex-col items-center gap-3 w-full md:w-auto md:flex-row md:absolute md:right-4">
+                <a href="chat.html" class="w-full md:w-40 flex items-center justify-center gap-2 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 border border-blue-400/40 rounded-full text-white text-xs font-black uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-95 shadow-[0_0_20px_rgba(37,99,235,0.4)] backdrop-blur-md">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-300 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-400"></span>
+                    </span>
+                    Realtime Chat
+                </a>
+                <select id="theme-selector" class="w-full md:w-40 bg-white/10 text-white backdrop-blur-md border border-white/20 rounded-full px-6 py-2.5 text-[10px] md:text-xs font-black uppercase tracking-widest outline-none cursor-pointer hover:bg-white/20 transition-all appearance-none text-center">
+                    <option value="">Choose Theme</option>
+                    <option value="rose">Reddish Brown</option>
+                    <option value="midnight">Midnight Purple</option>
+                    <option value="ocean">Ocean Blue</option>
+                    <option value="golden">Golden Amber</option>
+                    <option value="coffee">Warm Coffee</option>
+                    <option value="sunset">Sunset Glow</option>
+                    <option value="indigo">Deep Indigo</option>
+                    <option value="forest">Forest Deep</option>
+                    <option value="chocolate">Chocolate Dark</option>
+                    <option value="slate">Slate Minimal</option>
+                    <option value="emerald">Emerald Green</option>
+                    <option value="dark">Navy Blue</option>
+                    <option value="light">Classic Light</option>
+                    <option value="sky">Desert Gold (Light)</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Title -->
+    <div class="md:hidden text-center mt-6 px-4">
+        <h1 class="font-bold text-3xl tracking-wider text-white">Mathematics</h1>
+    </div>
+
+    <!-- Main Content: Go directly to English since English only -->
+    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full flex flex-col items-center justify-center">
+        
+        <h2 class="text-2xl text-gray-200 mb-2 font-light">Mathematics</h2>
+        <p class="text-orange-200/70 text-sm mb-10 tracking-widest uppercase font-bold">English Medium</p>
+
+        <div class="grid grid-cols-1 gap-8 w-full max-w-md">
+            <!-- English Card -->
+            <a href="mathematics-en.html" class="block outline-none">
+                <div class="glass-card h-64 flex items-center justify-center p-8 rounded-2xl flex-col text-center transition-transform duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(251,113,133,0.5)]">
+                    <span class="text-5xl mb-4">A</span>
+                    <h2 class="text-3xl font-bold text-white">English</h2>
+                    <p class="text-orange-200/60 text-xs mt-3 uppercase tracking-widest font-bold">Tap to view chapters</p>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-card py-6 text-center text-gray-300 border-t-0 border-r-0 border-l-0 mt-auto">
+        <p>&copy; 2026 Unofficial Notes Portal. Created by Hashim</p>
+    </footer>
+
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+    <script>
+        (function() {
+            const selector = document.getElementById('theme-selector');
+            const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
+            if (selector) {
+                selector.value = savedTheme;
+                selector.addEventListener('change', (e) => {
+                    const theme = e.target.value;
+                    document.documentElement.setAttribute('data-theme', theme);
+                    localStorage.setItem('preferred-theme', theme);
+                });
+            }
+        })();
+    </script>
+
+    <!-- Firebase Presence -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+        import { getDatabase, ref, onValue, set, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
+        const firebaseConfig = { apiKey: "AIzaSyAc1eNCmAYDRYbnRZPWj8NQ7dOWJY-4d0o", authDomain: "academic-portal-135fd.firebaseapp.com", projectId: "academic-portal-135fd", storageBucket: "academic-portal-135fd.firebasestorage.app", messagingSenderId: "459730360375", appId: "1:459730360375:web:151a615ff0bc30557347b2", databaseURL: "https://academic-portal-135fd-default-rtdb.firebaseio.com/" };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        let userId = localStorage.getItem('portal-userId');
+        if (!userId) { userId = 'u_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9); localStorage.setItem('portal-userId', userId); }
+        onValue(ref(db, '.info/connected'), (snap) => {
+            if (snap.val() === true) {
+                const myPresenceRef = ref(db, `presence_v2/${userId}`);
+                const updatePresence = () => { set(myPresenceRef, { lastActive: serverTimestamp(), name: localStorage.getItem('portal-username') || 'Anonymous', userId }); };
+                updatePresence();
+                onDisconnect(myPresenceRef).remove();
+                setInterval(updatePresence, 10000);
+            }
+        });
+    </script>
+</body>
+</html>
