@@ -70,12 +70,6 @@
         [data-theme="light"] #theme-selector, [data-theme="sky"] #theme-selector { background: rgba(255,255,255,0.8) !important; color: #0f172a !important; border: 1px solid rgba(0,0,0,0.1) !important; }
         [data-theme="light"] #theme-selector option, [data-theme="sky"] #theme-selector option { background: white !important; color: #0f172a !important; }
     </style>
-    <script>
-        (function() {
-            const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-        })();
-    </script>
 </head>
 <body class="bg-gradient-to-br from-red-950 via-rose-900 to-red-900 min-h-screen text-white font-sans antialiased flex flex-col">
 
@@ -131,81 +125,34 @@
 
     <!-- Main Content -->
     <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
-            <!-- Syllabus Card -->
-            <div>
-                <div onclick="document.getElementById('modal-syllabus').classList.remove('hidden')" class="glass-card h-40 flex items-center justify-center p-6 cursor-pointer rounded-xl text-center transition-all hover:-translate-y-1 bg-blue-500/10 border-blue-500/20 text-blue-100 hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]">
-                    <h2 class="flex flex-col items-center justify-center gap-2 text-xl font-bold text-white">
-                        <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                        Syllabus
-                        <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                    </h2>
-                </div>
-                <!-- Modal for Syllabus -->
-                <div id="modal-syllabus" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
-                    <div class="glass-card rounded-2xl p-8 max-w-sm w-full relative" onclick="event.stopPropagation()">
-                        <button onclick="document.getElementById('modal-syllabus').classList.add('hidden')" class="absolute top-4 right-4 text-gray-300 hover:text-white text-2xl">&times;</button>
-                        <h3 class="text-2xl font-bold text-white mb-6 text-center">Mathematics Syllabus</h3>
-                        <div class="flex flex-col gap-4">
-                            <a href="https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/intro/maths%20syllabus%20pdf.pdf" target="_blank" class="text-orange-300 hover:text-orange-100 underline text-center font-medium">View PDF</a>
-                            <a href="https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/intro/maths%20syllabus%20pdf.pdf?download=Mathematics_Syllabus.pdf" download="Mathematics_Syllabus.pdf" class="btn-glass text-center py-3 px-4 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white/10 text-white mt-2">
-                                Download PDF
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Chapter 1 — Coming Soon placeholder -->
-            <div>
-                <div class="glass-card h-40 flex items-center justify-center p-6 rounded-xl text-center bg-amber-500/5 border-amber-500/10 opacity-50 cursor-default select-none">
-                    <h2 class="flex flex-col items-center justify-center gap-2 text-xl font-bold text-white">
-                        Chapter 1
-                        <span class="text-xs text-orange-300 uppercase tracking-widest font-bold">Coming Soon</span>
-                    </h2>
-                </div>
-            </div>
-
-            <!-- Chapter 2 — Coming Soon placeholder -->
-            <div>
-                <div class="glass-card h-40 flex items-center justify-center p-6 rounded-xl text-center bg-amber-500/5 border-amber-500/10 opacity-50 cursor-default select-none">
-                    <h2 class="flex flex-col items-center justify-center gap-2 text-xl font-bold text-white">
-                        Chapter 2
-                        <span class="text-xs text-orange-300 uppercase tracking-widest font-bold">Coming Soon</span>
-                    </h2>
-                </div>
-            </div>
-
-            <!-- Chapter 3 — Coming Soon placeholder -->
-            <div>
-                <div class="glass-card h-40 flex items-center justify-center p-6 rounded-xl text-center bg-amber-500/5 border-amber-500/10 opacity-50 cursor-default select-none">
-                    <h2 class="flex flex-col items-center justify-center gap-2 text-xl font-bold text-white">
-                        Chapter 3
-                        <span class="text-xs text-orange-300 uppercase tracking-widest font-bold">Coming Soon</span>
-                    </h2>
-                </div>
-            </div>
-
+        <!-- Dynamic Cards Grid -->
+        <div id="cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Cards will be injected dynamically here to avoid huge HTML boilerplate -->
         </div>
     </main>
+
+    <!-- Dynamic Modal Component -->
+    <div id="dynamic-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+        <div class="glass-card rounded-2xl p-8 max-w-sm w-full relative" onclick="event.stopPropagation()">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-300 hover:text-white text-2xl">&times;</button>
+            <h3 id="modal-title" class="text-2xl font-bold text-white mb-6 text-center"></h3>
+            <div id="modal-body" class="flex flex-col gap-4">
+                <!-- Links injected dynamically -->
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="glass-card py-6 text-center text-gray-300 border-t-0 border-r-0 border-l-0 mt-auto">
         <p>&copy; 2026 Unofficial Notes Portal. Created by Hashim</p>
     </footer>
 
+    <!-- Theme Controller -->
     <script>
         (function() {
             const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
             document.documentElement.setAttribute('data-theme', savedTheme);
-        })();
-    </script>
-    <script>
-        (function() {
             const selector = document.getElementById('theme-selector');
-            const savedTheme = localStorage.getItem('preferred-theme') || 'rose';
             if (selector) {
                 selector.value = savedTheme;
                 selector.addEventListener('change', (e) => {
@@ -215,6 +162,184 @@
                 });
             }
         })();
+    </script>
+
+    <!-- Media Cards & Modal Data Script -->
+    <script>
+        const cardsData = [
+            {
+                title: "Syllabus",
+                class: "bg-blue-500/10 border-blue-500/20 text-blue-100 hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]",
+                viewUrl: "https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/intro/maths%20syllabus%20pdf.pdf",
+                downloadName: "Mathematics_Syllabus.pdf",
+                isSpecial: true
+            },
+            {
+                title: "Chapter 1",
+                class: "bg-amber-500/10 border-amber-500/20 text-amber-100 hover:shadow-[0_0_30px_rgba(245,158,11,0.2)]",
+                viewUrl: "https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/chapter%201/mathschapter1.pdf",
+                downloadName: "Mathematics_Chapter_1.pdf"
+            },
+            {
+                title: "Chapter 2",
+                class: "bg-amber-500/10 border-amber-500/20 text-amber-100 hover:shadow-[0_0_30px_rgba(245,158,11,0.2)]",
+                viewUrl: "https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/chapter%202/mathschapter2.pdf",
+                downloadName: "Mathematics_Chapter_2.pdf"
+            },
+            {
+                title: "Chapter 3",
+                class: "bg-amber-500/10 border-amber-500/20 text-amber-100 hover:shadow-[0_0_30px_rgba(245,158,11,0.2)]",
+                viewUrl: "https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/chapter%203/mathschapter3.pdf",
+                downloadName: "Mathematics_Chapter_3.pdf"
+            },
+            {
+                title: "Chapter 4",
+                class: "bg-amber-500/10 border-amber-500/20 text-amber-100 hover:shadow-[0_0_30px_rgba(245,158,11,0.2)]",
+                viewUrl: "https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/chapter%204/mathschapter4.pdf",
+                downloadName: "Mathematics_Chapter_4.pdf"
+            },
+            {
+                title: "Chapter 5",
+                class: "bg-amber-500/10 border-amber-500/20 text-amber-100 hover:shadow-[0_0_30px_rgba(245,158,11,0.2)]",
+                viewUrl: "https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/chapter%205/mathschapter5.pdf",
+                downloadName: "Mathematics_Chapter_5.pdf"
+            },
+            {
+                title: "Chapter 6",
+                class: "bg-amber-500/10 border-amber-500/20 text-amber-100 hover:shadow-[0_0_30px_rgba(245,158,11,0.2)]",
+                viewUrl: "https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/chapter%206/mathschapter6.pdf",
+                downloadName: "Mathematics_Chapter_6.pdf"
+            },
+            {
+                title: "Chapter 7",
+                class: "bg-amber-500/10 border-amber-500/20 text-amber-100 hover:shadow-[0_0_30px_rgba(245,158,11,0.2)]",
+                viewUrl: "https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/chapter%207/mathschapter%207.pdf",
+                downloadName: "Mathematics_Chapter_7.pdf"
+            },
+            {
+                title: "Chapter 8",
+                class: "bg-amber-500/10 border-amber-500/20 text-amber-100 hover:shadow-[0_0_30px_rgba(245,158,11,0.2)]",
+                viewUrl: "https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/chapter%208/mathschapter8.pdf",
+                downloadName: "Mathematics_Chapter_8.pdf"
+            },
+            {
+                title: "Chapter 9",
+                class: "bg-amber-500/10 border-amber-500/20 text-amber-100 hover:shadow-[0_0_30px_rgba(245,158,11,0.2)]",
+                viewUrl: "https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/chapter%209/mathschapter9.pdf",
+                downloadName: "Mathematics_Chapter_9.pdf"
+            },
+            {
+                title: "Chapter 10",
+                class: "bg-amber-500/10 border-amber-500/20 text-amber-100 hover:shadow-[0_0_30px_rgba(245,158,11,0.2)]",
+                viewUrl: "https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/chapter%2010/mathschapter10.pdf",
+                downloadName: "Mathematics_Chapter_10.pdf"
+            },
+            {
+                title: "Chapter 11",
+                class: "bg-amber-500/10 border-amber-500/20 text-amber-100 hover:shadow-[0_0_30px_rgba(245,158,11,0.2)]",
+                viewUrl: "https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/chapter%2011/mathschapter11.pdf",
+                downloadName: "Mathematics_Chapter_11.pdf"
+            },
+            {
+                title: "Chapter 12",
+                class: "bg-amber-500/10 border-amber-500/20 text-amber-100 hover:shadow-[0_0_30px_rgba(245,158,11,0.2)]",
+                viewUrl: "https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/chapter%2012/mathschapter12.pdf",
+                downloadName: "Mathematics_Chapter_12.pdf"
+            },
+            {
+                title: "Chapter 13",
+                class: "bg-amber-500/10 border-amber-500/20 text-amber-100 hover:shadow-[0_0_30px_rgba(245,158,11,0.2)]",
+                viewUrl: "https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/chapter%2013/mathschapter13.pdf",
+                downloadName: "Mathematics_Chapter_13.pdf"
+            },
+            {
+                title: "Chapter 14",
+                class: "bg-amber-500/10 border-amber-500/20 text-amber-100 hover:shadow-[0_0_30px_rgba(245,158,11,0.2)]",
+                viewUrl: "https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/chapter%2014/mathschapter14.pdf",
+                downloadName: "Mathematics_Chapter_14.pdf"
+            },
+            {
+                title: "Question Bank Mod 1",
+                class: "bg-purple-500/10 border-purple-500/20 text-purple-100 hover:shadow-[0_0_30px_rgba(168,85,247,0.2)] font-semibold",
+                viewUrl: "https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/question%20bank%20module%201/question%20bank%20module%201%20maths.pdf",
+                downloadName: "Question_Bank_Module_1.pdf"
+            },
+            {
+                title: "Question Bank Mod 2",
+                class: "bg-purple-500/10 border-purple-500/20 text-purple-100 hover:shadow-[0_0_30px_rgba(168,85,247,0.2)] font-semibold",
+                viewUrl: "https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/question%20bank%20module%201/question%20bank%20module%202%20maths.pdf",
+                downloadName: "Question_Bank_Module_2.pdf"
+            },
+            {
+                title: "Question Bank Mod 3",
+                class: "bg-purple-500/10 border-purple-500/20 text-purple-100 hover:shadow-[0_0_30px_rgba(168,85,247,0.2)] font-semibold",
+                viewUrl: "https://cbxbwvftstjuqrqummyg.supabase.co/storage/v1/object/public/degree-sem1-notes/degree-sem1-notes%20and%20classes/maths/question%20bank%20module%201/question%20bank%20module%203%20maths.pdf",
+                downloadName: "Question_Bank_Module_3.pdf"
+            },
+            {
+                title: "Open Ended",
+                class: "bg-gray-500/10 border-gray-500/20 text-gray-400 opacity-60",
+                isOpenEnded: true
+            }
+        ];
+
+        function renderCards() {
+            const container = document.getElementById("cards-grid");
+            container.innerHTML = "";
+            cardsData.forEach((card, idx) => {
+                const colDiv = document.createElement("div");
+                const tickSvg = `<svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+                const eyeSvg = `<svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>`;
+                
+                let iconOrBadge = tickSvg;
+                if (card.isSpecial) {
+                    iconOrBadge = eyeSvg;
+                } else if (card.isOpenEnded) {
+                    iconOrBadge = `<span class="text-[10px] uppercase font-bold text-gray-500 tracking-wider">TBD</span>`;
+                }
+
+                colDiv.innerHTML = `
+                    <div onclick="openCard(${idx})" class="glass-card h-40 flex items-center justify-center p-6 cursor-pointer rounded-xl text-center transition-all hover:-translate-y-1 ${card.class}">
+                        <h2 class="flex flex-col items-center justify-center gap-2 text-xl font-bold text-white">
+                            ${card.title}
+                            ${iconOrBadge}
+                        </h2>
+                    </div>
+                `;
+                container.appendChild(colDiv);
+            });
+        }
+
+        function openCard(idx) {
+            const card = cardsData[idx];
+            if (card.isOpenEnded) {
+                alert("This section is open-ended. Content will be configured later!");
+                return;
+            }
+            document.getElementById("modal-title").innerText = card.title;
+            const modalBody = document.getElementById("modal-body");
+            modalBody.innerHTML = `
+                <a href="${card.viewUrl}" target="_blank" class="text-orange-300 hover:text-orange-100 underline text-center font-medium">View PDF</a>
+                <a href="${card.viewUrl}?download=${encodeURIComponent(card.downloadName)}" 
+                   download="${card.downloadName}" 
+                   class="btn-glass text-center py-3 px-4 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white/10 text-white mt-2">
+                    Download PDF
+                </a>
+            `;
+            document.getElementById("dynamic-modal").classList.remove("hidden");
+        }
+
+        function closeModal() {
+            document.getElementById("dynamic-modal").classList.add("hidden");
+        }
+
+        // Close on click outside modal content
+        document.getElementById("dynamic-modal").addEventListener("click", function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // Initialize cards rendering
+        renderCards();
     </script>
 
     <!-- Advanced Download Handler -->
