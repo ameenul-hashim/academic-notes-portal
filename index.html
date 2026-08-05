@@ -162,6 +162,94 @@
 <body class="min-h-screen text-base font-sans antialiased flex flex-col bg-transparent">
 
     <!-- ==================================================================
+         NOTESPHERE WELCOME POPUP (TERMS & INFO)
+         Shows first on page load. Once closed, it reveals the mask page
+         underneath. Content mirrors the NoteSphere welcome notice.
+         ================================================================== -->
+    <div id="notesphere-popup-overlay" style="position:fixed; inset:0; z-index:1000000; background:rgba(17,24,39,0.6); display:flex; align-items:center; justify-content:center; padding:20px; font-family:Arial, Helvetica, sans-serif;">
+        <div style="background:#ffffff; border-radius:24px; max-width:660px; width:100%; max-height:92vh; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 25px 70px rgba(17,24,39,0.45);">
+            <div style="padding:28px 32px 20px; text-align:center; border-bottom:1px solid #e5e7eb;">
+                <img src="assets/favicon.png" alt="Logo" style="width:60px; height:60px; margin:0 auto 12px; display:block;">
+                <h1 style="font-size:26px; font-weight:800; color:#111827; margin:0;">Welcome to NoteSphere</h1>
+                <p style="font-size:12px; color:#9ca3af; margin:8px 0 0; text-transform:uppercase; letter-spacing:.2em; font-weight:700;">The New Learning Platform</p>
+            </div>
+            <div style="flex:1; overflow-y:auto; padding:24px 32px 8px; color:#374151; font-size:14px; line-height:1.7;">
+                <p style="margin:0 0 16px;">
+                    <strong style="color:#111827;">Calicut Unofficial Notes has now been rebranded as NoteSphere.</strong>
+                    To provide a modern, reliable, and long-term learning experience, we have completely redesigned the application with a new interface, improved features, and a better system architecture. NoteSphere is built to support both current and future students, ensuring continued access to study materials for upcoming semesters and future academic years.
+                </p>
+
+                <h2 style="font-size:16px; font-weight:800; color:#111827; margin:20px 0 8px;">Who Can Use NoteSphere?</h2>
+                <p style="margin:0 0 8px;">NoteSphere is designed for:</p>
+                <ul style="margin:0 0 8px; padding-left:20px;">
+                    <li>BA History students</li>
+                    <li>BA Sociology students</li>
+                </ul>
+                <p style="margin:0 0 16px;">The platform provides semester-wise study materials in both <strong>English</strong> and <strong>Malayalam</strong>. Each semester contains organized subjects, notes, and learning resources that can be viewed or downloaded directly within the application.</p>
+
+                <h2 style="font-size:16px; font-weight:800; color:#111827; margin:20px 0 8px;">Create Your NoteSphere Account</h2>
+                <p style="margin:0 0 8px;">To access the study materials, every student must create a NoteSphere account.</p>
+                <p style="margin:0 0 4px; font-weight:700; color:#111827;">Registration Requirements</p>
+                <ul style="margin:0 0 8px; padding-left:20px;">
+                    <li><strong>Full Name</strong> – Enter your official full name.</li>
+                    <li><strong>Username</strong> – Choose a unique username or nickname that you can easily remember.</li>
+                    <li><strong>Email Address</strong> – Required for account verification, password recovery, and security notifications.</li>
+                    <li><strong>Phone Number</strong> – Optional.</li>
+                    <li><strong>Password</strong> – Must meet the following security requirements:
+                        <ul style="margin:4px 0; padding-left:20px;">
+                            <li>At least 8 characters long</li>
+                            <li>At least one uppercase letter (A&ndash;Z)</li>
+                            <li>At least one lowercase letter (a&ndash;z)</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p style="margin:0 0 16px;">If you ever forget your password, password reset instructions and OTP verification will be sent to your registered email address.</p>
+
+                <h2 style="font-size:16px; font-weight:800; color:#111827; margin:20px 0 8px;">Login</h2>
+                <p style="margin:0 0 16px;">After creating your account, simply log in using your <strong>Username</strong> and <strong>Password</strong>. Once logged in, you can access all available semester-wise study materials according to your course.</p>
+
+                <h2 style="font-size:16px; font-weight:800; color:#111827; margin:20px 0 8px;">Learning Features</h2>
+                <p style="margin:0 0 8px;">Inside NoteSphere you can:</p>
+                <ul style="margin:0 0 16px; padding-left:20px;">
+                    <li>Browse semester-wise subjects.</li>
+                    <li>Read notes directly within the application.</li>
+                    <li>Download study materials for offline learning.</li>
+                    <li>Access content in both English and Malayalam.</li>
+                    <li>Continue using the same account throughout your academic journey.</li>
+                </ul>
+
+                <h2 style="font-size:16px; font-weight:800; color:#111827; margin:20px 0 8px;">Long-Term Availability</h2>
+                <p style="margin:0 0 16px;">Your NoteSphere account is designed for long-term use. As new semesters and study materials are added, your existing account will continue to provide access without requiring a new registration.</p>
+
+                <h2 style="font-size:16px; font-weight:800; color:#111827; margin:20px 0 8px;">Community Guidelines</h2>
+                <p style="margin:0 0 8px;">Please use NoteSphere responsibly. The following activities are strictly prohibited:</p>
+                <ul style="margin:0 0 8px; padding-left:20px;">
+                    <li>Unauthorized copying or redistribution of study materials.</li>
+                    <li>Copyright infringement.</li>
+                    <li>Attempting to exploit, modify, or misuse the application.</li>
+                    <li>Any activity that violates the application's Terms of Use.</li>
+                </ul>
+                <p style="margin:0 0 16px; color:#b91c1c;">Any user found engaging in copyright violations, unauthorized distribution of content, or misuse of the platform may have their account <strong>permanently banned</strong>, resulting in the loss of access to NoteSphere and all associated services.</p>
+
+                <p style="margin:0; padding-bottom:16px;">Thank you for being part of NoteSphere. We are committed to providing a secure, organized, and long-lasting learning platform for every student.</p>
+            </div>
+            <div style="padding:16px 32px 24px; border-top:1px solid #e5e7eb; text-align:center;">
+                <button onclick="closeNotesSpherePopup()" style="display:inline-block; background:#111827; color:#ffffff; border:none; cursor:pointer; text-decoration:none; font-size:15px; font-weight:700; padding:13px 44px; border-radius:9999px; transition:all .2s; box-shadow:0 4px 14px rgba(17,24,39,0.3); font-family:Arial, Helvetica, sans-serif;"
+                        onmouseover="this.style.opacity='0.85'; this.style.transform='translateY(-2px)'" onmouseout="this.style.opacity='1'; this.style.transform='translateY(0)'">
+                    Got It &ndash; Continue
+                </button>
+                <p style="font-size:12px; color:#9ca3af; margin:10px 0 0;">You will be taken to the new NoteSphere sign-up/login page next.</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function closeNotesSpherePopup() {
+            document.getElementById('notesphere-popup-overlay').style.display = 'none';
+        }
+    </script>
+    <!-- ====================== END NOTESPHERE WELCOME POPUP ====================== -->
+
+    <!-- ==================================================================
          WHITE MASK PAGE (TEMPORARY)
          To restore the old dashboard, DELETE everything from this comment
          down to the matching 'END WHITE MASK PAGE' comment below.
